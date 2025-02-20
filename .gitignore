@@ -13,10 +13,13 @@
 **/venv/                # 忽略所有层级的虚拟环境
 **/env/                 # 忽略所有层级的虚拟环境
 *.egg-info/             # Python 打包元数据
+**/out/
+**/dataset/
 
 # Java 相关（通配符匹配所有层级的目录）
 *.class                 # Java 编译后的类文件
 **/target/              # 忽略所有层级的 target（Maven/Gradle）
+**/mvn/
 *.jar                   # JAR 文件（如果是构建输出）
 *.war                   # WAR 文件
 
