@@ -1,7 +1,7 @@
 > [!IMPORTANT]
 > original project <https://github.com/jingyaogong/minimind>
 
-those are my learning experience
+these are my learning experience
 
 system info: Linux arch 6.13.2-arch1-1 #1 SMP PREEMPT_DYNAMIC Sat, 08 Feb 2025 18:54:55 +0000 x86_64 GNU/Linux
 pip install -r requirements.txt -i <https://pypi.tuna.tsinghua.edu.cn/simple>
