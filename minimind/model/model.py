@@ -91,6 +91,8 @@ class Attention(nn.Module):
         past_key_value: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
         use_cache=False,
     ):
+
+        # x.shape still (batch_size,seq_len,num_heads,head_dim)
         bsz, seq_len, _ = x.shape
         xq, xk, xv = self.wq(x), self.wk(x), self.wv(x)
         xq = xq.view(bsz, seq_len, self.n_local_heads, self.head_dim)
@@ -109,6 +111,7 @@ class Attention(nn.Module):
             repeat_kv(xk, self.n_rep).transpose(1, 2),
             repeat_kv(xv, self.n_rep).transpose(1, 2),
         )
+
         if self.flash and seq_len != 1:
             dropout_p = self.dropout if self.training else 0.0
             output = F.scaled_dot_product_attention(
@@ -121,6 +124,8 @@ class Attention(nn.Module):
             scores = self.attn_dropout(scores)
             output = scores @ xv
 
+        # merge n_local_heads and head_dim
+        # last linear transform
         output = output.transpose(1, 2).reshape(bsz, seq_len, -1)
         output = self.resid_dropout(self.wo(output))
         return output, past_kv
