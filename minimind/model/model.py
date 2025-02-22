@@ -10,15 +10,18 @@ class RNSNorm(torch.nn.Module):
     def __init__(self, dim: int, eps: float):
         super().__init__()
         self.eps = eps
+        # treat model parameter backpropagation calculate gradient
         self.weight = nn.Parameter(torch.ones(dim))
 
     def forward(self, x):
+        # -1 usually mean calculate all
         return self.weight * (
             x.float() * torch.rsqrt(x.pow(2).mean(-1, keepdim=True) + self.eps)
         ).type_as(x)
 
 
 def procompute_pos_cis(dim: int, end: int = int(32 * 1024), theta: float = 1e6):
+    # // 2 because 2i and 2i+1 in sin cos equal so save half
     freqs = 1.0 / (theta ** (torch.arange(0, dim, 2)[: (dim // 2)].float() / dim))
     t = torch.arange(end, device=freqs.device)
     freqs = torch.outer(t, freqs).float()
@@ -26,6 +29,8 @@ def procompute_pos_cis(dim: int, end: int = int(32 * 1024), theta: float = 1e6):
     return pos_cis
 
 
+# xq xk (batch_size,seq_len,num_heads,head_dim)
+# pos_cis (seq_len,head_dim//2)
 def apply_rotary_emb(xq, xk, pos_cis):
     def unite_shape(pos_cis, x):
         ndim = x.ndim
@@ -57,11 +62,12 @@ def repeat_kv(x: torch.Tensor, n_rep: int) -> torch.Tensor:
 class Attention(nn.Module):
     def __init__(self, args: LMConfig):
         super().__init__()
+        # GQA
         self.n_kv_heads = args.n_heads if args.n_kv_heads is None else args.n_kv_heads
         assert args.n_heads % self.n_kv_heads == 0
         self.n_local_heads = args.n_heads
-        self.n_local_kv_heads = args.n_heads
-        self.n_rep = self.n_local_heads // self.n_local_heads
+        self.n_local_kv_heads = args.n_kv_heads
+        self.n_rep = self.n_local_heads // self.n_local_kv_heads
         self.head_dim = args.dim // args.n_heads
         self.wq = nn.Linear(args.dim, args.n_heads * self.head_dim, bias=False)
         self.wk = nn.Linear(args.dim, args.n_kv_heads * self.head_dim, bias=False)
@@ -91,7 +97,7 @@ class Attention(nn.Module):
         xk = xk.view(bsz, seq_len, self.n_local_kv_heads, self.head_dim)
         xv = xv.view(bsz, seq_len, self.n_local_kv_heads, self.head_dim)
 
-        sq, xk = apply_rotary_emb(xq, xk, pos_cis)
+        xq, xk = apply_rotary_emb(xq, xk, pos_cis)
         # kv implement
         if past_key_value is not None:
             xk = torch.cat([past_key_value[0], xk], dim=1)

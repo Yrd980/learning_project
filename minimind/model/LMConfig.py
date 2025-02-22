@@ -18,6 +18,7 @@ class LMConfig(PretrainedConfig):
         rope_theta: int = 1e6,
         dropout: float = 0.0,
         flash_attn: bool = True,
+        # moe config
         use_moe: bool = False,
         num_experts_per_tok: int = 2,
         n_routed_experts: int = 4,
