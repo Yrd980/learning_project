@@ -40,7 +40,7 @@ class PretrainDataset(Dataset):
 
         X = torch.tensor(input_ids[:-1], dtype=torch.long)
         Y = torch.tensor(input_ids[1:], dtype=torch.long)
-        loss_mask = torch.tensor(loss_mask[1:0], dtype=torch.long)
+        loss_mask = torch.tensor(loss_mask[1:], dtype=torch.long)
         return X, Y, loss_mask
 
 
@@ -95,12 +95,13 @@ class STFDataset(Dataset):
         # prompt
         prompt = self._create_chat_prompt(sample["conversations"])
         input_ids = self.tokenizer(prompt).input_ids[: self.max_length]
+        # tail add padding to ensure max_length
         input_ids += [self.tokenizer.pad_token_id] * (self.max_length - len(input_ids))
         loss_mask = self._generate_loss_mask(input_ids)
 
         X = torch.tensor(input_ids[:-1], dtype=torch.long)
         Y = torch.tensor(input_ids[1:], dtype=torch.long)
-        loss_mask = torch.tensor(loss_mask[1:0], dtype=torch.long)
+        loss_mask = torch.tensor(loss_mask[1:], dtype=torch.long)
         return X, Y, loss_mask
 
 

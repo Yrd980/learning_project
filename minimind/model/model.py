@@ -154,7 +154,7 @@ class MoEGate(nn.Module):
         super().__init__()
         self.config = config
         self.top_k = config.num_experts_per_tok
-        self.n_routed_exports = config.n_routed_experts
+        self.n_routed_experts = config.n_routed_experts
 
         self.scoring_func = config.scoring_func
         self.alpha = config.aux_loss_alpha
@@ -163,7 +163,7 @@ class MoEGate(nn.Module):
         self.norm_topk_prob = config.norm_topk_prob
         self.gating_dim = config.dim
         self.weight = nn.Parameter(
-            torch.empty((self.n_routed_exports, self.gating_dim))
+            torch.empty((self.n_routed_experts, self.gating_dim))
         )
         self.reset_parameters()
 
@@ -173,16 +173,22 @@ class MoEGate(nn.Module):
         init.kaiming_uniform_(self.weight, a=math.sqrt(5))
 
     def forward(self, hidden_states):
+        # hidden_states(batch_size,seq_len,hidden_dim)
         bsz, seq_len, h = hidden_states.shape
+        # hidden_states(batch_size * seq_len,hidden_dim)
         hidden_states = hidden_states.view(-1, h)
+        # weight(hidden_dim,n_routed_experts)
+        # logits(batch_size * seq_len,n_routed_experts)
         logits = F.linear(hidden_states, self.weight, None)
         if self.scoring_func == "softmax":
+            # same as logits n_routed_experts execute softmax
             scores = logits.softmax(dim=-1)
         else:
             raise NotImplementedError(
                 f"insupportable scoring function for MoE gating: {self.scoring_func}"
             )
 
+        # shape(batch_size * seq_len,top_k)
         topk_weight, topk_idx = torch.topk(scores, k=self.top_k, dim=-1, sorted=False)
 
         if self.top_k > 1 and self.norm_topk_prob:
@@ -192,27 +198,44 @@ class MoEGate(nn.Module):
         if self.training and self.alpha > 0.0:
             scores_for_aux = scores
             aux_topk = self.top_k
+            # shape(batch_size,seq_len * top_k)
             topk_idx_for_aux_loss = topk_idx.view(bsz, -1)
             if self.seq_aux:
+                # shape(batch_size,seq_len,n_routed_experts)
                 scores_for_seq_aux = scores_for_aux.view(bsz, seq_len, -1)
+                # shape(batch_size,n_routed_experts)
                 ce = torch.zeros(
-                    bsz, self.n_routed_exports, device=hidden_states.device
+                    bsz, self.n_routed_experts, device=hidden_states.device
                 )
+                # apply n_routed_experts cumulate and topk_idx_for_aux_loss as index aka merge experts occur numbers
+                # topk_idx_for_aux_loss(batch_size * seq_len,top_k)
                 ce.scatter_add(
                     1,
                     topk_idx_for_aux_loss,
                     torch.ones(bsz, seq_len * aux_topk, device=hidden_states.device),
-                ).div_(seq_len * aux_topk / self.n_routed_exports)
+                ).div_(seq_len * aux_topk / self.n_routed_experts)
+                # dim=1 mean seq_len (batch_size,seq_len,n_routed_experts) array mean(dim=1) column average aka experts scores average
+                # # Batch 1
+                #    [[0.1, 0.2, 0.3, 0.4],  # Sequence position 1
+                #     [0.5, 0.6, 0.7, 0.8],  # Sequence position 2
+                #     [0.9, 1.0, 1.1, 1.2]], # Sequence position 3
+                #    # Batch 2
+                #    [[1.3, 1.4, 1.5, 1.6],  # Sequence position 1
+                #     [1.7, 1.8, 1.9, 2.0],  # Sequence position 2
+                #     [2.1, 2.2, 2.3, 2.4]]  # Sequence position 3
                 aux_loss = (ce * scores_for_seq_aux.mean(dim=1)).sum(
                     dim=1
                 ).mean() * self.alpha
             else:
+                # shape(batch_size * seq_len * top_k , n_routed_experts)
                 mask_ce = F.one_hot(
-                    topk_idx_for_aux_loss.view(-1), num_classes=self.n_routed_exports
+                    topk_idx_for_aux_loss.view(-1), num_classes=self.n_routed_experts
                 )
+                # shape(n_routed_experts)
                 ce = mask_ce.float().mean(0)
+                # shape(n_routed_experts) just like 226 line
                 Pi = scores_for_aux.mean(0)
-                fi = ce * self.n_routed_exports
+                fi = ce * self.n_routed_experts
                 aux_loss = (Pi * fi).sum() * self.alpha
         else:
             aux_loss = 0
