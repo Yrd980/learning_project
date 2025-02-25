@@ -134,7 +134,7 @@ class Attention(nn.Module):
         return output, past_kv
 
 
-class FeedForword(nn.Module):
+class FeedForward(nn.Module):
     def __init__(self, config: LMConfig):
         super().__init__()
         if config.hidden_dim is None:
@@ -250,11 +250,11 @@ class MoEFeedForward(nn.Module):
         super().__init__()
         self.config = config
         self.experts = nn.ModuleList(
-            [FeedForword(config) for _ in range(config.n_routed_experts)]
+            [FeedForward(config) for _ in range(config.n_routed_experts)]
         )
         self.gate = MoEGate(config)
         if config.n_shared_experts is not None:
-            self.shared_experts = FeedForword(config)
+            self.shared_experts = FeedForward(config)
 
     def forward(self, x):
         identity = x
@@ -314,7 +314,7 @@ class MiniMindBlock(nn.Module):
         self.attention_norm = RMSNorm(config.dim, eps=config.norm_eps)
         self.ffn_norm = RMSNorm(config.dim, eps=config.eps)
         self.feed_forward = (
-            FeedForword(config) if not config.use_moe else MoEFeedForward(config)
+            FeedForward(config) if not config.use_moe else MoEFeedForward(config)
         )
 
     def forward(self, x, pos_cis, past_key_value, use_cache=False):
@@ -324,6 +324,7 @@ class MiniMindBlock(nn.Module):
             past_key_value=past_key_value,
             use_cache=use_cache,
         )
+        # reside
         h = x + h_attn
         out = h + self.feed_forward(self.ffn_norm)
         return out, past_kv
@@ -415,7 +416,7 @@ class MiniMindLM(PreTrainedModel):
             if top_p is not None and top_p < 1.0:
                 sorted_logits , sorted_indices = torch.sort(logits,descending=True,dim=-1)
                 sorted_probs = F.softmax(sorted_logits,dim=-1)
-                cumulative_probs = torch.cumulative(sorted_probs,dim=-1)
+                cumulative_probs = torch.cumsum(sorted_probs,dim=-1)
                 sorted_indices_to_remove = cumulative_probs > top_p 
                 sorted_indices_to_remove[:,1] = sorted_indices_to_remove[:,:-1].clone()
                 sorted_indices_to_remove[:,0] = False
