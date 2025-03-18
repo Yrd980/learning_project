@@ -1,0 +1,15 @@
+f2d4c0cb0526983cd145e42ca5b294ab127c995d|Yrd980|2025-03-18 10:12:24 +0800|reference yupi project refine .gitignore
+0432c8132d8edc355d1be8a6a3688d91d1a25ae2|Yrd980|2025-03-18 10:05:53 +0800|rename
+5937ff4a386fd4d760900ed9ba6af5f160bf9f6c|Yrd980|2025-03-17 19:32:16 +0800|add yuemu project initial
+c12e21d7d229619314373a7921d7f58ce6343e90|Yrd980|2025-03-10 17:57:12 +0800|refine visualize_github_star project
+3173615fcca5ca7015686bdedcfb91279a2a6a51|Yrd980|2025-03-10 17:24:57 +0800|grade2 project use fastapi
+b43d1907ee6ebb40a1f380cf4eecb87c6df5e076|Yrd980|2025-03-10 17:21:31 +0800|add get github star repo script
+d3edfb6af1533ac2d9f21ad39c89f75df556e8a0|Yrd980|2025-02-25 20:28:17 +0800|add clip
+91900e4199e8a65dd455a8530cb86a1dc4125fac|Yrd980|2025-02-24 15:44:09 +0800|fix spell problem add comment
+fe87ffeab0cf0bc916b3db54303d6b346347df18|Yrd980|2025-02-23 14:25:13 +0800|fix spell error then add comment for all
+3b44273f47f12c75d7a16cb3bf8cf1f58c75e273|Yrd980|2025-02-22 23:43:16 +0800|add model structure picture 1 understanding
+934feb97b0df17703af944f1a2c6ef968b157c76|Yrd980|2025-02-22 20:34:57 +0800|fix bugs and add some comments
+51dfbaa2f7a844cd0b7ef6652ba4f906b52700af|Yrd980|2025-02-21 23:30:24 +0800|partly add model.py main attention and some moe
+ce21139f0c2e6ca47de39bca88294d62aff2e11f|Yrd980|2025-02-21 16:16:00 +0800|fix spell
+4a4fa7cdcf4f7bd05123294d92d55eda729587db|Yrd980|2025-02-20 20:49:07 +0800|add readme.md LMConfig dataset.py
+06f1fc4f2f2d7d65d97ba39cc6227f061ae6e6c2|Yrd980|2025-02-20 18:09:50 +0800|Initial commit
