@@ -1,7 +1,7 @@
-import { outLogin } from '@/services/ant-design-pro/api';
+import { userLogout } from '@/services/backend/userController';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';
-import { Spin } from 'antd';
+import { Avatar, Space, Spin } from 'antd';
 import { createStyles } from 'antd-style';
 import { stringify } from 'querystring';
 import type { MenuInfo } from 'rc-menu/lib/interface';
@@ -11,7 +11,6 @@ import HeaderDropdown from '../HeaderDropdown';
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
-  children?: React.ReactNode;
 };
 
 export const AvatarName = () => {
@@ -38,12 +37,12 @@ const useStyles = createStyles(({ token }) => {
   };
 });
 
-export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, children }) => {
+export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   /**
    * 退出登录，并且将当前的 url 保存
    */
   const loginOut = async () => {
-    await outLogin();
+    await userLogout();
     const { search, pathname } = window.location;
     const urlParams = new URL(window.location.href).searchParams;
     /** 此方法会跳转到 redirect 参数所在的位置 */
@@ -89,13 +88,9 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
     </span>
   );
 
-  if (!initialState) {
-    return loading;
-  }
+  const { currentUser } = initialState || {};
 
-  const { currentUser } = initialState;
-
-  if (!currentUser || !currentUser.name) {
+  if (!currentUser) {
     return loading;
   }
 
@@ -132,7 +127,14 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
         items: menuItems,
       }}
     >
-      {children}
+      <Space>
+        {currentUser?.userAvatar ? (
+          <Avatar size="small" icon={<UserOutlined />} />
+        ) : (
+          <Avatar size="small" src={currentUser?.userAvatar} />
+        )}
+        ,<span className="anticon">{currentUser?.userName}</span>
+      </Space>
     </HeaderDropdown>
   );
 };
