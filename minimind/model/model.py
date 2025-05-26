@@ -1,9 +1,8 @@
 import torch
 import torch.nn.functional as F
 from torch import nn
-from typing import Optional, Tuple, List
+from typing import Optional, Tuple, List 
 import math
-
 from .LMConfig import LMConfig
 from transformers import PreTrainedModel
 from transformers.modeling_outputs import CausalLMOutputWithPast
