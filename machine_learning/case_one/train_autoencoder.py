@@ -12,7 +12,7 @@ from tqdm import tqdm
 import time
 from torch.utils.tensorboard import SummaryWriter
 
-def train_autoencoder(model,lr,loader,test_loader,device,num_epochs=100,output_dir='results_autoencoder'):
+def train_autoencoder(model,lr,train_loader,test_loader,device,num_epochs=100,output_dir='results_autoencoder'):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     checkpoint_dir, tensorboard_dir = [os.path.join(output_dir,d) for d in ['checkpoints', 'tensorboard']]
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     train_losses, test_losses = train_autoencoder(
         model = model,
         lr = 1e-3,
-        loader = train_loader,
+        train_loader = train_loader,
         test_loader = test_loader,
         num_epochs = 100,
         device = device
