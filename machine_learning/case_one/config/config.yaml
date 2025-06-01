@@ -1,0 +1,21 @@
+training:
+  num_epochs: 100
+  batch_size: 32
+  learning_rate: 1e-3
+  save_interval: 10
+
+model:
+  input_channels: 1
+  hidden_channels: 32
+  latent_channels: 64
+
+data:
+  image_size: 256
+  train_dir: "data/train"
+  test_dir: "data/test"
+  preprocess: 
+    resize_size: [256,256]
+    normalize: True
+    mean: [0.5]
+    std: [0.5]
+
