@@ -29,51 +29,6 @@ def plot_confusion_matrix(cm,classes,output_path):
     plt.savefig(output_path)
     plt.close()
 
-def run_epoch(model,loader,autoencoder,criterion,optimizer,device,noise_factor=0.3,train=False,writer=None,global_step =0):
-    model.train() if train else model.eval()
-    running_loss = 0.0
-    correct = 0
-    total = 0
-    all_preds, all_targets = [], []
-
-    bar = tqdm(loader,desc='Training' if train else 'Testing')
-
-    for data, targets in bar:
-        data, targets = data.to(device), targets.to(device)
-        noisy_data = add_noise(data,noise_factor)
-
-        with torch.no_grad():
-            denoised_data = autoencoder(noisy_data)
-
-        outputs = model(denoised_data)
-        loss = criterion(outputs,targets)
-
-        if train:
-            model.zero_grad()
-            loss.backward()
-            optimizer.step()
-
-            if writer is not None:
-                writer.add_scalar('Loss/train', loss.item(), global_step)
-                global_step += 1
-
-        running_loss += loss.item()
-        _,predicted = outputs.max(1)
-        total += targets.size(0)
-        correct += predicted.eq(targets).sum().item()
-
-        all_preds.extend(predicted.cpu().numpy())
-        all_targets.extend(targets.cpu().numpy())
-
-        bar.set_postfix({
-            'loss': loss.item(),
-            'acc': 100. * correct / total
-        })
-
-    avg_loss = running_loss / len(loader)
-    acc = 100. * correct / total
-    return avg_loss, acc, all_preds, all_targets, global_step
-
 def save_plots(history,output_path,epoch=None):
     plt.figure(figsize=(12,5))
 
@@ -114,9 +69,54 @@ def train_cnn(cnn_model,autoencoder,lr,train_loader,test_loader,device,num_epoch
     global_step = 0
     classes = Constants.CLASSES
 
+    def _run_epoch(model,loader,autoencoder,criterion,device,noise_factor=0.3,train=False,writer=None,global_step=0):
+        model.train() if train else model.eval()
+        running_loss = 0.0
+        correct = 0
+        total = 0
+        all_preds, all_targets = [], []
+
+        bar = tqdm(loader,desc='Training' if train else 'Testing')
+
+        for data, targets in bar:
+            data, targets = data.to(device), targets.to(device)
+            noisy_data = add_noise(data,noise_factor)
+
+            with torch.no_grad():
+                denoised_data = autoencoder(noisy_data)
+
+            outputs = model(denoised_data)
+            loss = criterion(outputs,targets)
+
+            if train:
+                model.zero_grad()
+                loss.backward()
+                optimizer.step()
+
+                if writer is not None:
+                    writer.add_scalar('Loss/train', loss.item(), global_step)
+                    global_step += 1
+
+            running_loss += loss.item()
+            _,predicted = outputs.max(1)
+            total += targets.size(0)
+            correct += predicted.eq(targets).sum().item()
+
+            all_preds.extend(predicted.cpu().numpy())
+            all_targets.extend(targets.cpu().numpy())
+
+            bar.set_postfix({
+                'loss': loss.item(),
+                'acc': 100. * correct / total
+            })
+
+        avg_loss = running_loss / len(loader)
+        acc = 100. * correct / total
+        return avg_loss, acc, all_preds, all_targets, global_step
+
     for epoch in range(num_epochs):
-        train_loss, train_acc, _, _, global_step = run_epoch(cnn_model, train_loader, autoencoder, criterion, device, noise_factor, True, writer, global_step)
-        test_loss, test_acc, preds, targets, _ = run_epoch(cnn_model, test_loader, autoencoder, criterion, device, noise_factor, False)
+        train_loss, train_acc, _, _, global_step = _run_epoch(cnn_model, train_loader, autoencoder, criterion, device, noise_factor, True, global_step)
+        test_loss, test_acc, preds, targets, _ = _run_epoch(cnn_model, test_loader, autoencoder, criterion, device, noise_factor, False)
 
         history['train_loss'].append(train_loss)
         history['test_loss'].append(test_loss)

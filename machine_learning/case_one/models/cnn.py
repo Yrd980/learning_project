@@ -3,7 +3,6 @@ import torch.nn as nn
 class CNN(nn.Module):
     def __init__(self):
         super(CNN,self).__init__()
-
         self.features = nn.Sequential(
             nn.Conv2d(1, 16, kernel_size=3, padding=1),  
             nn.ReLU(),
