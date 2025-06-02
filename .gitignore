@@ -15,6 +15,7 @@
 *.egg-info/             # Python package metadata
 **/out/
 **/dataset/
+**/checkpoints/
 
 # Java related
 *.class                 # Java compiled class files
