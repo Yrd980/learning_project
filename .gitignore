@@ -16,6 +16,8 @@
 **/out/
 **/dataset/
 **/checkpoints/
+**/tensorboard/
+**/plots/
 
 # Java related
 *.class                 # Java compiled class files
