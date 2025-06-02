@@ -8,3 +8,7 @@
 
 - tensorboard --logdir_spec autoencoder:results/autoencoder/tensorboard,cnn:results/cnn/tensorboard
 
+# gradio
+
+- python app.py --autoencoder_path results/autoencoder/checkpoints/best_autoencoder.pth  --cnn_path results/cnn/checkpoints/best_cnn.pth --port 7860
+
