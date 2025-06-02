@@ -133,7 +133,7 @@ def train_cnn(cnn_model,autoencoder,lr,train_loader,test_loader,device,num_epoch
 
         if test_acc > best_test_acc:
             best_test_acc = test_acc
-            torch.save(cnn_model.state_dict(), os.path.join(checkpoint_dir, 'best_cnn_model.pth'))
+            torch.save(cnn_model.state_dict(), os.path.join(checkpoint_dir, 'best_cnn.pth'))
 
         if (epoch + 1) % 10 == 0:
             checkpoint = {
@@ -149,7 +149,7 @@ def train_cnn(cnn_model,autoencoder,lr,train_loader,test_loader,device,num_epoch
             torch.save(checkpoint, os.path.join(checkpoint_dir, f'cnn_checkpoint_epoch_{epoch+1}.pth'))
             save_plots(history, plot_dir, epoch)
 
-    torch.save(cnn_model.state_dict(), os.path.join(checkpoint_dir, 'final_cnn_model.pth'))
+    torch.save(cnn_model.state_dict(), os.path.join(checkpoint_dir, 'final_cnn.pth'))
     save_plots(history,plot_dir)
     print(f'Training completed in {time.time() - start_time:.2f} seconds')
     writer.close()
