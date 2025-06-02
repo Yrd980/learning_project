@@ -1,9 +1,7 @@
 import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
-
 import os
-
 from PIL import Image
 from constants.constants import Constants
 
@@ -14,7 +12,7 @@ class XrayDataset(Dataset):
         self.classes = Constants.CLASSES
 
         self.transform = transform or transforms.Compose([
-            transforms.Resize((225, 225)),
+            transforms.Resize((256, 256)),
             transforms.Grayscale(num_output_channels=1),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.5],std=[0.5])
@@ -25,7 +23,7 @@ class XrayDataset(Dataset):
     def _gather_data(self):
 
         data = []
-        phase = 'train' if self.is_train else 'test'
+        phase = 'train' if self.is_train else 'noisy_test'
 
         for class_idx, class_name in enumerate(self.classes):
             class_path = os.path.join(self.root_dir, phase, class_name)
@@ -59,8 +57,9 @@ class XrayDataset(Dataset):
 
 
 if __name__ == "__main__":
-    dataset = XrayDataset(root_dir=Constants.TRAIN_DATA_PATH, is_train=True)
+    dataset = XrayDataset(root_dir=Constants.ROOT_PATH, is_train=False)
     print(f"Number of training samples: {len(dataset)}")
+    print(dataset[0][0].shape)
 
 
 

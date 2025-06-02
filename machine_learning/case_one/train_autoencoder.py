@@ -1,4 +1,3 @@
-from numpy import fix
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -6,13 +5,13 @@ from torch.utils.data import DataLoader
 from torchvision.utils import make_grid
 import os
 from data.dataset import XrayDataset
-from machine_learning.case_one.constants.constants import Constants
+from constants.constants import Constants
 from models.autoencoder import Autoencoder
 from tqdm import tqdm
 import time
 from torch.utils.tensorboard import SummaryWriter
 
-def train_autoencoder(model,lr,train_loader,test_loader,device,num_epochs=100,output_dir='results_autoencoder'):
+def train_autoencoder(model,lr,train_loader,test_loader,device,num_epochs=100,output_dir='results/autoencoder'):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     checkpoint_dir, tensorboard_dir = [os.path.join(output_dir,d) for d in ['checkpoints', 'tensorboard']]
@@ -59,7 +58,10 @@ def train_autoencoder(model,lr,train_loader,test_loader,device,num_epochs=100,ou
 
         return total_loss / len(loader)
 
+    train_losses, test_losses = [], []
+
     for epoch in range(num_epochs):
+
         train_loss = _run_epoch(train_loader, is_train=True)
         test_loss = _run_epoch(test_loader, is_train=False)
 
@@ -67,19 +69,17 @@ def train_autoencoder(model,lr,train_loader,test_loader,device,num_epochs=100,ou
         test_losses.append(test_loss)
 
         if writer is not None:
-            writer.add_scalar('loss/test', {
-                'train': train_loss,
-                "test": test_loss
-            },epoch)
+            writer.add_scalar('Loss/train_epoch', train_loss, epoch)
+            writer.add_scalar('Loss/test_epoch', test_loss, epoch)
 
             with torch.no_grad():
                 reconstructed = model(fixed_test_data)
-                comprison = torch.cat([fixed_test_data[:8],reconstructed[:8]])
-                grid = make_grid(comprison, nrow=8, normalize=True)
+                comparison = torch.cat([fixed_test_data[:8],reconstructed[:8]])
+                grid = make_grid(comparison, nrow=8, normalize=True)
                 writer.add_image('Reconstruction', grid, epoch)
 
             for name,param in model.named_parameters():
-                writer.add_histogram(f'Prameters/{name}', param, epoch)
+                writer.add_histogram(f'Parameters/{name}', param, epoch)
                 if param.grad is not None:
                     writer.add_histogram(f'Gradient{name}', param.grad, epoch)
 
@@ -118,8 +118,8 @@ if __name__ == "__main__":
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f'Using device: {device}')
 
-    train_dataset = XrayDataset(Constants.TRAIN_DATA_PATH,is_train=True)
-    test_dataset = XrayDataset(Constants.TEST_DATA_PATH,is_train=False)
+    train_dataset = XrayDataset(Constants.ROOT_PATH,is_train=True)
+    test_dataset = XrayDataset(Constants.ROOT_PATH,is_train=False)
 
     train_loader = DataLoader(train_dataset,batch_size=32,shuffle=True,num_workers=4)
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=4)

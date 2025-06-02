@@ -69,7 +69,7 @@ def train_cnn(cnn_model,autoencoder,lr,train_loader,test_loader,device,num_epoch
     global_step = 0
     classes = Constants.CLASSES
 
-    def _run_epoch(model,loader,autoencoder,criterion,device,noise_factor=0.3,train=False,writer=None,global_step=0):
+    def _run_epoch(model,loader,autoencoder,criterion,device,noise_factor=0.3,train=False,global_step=0):
         model.train() if train else model.eval()
         running_loss = 0.0
         correct = 0
@@ -93,9 +93,8 @@ def train_cnn(cnn_model,autoencoder,lr,train_loader,test_loader,device,num_epoch
                 loss.backward()
                 optimizer.step()
 
-                if writer is not None:
-                    writer.add_scalar('Loss/train', loss.item(), global_step)
-                    global_step += 1
+                writer.add_scalar('Loss/train', loss.item(), global_step)
+                global_step += 1
 
             running_loss += loss.item()
             _,predicted = outputs.max(1)
@@ -161,14 +160,14 @@ if __name__ == "__main__":
     device =torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f'Using device: {device}')
 
-    train_dataset = XrayDataset(Constants.TRAIN_DATA_PATH,is_train=True)
-    test_dataset = XrayDataset(Constants.TEST_DATA_PATH, is_train=True)
+    train_dataset = XrayDataset(Constants.ROOT_PATH,is_train=True)
+    test_dataset = XrayDataset(Constants.ROOT_PATH, is_train=True)
 
     train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=4)
     test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=4)
 
     autoencoder = Autoencoder().to(device)
-    autoencoder.load_state_dict(torch.load('models/autoencoder.pth'))
+    autoencoder.load_state_dict(torch.load('results/autoencoder/checkpoints/best_autoencoder.pth', map_location=device))
 
     cnn_model = CNN()
 
