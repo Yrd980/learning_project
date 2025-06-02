@@ -3,8 +3,6 @@ import torch
 from torch.utils.data import DataLoader
 import argparse
 from data.dataset import XrayDataset
-from machine_learning.case_one.constants.constants import Constants
-from machine_learning.case_one.models import autoencoder
 from models.autoencoder import Autoencoder
 from models.cnn import CNN
 from utils import load_config
@@ -109,7 +107,7 @@ def train_phase_autoencoder(args,config,device,train_loader,test_loader):
         output_dir=args.autoencoder_dir
     )
 
-    return autoencoder
+    return autoencoder_history
 
 def train_phase_cnn(args,config,device,train_loader,test_loader,autoencoder):
     print("=== cnn training phase ===")

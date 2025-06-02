@@ -59,7 +59,7 @@ class XrayDataset(Dataset):
 
 
 if __name__ == "__main__":
-    dataset = XrayDataset(root_dir='data/xray', is_train=True)
+    dataset = XrayDataset(root_dir=Constants.TRAIN_DATA_PATH, is_train=True)
     print(f"Number of training samples: {len(dataset)}")
 
 
