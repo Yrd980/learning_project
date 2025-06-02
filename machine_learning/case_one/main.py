@@ -68,7 +68,7 @@ def parse_args():
     )
 
     parser.add_argument(
-        "--device", type=str,choices=["cpu", "cuda"], default="cpu",help="device to use for training (cpu or cuda)"
+        "--device", type=str,choices=["cpu", "cuda"], default="cuda",help="device to use for training (cpu or cuda)"
     )
 
     parser.add_argument(
