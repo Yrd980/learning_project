@@ -49,7 +49,7 @@ def save_plots(history,output_path,epoch=None):
     plt.savefig(os.path.join(output_path,filename))
     plt.close()
 
-def train_cnn(cnn_model,autoencoder,lr,train_loader,test_loader,device,num_epochs=100,output_path='results_cnn',noise_factor=0.3):
+def train_cnn(cnn_model,autoencoder,lr,train_loader,test_loader,device,num_epochs=100,output_path='results/cnn',noise_factor=0.3):
     checkpoint_dir, tensorboard_dir, plot_dir = [os.path.join(output_path, d) for d in ['checkpoints', 'tensorboard', 'plots']]
     for d in [checkpoint_dir, tensorboard_dir, plot_dir]:
         os.makedirs(d, exist_ok=True)

@@ -8,6 +8,7 @@
 # Python related
 **/__pycache__/         # Ignore all levels of __pycache__
 *.py[cod]               # Python compiled files
+*.pth                   # module parameter file
 *.pyc                   # Python compiled files
 **/venv/                # Ignore all levels of virtual environments
 **/env/                 # Ignore all levels of virtual environments
