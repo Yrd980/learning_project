@@ -11,7 +11,7 @@ const (
 	TOKEN_VAR_PREFIX
 	TOKEN_LEFT_PAREN
 	TOKEN_RIGHT_PAREN
-	TOEKN_EQUAL
+	TOKEN_EQUAL
 	TOKEN_QUOTE
 	TOKEN_DUOQUOTE
 	TOKEN_NAME
@@ -107,7 +107,7 @@ func (lexer *Lexer) scanName() string {
 }
 
 func (lexer *Lexer) scanBeforeToken(token string) string {
-	s := strings.Split(lexer.sourceCode,token)
+	s := strings.Split(lexer.sourceCode, token)
 	if len(s) < 2 {
 		panic("unreachable!")
 	}
@@ -209,4 +209,3 @@ func (lexer *Lexer) LookAhead() int {
 	lexer.nextToken = token
 	return tokenType
 }
-
