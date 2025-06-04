@@ -4,11 +4,13 @@ import (
 	"errors"
 )
 
+// Name ::= [_A-Za-z][_0-9A-Za-z]*
 func parseName(lexer *Lexer) (string, error) {
 	_, name := lexer.NextTokenIs(TOKEN_NAME)
 	return name, nil
 }
 
+// String ::= '"' '"' Ignored | '"' StringCharacter '"' Ignored
 func parseString(lexer *Lexer) (string, error) {
 	str := ""
 	switch lexer.LookAhead() {
@@ -27,6 +29,7 @@ func parseString(lexer *Lexer) (string, error) {
 	}
 }
 
+// Variable ::= "$" Name Ignored
 func parseVariable(lexer *Lexer) (*Variable, error) {
 	var variable Variable
 	var err error
@@ -40,6 +43,7 @@ func parseVariable(lexer *Lexer) (*Variable, error) {
 	return &variable, nil
 }
 
+// Assignment  ::= Variable Ignored "=" Ignored String Ignored
 func parseAssignment(lexer *Lexer) (*Assignment, error) {
 	var assignment Assignment
 	var err error
@@ -58,6 +62,7 @@ func parseAssignment(lexer *Lexer) (*Assignment, error) {
 	return &assignment, nil
 }
 
+// Print ::= "print" "(" Ignored Variable Ignored ")" Ignored
 func parsePrint(lexer *Lexer) (*Print, error) {
 	var print Print
 	var err error
@@ -75,6 +80,7 @@ func parsePrint(lexer *Lexer) (*Print, error) {
 	return &print, nil
 }
 
+// Statement ::= Print | Assignment
 func parseStatements(lexer *Lexer) ([]Statement, error) {
 	var statements []Statement
 
@@ -82,7 +88,7 @@ func parseStatements(lexer *Lexer) ([]Statement, error) {
 		var statement Statement
 		var err error
 
-		if statement, err = parseStatements(lexer); err != nil {
+		if statement, err = parseStatement(lexer); err != nil {
 			return nil, err
 		}
 		statements = append(statements, statement)
@@ -102,7 +108,7 @@ func parseStatement(lexer *Lexer) (statement Statement, err error) {
 	}
 }
 
-func parseSourceCode(lexer *Lexer) ([]Statement, error) {
+func parseSourceCode(lexer *Lexer) (*SourceCode, error) {
 	var sourceCode SourceCode
 	var err error
 
@@ -113,7 +119,7 @@ func parseSourceCode(lexer *Lexer) ([]Statement, error) {
 	return &sourceCode, nil
 }
 
-func isSourceCodeEnd(tokenType TokenType) bool {
+func isSourceCodeEnd(tokenType int) bool {
 	return tokenType == TOKEN_EOF
 }
 

@@ -3,8 +3,7 @@ package main
 import (
 	"os"
 	"fmt"
-	"io/ioutil"
-  "github.com/karminski/pineapple/src"
+	"case_go/src"
 )
 
 func main() {
@@ -14,11 +13,11 @@ func main() {
 		return
 	}
 	filename := args[1]
-	code, err := ioutil.ReadFile(filename)
+	code, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println("error reading file:", err)
 		return
 	}
 
-	pineapple.Execute(string(code))
+	case_go.Execute(string(code))
 }

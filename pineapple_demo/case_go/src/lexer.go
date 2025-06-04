@@ -95,7 +95,7 @@ func (lexer *Lexer) isIgnored() bool {
 }
 
 func (lexer *Lexer) scan(regex *regexp.Regexp) string {
-	if token := regexp.FindString(lexer.sourceCode); token != "" {
+	if token := regex.FindString(lexer.sourceCode); token != "" {
 		lexer.skipSourceCode(len(token))
 		return token
 	}
@@ -141,7 +141,7 @@ func (lexer *Lexer) MatchToken() (lineNum int, tokenType int, token string) {
 		return lexer.lineNum, TOKEN_RIGHT_PAREN, tokenNameMap[TOKEN_RIGHT_PAREN]
 	case '=':
 		lexer.skipSourceCode(1)
-		return lexer.lineNum, TOEKN_EQUAL, tokenNameMap[TOEKN_EQUAL]
+		return lexer.lineNum, TOKEN_EQUAL, tokenNameMap[TOKEN_EQUAL]
 	case '"':
 		if lexer.nextSouceCodeIs("\"\"") {
 			lexer.skipSourceCode(2)
