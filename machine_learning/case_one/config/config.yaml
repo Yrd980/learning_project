@@ -12,7 +12,7 @@ model:
 data:
   image_size: 256
   train_dir: "data/train"
-  test_dir: "data/test"
+  test_dir: "data/noisy_test"
   preprocess: 
     resize_size: [256,256]
     normalize: True

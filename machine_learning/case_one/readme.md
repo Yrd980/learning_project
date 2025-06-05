@@ -2,6 +2,8 @@ ref https://github.com/guangzhaoli/covid19-xray-classification
 
 > [!IMPORTANT]
 > PYTHONPATH=. python data/dataset.py
+> PYTHONPATH=. python train_autoencoder.py
+> PYTHONPATH=. python train_cnn.py
 
 # Tenserboard
 
