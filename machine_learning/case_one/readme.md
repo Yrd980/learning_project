@@ -1,3 +1,5 @@
+ref https://github.com/guangzhaoli/covid19-xray-classification
+
 > [!IMPORTANT]
 > PYTHONPATH=. python data/dataset.py
 
