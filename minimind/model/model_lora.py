@@ -13,34 +13,30 @@ class LoRA(nn.Module):
     def forward(self,x):
         return self.B(self.A(x))
 
-def apply_lora(model, rank=16, target_modules=None):
-    lora_modules = {}
-    for name, module in model.named_modules():
-        if isinstance(module, nn.Linear):
-            if target_modules and name not in target_modules:
-                continue
-            lora = LoRA(module.in_features, module.out_features, rank).to(next(model.parameters()).device)
-            module.lora = lora  # attach to each module
-            original_forward = module.forward
+def apply_lora(model,rank=8):
+    for name,module in model.name_modules():
+        if isinstance(module,nn.Linear) and module.weight.shape[0] == module.weight.shape[1]:
+            lora = LoRA(module.weight.shape[0], module.weight.shape[1], rank=rank).to(model.device)
+            setattr(model,"lora",lora)
+            orignal_forward = model.forward
 
-            def forward_with_lora(x, orig=original_forward, lora_mod=lora):
-                return orig(x) + lora_mod(x)
+            def forward_with_lora(x,layer1 = orignal_forward, layer2 = lora):
+                return layer1(x) + layer2(x)
 
             module.forward = forward_with_lora
-            lora_modules[name] = lora
-    model._lora_modules = lora_modules  # store for later access
+
+def load_lora(model,path):
+    state_dict = torch.load(path,map_location=model.device)
+    for name,module in model.name_modules():
+        if hasattr(model,'lora'):
+            lora_state = {k.replace(f'{name}.lora.', ''): v for k, v in state_dict.items() if f'{name}.lora.' in k}
+            module.lora.load_state_dict(lora_state)
 
 def save_lora(model, path):
     state_dict = {}
-    for name, lora in getattr(model, "_lora_modules", {}).items():
-        for key, val in lora.state_dict().items():
-            state_dict[f"{name}.lora.{key}"] = val
+    for name, module in model.named_modules():
+        if hasattr(module, 'lora'):
+            lora_state = {f'{name}.lora.{k}': v for k, v in module.lora.state_dict().items()}
+            state_dict.update(lora_state)
     torch.save(state_dict, path)
-
-def load_lora(model, path):
-    state_dict = torch.load(path, map_location=next(model.parameters()).device)
-    for name, lora in getattr(model, "_lora_modules", {}).items():
-        lora_state = {k.replace(f"{name}.lora.", ""): v for k, v in state_dict.items() if k.startswith(f"{name}.lora.")}
-        lora.load_state_dict(lora_state)
-
 
