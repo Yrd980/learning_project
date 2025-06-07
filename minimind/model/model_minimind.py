@@ -58,7 +58,7 @@ class MiniMindConfig(PretrainedConfig):
 
 import torch
 import torch.nn.functional as F
-from torch import device, full, nn
+from torch import nn 
 from typing import Optional, Tuple, List, Union
 import math
 from transformers.activations import ACT2FN
@@ -440,7 +440,7 @@ class MiniMindModel(nn.Module):
         )
 
         presents = []
-        for layer_idx, (layer,past_key_value) in enumerate(zip(self.layers,past_key_value)):
+        for layer_idx, (layer,past_key_value) in enumerate(zip(self.layers,past_key_values)):
             hidden_states, present = layer(
                 hidden_states,
                 position_embeddings,
