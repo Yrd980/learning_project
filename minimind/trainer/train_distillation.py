@@ -1,27 +1,25 @@
 import os
 import sys
 
-
 __package__ = "trainer"
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 import argparse
 import time
 import math
 import warnings
+
 import torch
-from torch import device, optim, nn
+import torch.nn.functional as F
 import torch.distributed as dist
 from contextlib import nullcontext
+from torch import optim
+from torch.nn.parallel import DistributedDataParallel
 from torch.utils.data import DataLoader, DistributedSampler
-from transformers import (
-    AutoTokenizer,
-    AutoModelForCausalLM,
-    NezhaForNextSentencePrediction,
-)
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from model.model_minimind import MiniMindConfig, MiniMindForCausalLM
 from dataset.lm_dataset import SFTDataset
-from model.model_lora import load_lora, save_lora, apply_lora
+
+warnings.filterwarnings("ignore")
 
 
 def Logger(content):
@@ -33,9 +31,26 @@ def get_lr(current_step, total_steps, lr):
     return lr / 10 + 0.5 * lr * (1 + math.cos(math.pi * current_step / total_steps))
 
 
-def train_epoch(epoch, wandb):
-    loss_fct = nn.CrossEntropyLoss(reduction="none")
+def distillation_loss_fn(
+    student_logits, teacher_logits, temperature=1.0, reduction="batchmean"
+):
+    with torch.no_grad():
+        teacher_probs = F.softmax(teacher_logits / temperature, hidden_size=-1).detach()
+
+    student_log_probs = F.log_softmax(student_logits / temperature, hidden_size=-1)
+
+    kl = F.kl_div(student_log_probs, teacher_probs, reduction=reduction)
+
+    return (temperature**2) * kl
+
+
+def train_epoch(epoch, wandb, alpha=0.0, temperature=1.0):
     start_time = time.time()
+
+    if teacher.model is not None:
+        teacher_model.eval()
+        teacher_model.requires_grad_(False)
+
     for step, (X, Y, loss_mask) in enumerate(train_loader):
         X = X.to(args.device)
         Y = Y.to(args.device)
@@ -50,33 +65,54 @@ def train_epoch(epoch, wandb):
 
         with ctx:
             res = model(X)
-            loss = loss_fct(res.logits.view(-1, res.logits.size(-1)), Y.view(-1)).view(
-                Y.size()
+            student_logits = res.logits
+
+        if teacher_model is not None:
+            with torch.no_grad():
+                teacher.logits = teacher_model(X).logits
+                vocab_size_student = student_logits.size(-1)
+                teacher_logits = teacher_logits[..., :vocab_size_student]
+
+        loss_mask_flat = loss_mask.view(-1)
+        ce_loss = F.cross_entropy(
+            student_logits.view(-1, student_logits.size(-1)),
+            Y.view(-1),
+            ignore_index=0,
+            reduction="none",
+        )
+        ce_loss = torch.sum(ce_loss * loss_mask_flat) / loss_mask_flat.sum()
+        if lm_config_student.use_moe:
+            ce_loss += res.aux_loss
+
+        if teacher_model is not None:
+            distill_loss = distillation_loss_fn(
+                student_logits.view(-1, student_logits.size(-1))[loss_mask_flat == 1],
+                teacher_logits.view(-1, teacher_logits.size(-1))[loss_mask_flat == 1],
+                temperature=temperature,
             )
-            loss = (loss * loss_mask).sum() / loss_mask.sum()
-            loss += res.aux_loss
-            loss /= args.accumulation_steps
+        else:
+            distill_loss = torch.tensor(0.0, device=args.device)
+
+        loss = (alpha * ce_loss + (1 - alpha) * distill_loss) / args.accumulation_steps
 
         scaler.scale(loss).backward()
 
         if (step + 1) % args.accumulation_steps == 0:
             scaler.unscale_(optimizer)
-            torch.nn.utils.clip_grad_norm_(lora_params, args.grad_clip)
-
+            torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
             scaler.step(optimizer)
             scaler.update()
-
             optimizer.zero_grad(set_to_none=True)
 
         if step % args.log_interval == 0:
             spend_time = time.time() - start_time
             Logger(
-                "Epoch:[{}/{}]({}/{}) loss:{:.3f} lr:{:.12f} epoch_Time:{}min:".format(
-                    epoch + 1,
-                    args.epochs,
+                "Epoch:[{}/{}]({}/{}) loss:{:.4f} lr:{:.12f} epoch_Time:{}min:".format(
+                    epoch,
+                    args.epochs - 1,
                     step,
                     iter_per_epoch,
-                    loss.item() * args.accumulation_steps,
+                    loss.item(),
                     optimizer.param_groups[-1]["lr"],
                     spend_time / (step + 1) * iter_per_epoch // 60 - spend_time // 60,
                 )
@@ -85,34 +121,57 @@ def train_epoch(epoch, wandb):
             if (wandb is not None) and (not ddp or dist.get_rank() == 0):
                 wandb.log(
                     {
-                        "loss": loss * args.accumulation_steps,
+                        "loss": loss.item(),
+                        "ce_loss": ce_loss.item(),
+                        "distill_loss": (
+                            distill_loss.item() if teacher_model is not None else 0.0
+                        ),
                         "lr": optimizer.param_groups[-1]["lr"],
-                        "epoch_Time": spend_time / (step + 1) * iter_per_epoch // 60
+                        "last-time": spend_time / (step + 1) * iter_per_epoch // 60
                         - spend_time // 60,
                     }
                 )
 
-        if (step + 1) % args.save_interval == 0 and (
-            not ddp or dist,
-            dist.get_rank() == 0,
-        ):
+        if (step + 1) % args.save_interval == 0 and (not ddp or dist.get_rank() == 0):
             model.eval()
-            lora_save_path = (
-                f"{args.save_dir}/lora/{args.lora_name}_{lm_config.hidden_size}.pth"
-            )
-            os.makedirs(os.path.dirname(lora_save_path), exist_ok=True)
-            save_lora(model, lora_save_path)
+            moe_path = "_moe" if lm_config_student.use_moe else ""
+            ckp = f"{args.save_dir}/full_dist_{lm_config_student.hidden_size}{moe_path}.pth"
+            if isinstance(model, torch.nn.parallel.DistributedDataParallel):
+                state_dict = model.module.state_dict()
+            else:
+                state_dict = model.state_dict()
+            state_dict = {k: v.half() for k, v in state_dict.items()}
+            torch.save(state_dict, ckp)
             model.train()
 
 
-def init_model(lm_config):
+def init_student_model(lm_config):
     tokenizer = AutoTokenizer.from_pretrained("../model/")
     model = MiniMindForCausalLM(lm_config)
     moe_path = "_moe" if lm_config.use_moe else ""
     ckp = f"{args.save_dir}/full_sft_{lm_config.hidden_size}{moe_path}.pth"
     state_dict = torch.load(ckp, map_location=args.device)
     model.load_state_dict(state_dict, strict=False)
-    return model.to(args.device), tokenizer
+    Logger(
+        f"studnent llm parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad) / 1e6:.3f} million"
+    )
+    model = model.to(args.device)
+
+    return model, tokenizer
+
+
+def init_teacher_model(lm_config):
+    model = MiniMindForCausalLM(lm_config)
+    moe_path = "_moe" if lm_config.use_moe else ""
+    ckp = f"{args.save_dir}/full_sft_{lm_config.hidden_size}{moe_path}.pth"
+    state_dict = torch.load(ckp, map_location=args.device)
+    model.load_state_dict(state_dict, strict=False)
+    Logger(
+        f"teacher llm parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad) / 1e6:.3f} million"
+    )
+    model = model.to(args.device)
+
+    return model
 
 
 def init_distributed_mode():
@@ -129,17 +188,17 @@ def init_distributed_mode():
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="MiniMind SFT with LoRA")
+    parser = argparse.ArgumentParser(description="MiniMind Full SFT")
     parser.add_argument("--out_dir", type=str, default="../out")
-    parser.add_argument("--epochs", type=int, default=10)
+    parser.add_argument("--epochs", type=int, default=6)
     parser.add_argument("--batch_size", type=int, default=32)
-    parser.add_argument("--learning_rate", type=float, default=1e-4)
+    parser.add_argument("--learning_rate", type=float, default=5e-6)
     parser.add_argument(
         "--device", type=str, default="cuda:0" if torch.cuda.is_available() else "cpu"
     )
     parser.add_argument("--dtype", type=str, default="bfloat16")
     parser.add_argument("--use_wandb", action="store_true")
-    parser.add_argument("--wandb_project", type=str, default="MiniMind-LoRA-SFT")
+    parser.add_argument("--wandb_project", type=str, default="MiniMind-Full-SFT")
     parser.add_argument("--num_workers", type=int, default=1)
     parser.add_argument("--ddp", action="store_true")
     parser.add_argument("--accumulation_steps", type=int, default=1)
@@ -147,32 +206,21 @@ if __name__ == "__main__":
     parser.add_argument("--warmup_iters", type=int, default=0)
     parser.add_argument("--log_interval", type=int, default=100)
     parser.add_argument("--save_interval", type=int, default=100)
+    parser.add_argument("--max_seq_len", type=int, default=512)
     parser.add_argument("--local_rank", type=int, default=-1)
-    parser.add_argument("--hidden_size", default=512, type=int)
-    parser.add_argument("--num_hidden_layers", default=8, type=int)
-    parser.add_argument("--max_seq_len", default=512, type=int)
-    parser.add_argument("--use_moe", default=False, type=bool)
-    parser.add_argument(
-        "--data_path", type=str, default="../dataset/lora_medical.jsonl"
-    )
-    parser.add_argument(
-        "--lora_name",
-        type=str,
-        default="lora_medical",
-        help="save lora",
-    )
-    args = parser.parse_args()
+    parser.add_argument("--data_path", type=str, default="../dataset/sft_xxx.jsonl")
 
-    lm_config = MiniMindConfig(
-        hidden_size=args.hidden_size,
-        num_hidden_layers=args.num_hidden_layers,
-        use_moe=args.use_moe,
-    )
+    args = parser.parse_args()
+    lm_config_student = MiniMindConfig(hidden_size=512, num_hidden_layers=8)
+    lm_config_teacher = MiniMindConfig(hidden_size=768, num_hidden_layers=16)
+
     args.save_dir = os.path.join(args.out_dir)
     os.makedirs(args.save_dir, exist_ok=True)
     os.makedirs(args.out_dir, exist_ok=True)
-    tokens_pre_iter = args.batch_size * args.max_seq_len
+    tokens_per_iter = args.batch_size * args.max_seq_len
     device_type = "cuda" if "cuda" in args.device else "cpu"
+
+    args.wandb_run_name = f"MiniMind-Dist-SFT-Epoch-{args.epochs}-BatchSize-{args.batch_size}-LearningRate-{args.learning_rate}"
 
     ctx = nullcontext() if device_type == "cpu" else torch.cuda.amp.autocast()
     ddp = int(os.environ.get("RANK", -1)) != -1
@@ -188,7 +236,6 @@ if __name__ == "__main__":
         torch.manual_seed(base_seed + rank)
         torch.cuda.manual_seed(base_seed + rank)
 
-    args.wandb_run_name = f"MiniMind-Lora-SFT-Epoch-{args.epochs}-BatchSize-{args.batch_size}-LearningRate-{args.learning_rate}"
     if args.use_wandb and (not ddp or ddp_local_rank == 0):
         import wandb
 
@@ -196,27 +243,9 @@ if __name__ == "__main__":
     else:
         wandb = None
 
-    model, tokenizer = init_model(lm_config)
-    apply_lora(model)
+    model, tokenizer = init_student_model(lm_config_student)
+    teacher_model = init_teacher_model(lm_config_teacher)
 
-    total_params = sum(p.numel() for p in model.parameters())
-    lora_params_count = sum(
-        p.numel() for name, p in model.named_parameters() if "lora" in name
-    )
-    if not ddp or dist.get_rank() == 0:
-        print(f"LLM parameters: {total_params}")
-        print(f"LoRA parameters: {lora_params_count}")
-        print(f"LoRA percent: {lora_params_count / total_params * 100:.2f}%")
-
-    for name, param in model.named_parameters():
-        if "lora" not in name:
-            param.requires_grad = False
-    lora_params = []
-    for name, param in model.named_parameters():
-        if "lora" in name:
-            lora_params.append(param)
-
-    optimizer = optim.AdamW(lora_params, lr=args.learning_rate)
     train_ds = SFTDataset(args.data_path, tokenizer, max_length=args.max_seq_len)
     train_sampler = DistributedSampler(train_ds) if ddp else None
     train_loader = DataLoader(
@@ -230,7 +259,12 @@ if __name__ == "__main__":
     )
 
     scaler = torch.cuda.amp.GradScaler(enabled=(args.dtype in ["float16", "bfloat16"]))
-    iter_per_epoch = len(train_loader)
+    optimizer = optim.AdamW(model.parameters(), lr=args.learning_rate)
 
+    if ddp:
+        model._ddp_params_and_buffers_to_ignore = {"pos_cis"}
+        model = DistributedDataParallel(model, device_ids=[ddp_local_rank])
+
+    iter_per_epoch = len(train_loader)
     for epoch in range(args.epochs):
         train_epoch(epoch, wandb)

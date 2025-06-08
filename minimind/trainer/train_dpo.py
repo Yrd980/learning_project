@@ -5,23 +5,23 @@ import sys
 __package__ = "trainer"
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+
 import argparse
 import time
 import math
 import warnings
 import torch
-from torch import device, optim, nn
+import torch.nn.functional as F
 import torch.distributed as dist
 from contextlib import nullcontext
+from torch import optim
+from torch.nn.parallel import DistributedDataParallel
 from torch.utils.data import DataLoader, DistributedSampler
-from transformers import (
-    AutoTokenizer,
-    AutoModelForCausalLM,
-    NezhaForNextSentencePrediction,
-)
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from model.model_minimind import MiniMindConfig, MiniMindForCausalLM
-from dataset.lm_dataset import SFTDataset
-from model.model_lora import load_lora, save_lora, apply_lora
+from dataset.lm_dataset import DPODataset
+
+warnings.filterwarnings("ignore")
 
 
 def Logger(content):
@@ -33,13 +33,45 @@ def get_lr(current_step, total_steps, lr):
     return lr / 10 + 0.5 * lr * (1 + math.cos(math.pi * current_step / total_steps))
 
 
+def logits_to_probs(logits, labels):
+    log_probs = F.log_softmax(logits, dim=2)
+    probs = torch.gather(log_probs, dim=2, index=labels.unsqueeze(2)).squeeze(-1)
+    return probs
+
+
+def dpo_loss(ref_probs, probs, mask, beta):
+    seq_lengths = mask.sum(dim=1, keepdim=True)
+    ref_probs = (ref_probs * mask).sum(dim=1) / seq_lengths.squeeze()
+    probs = (probs * mask).sum(dim=1) / seq_lengths.squeeze()
+
+    batch_size = ref_probs.shape[0]
+    batch_size = ref_probs[: batch_size // 2]
+    chosen_ref_probs = ref_probs[: batch_size // 2]
+    reject_ref_probs = ref_probs[batch_size // 2 :]
+    chosen_probs = probs[: batch_size // 2]
+    reject_probs = probs[batch_size // 2 :]
+
+    pi_logratios = chosen_probs - reject_probs
+    ref_logratios = chosen_ref_probs - reject_ref_probs
+    logits = pi_logratios - ref_logratios
+    loss = -F.logsigmoid(beta * logits)
+    return loss.mean()
+
+
 def train_epoch(epoch, wandb):
-    loss_fct = nn.CrossEntropyLoss(reduction="none")
     start_time = time.time()
-    for step, (X, Y, loss_mask) in enumerate(train_loader):
-        X = X.to(args.device)
-        Y = Y.to(args.device)
-        loss_mask = loss_mask.to(args.device)
+    for step, batch in enumerate(train_loader):
+        x_chosen = batch["x_chosen"].to(args.device)
+        y_chosen = batch["y_chosen"].to(args.device)
+        x_rejected = batch["x_rejected"].to(args.device)
+        y_rejected = batch["y_rejected"].to(args.device)
+        mask_chosen = batch["mask_chosen"].to(args.device)
+        mask_rejected = batch["mask_rejected"].to(args.device)
+
+        x = torch.cat([x_chosen, x_rejected], dim=0)
+        y = torch.cat([y_chosen, y_rejected], dim=0)
+        mask = torch.cat([mask_chosen, mask_rejected], dim=0)
+
         lr = get_lr(
             epoch * iter_per_epoch + step,
             args.epochs * iter_per_epoch,
@@ -49,19 +81,23 @@ def train_epoch(epoch, wandb):
             param_group["lr"] = lr
 
         with ctx:
-            res = model(X)
-            loss = loss_fct(res.logits.view(-1, res.logits.size(-1)), Y.view(-1)).view(
-                Y.size()
-            )
-            loss = (loss * loss_mask).sum() / loss_mask.sum()
-            loss += res.aux_loss
+            with torch.no_grad():
+                ref_outputs = ref_model(x)
+                ref_logits = ref_outputs.logits
+            ref_probs = logits_to_probs(ref_logits, y)
+            ref_probs *= mask
+            outputs = model(x)
+            logits = outputs.logits
+            probs = logits_to_probs(logits, y)
+            probs *= mask
+            loss = dpo_loss(ref_probs, probs, mask, beta=0.1)
             loss /= args.accumulation_steps
 
         scaler.scale(loss).backward()
 
         if (step + 1) % args.accumulation_steps == 0:
             scaler.unscale_(optimizer)
-            torch.nn.utils.clip_grad_norm_(lora_params, args.grad_clip)
+            torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
 
             scaler.step(optimizer)
             scaler.update()
@@ -97,11 +133,15 @@ def train_epoch(epoch, wandb):
             dist.get_rank() == 0,
         ):
             model.eval()
-            lora_save_path = (
-                f"{args.save_dir}/lora/{args.lora_name}_{lm_config.hidden_size}.pth"
-            )
-            os.makedirs(os.path.dirname(lora_save_path), exist_ok=True)
-            save_lora(model, lora_save_path)
+            moe_path = "_moe" if lm_config.use_moe else ""
+            ckp = f"{args.save_dir}/rlhf_{lm_config.hidden_size}{moe_path}.pth"
+
+            if isinstance(model, torch.nn.parallel.DistributedDataParallel):
+                state_dict = model.module.state_dict()
+            else:
+                state_dict = model.state_dict()
+            state_dict = {k: v.half() for k, v in state_dict.items()}
+            torch.save(state_dict, ckp)
             model.train()
 
 
@@ -112,7 +152,15 @@ def init_model(lm_config):
     ckp = f"{args.save_dir}/full_sft_{lm_config.hidden_size}{moe_path}.pth"
     state_dict = torch.load(ckp, map_location=args.device)
     model.load_state_dict(state_dict, strict=False)
-    return model.to(args.device), tokenizer
+    ref_model = MiniMindForCausalLM(lm_config)
+    ref_model.load_state_dict(state_dict,strict = False)
+    ref_model.eval()
+
+    Logger(f'LLM parameter {sum(p.numel() for p in model.parameters() if p.requires_grad) / 1e6:.3f} million')
+    model = model.to(args.device)
+    ref_model = ref_model.to(args.device)
+
+    return model, ref_model, tokenizer
 
 
 def init_distributed_mode():
@@ -129,17 +177,15 @@ def init_distributed_mode():
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="MiniMind SFT with LoRA")
+    parser = argparse.ArgumentParser(description="MiniMind RLHF")
     parser.add_argument("--out_dir", type=str, default="../out")
-    parser.add_argument("--epochs", type=int, default=10)
-    parser.add_argument("--batch_size", type=int, default=32)
-    parser.add_argument("--learning_rate", type=float, default=1e-4)
-    parser.add_argument(
-        "--device", type=str, default="cuda:0" if torch.cuda.is_available() else "cpu"
-    )
+    parser.add_argument("--epochs", type=int, default=2)
+    parser.add_argument("--batch_size", type=int, default=4)
+    parser.add_argument("--learning_rate", type=float, default=1e-8)
+    parser.add_argument("--device", type=str, default="cuda:0" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--dtype", type=str, default="bfloat16")
     parser.add_argument("--use_wandb", action="store_true")
-    parser.add_argument("--wandb_project", type=str, default="MiniMind-LoRA-SFT")
+    parser.add_argument("--wandb_project", type=str, default="MiniMind-RLHF-SFT")
     parser.add_argument("--num_workers", type=int, default=1)
     parser.add_argument("--ddp", action="store_true")
     parser.add_argument("--accumulation_steps", type=int, default=1)
@@ -147,20 +193,13 @@ if __name__ == "__main__":
     parser.add_argument("--warmup_iters", type=int, default=0)
     parser.add_argument("--log_interval", type=int, default=100)
     parser.add_argument("--save_interval", type=int, default=100)
-    parser.add_argument("--local_rank", type=int, default=-1)
-    parser.add_argument("--hidden_size", default=512, type=int)
-    parser.add_argument("--num_hidden_layers", default=8, type=int)
-    parser.add_argument("--max_seq_len", default=512, type=int)
-    parser.add_argument("--use_moe", default=False, type=bool)
-    parser.add_argument(
-        "--data_path", type=str, default="../dataset/lora_medical.jsonl"
-    )
-    parser.add_argument(
-        "--lora_name",
-        type=str,
-        default="lora_medical",
-        help="save lora",
-    )
+    parser.add_argument('--local_rank', type=int, default=-1)
+    parser.add_argument('--hidden_size', default=512, type=int)
+    parser.add_argument('--num_hidden_layers', default=8, type=int)
+    parser.add_argument('--max_seq_len', default=1024, type=int)
+    parser.add_argument('--use_moe', default=False, type=bool)
+    parser.add_argument("--data_path", type=str, default="../dataset/dpo.jsonl")
+
     args = parser.parse_args()
 
     lm_config = MiniMindConfig(
@@ -188,7 +227,6 @@ if __name__ == "__main__":
         torch.manual_seed(base_seed + rank)
         torch.cuda.manual_seed(base_seed + rank)
 
-    args.wandb_run_name = f"MiniMind-Lora-SFT-Epoch-{args.epochs}-BatchSize-{args.batch_size}-LearningRate-{args.learning_rate}"
     if args.use_wandb and (not ddp or ddp_local_rank == 0):
         import wandb
 
@@ -196,28 +234,8 @@ if __name__ == "__main__":
     else:
         wandb = None
 
-    model, tokenizer = init_model(lm_config)
-    apply_lora(model)
-
-    total_params = sum(p.numel() for p in model.parameters())
-    lora_params_count = sum(
-        p.numel() for name, p in model.named_parameters() if "lora" in name
-    )
-    if not ddp or dist.get_rank() == 0:
-        print(f"LLM parameters: {total_params}")
-        print(f"LoRA parameters: {lora_params_count}")
-        print(f"LoRA percent: {lora_params_count / total_params * 100:.2f}%")
-
-    for name, param in model.named_parameters():
-        if "lora" not in name:
-            param.requires_grad = False
-    lora_params = []
-    for name, param in model.named_parameters():
-        if "lora" in name:
-            lora_params.append(param)
-
-    optimizer = optim.AdamW(lora_params, lr=args.learning_rate)
-    train_ds = SFTDataset(args.data_path, tokenizer, max_length=args.max_seq_len)
+    model, ref_model, tokenizer = init_model(lm_config)
+    train_ds = DPODataset(args.data_path,tokenizer,max_length=args.max_seq_len)
     train_sampler = DistributedSampler(train_ds) if ddp else None
     train_loader = DataLoader(
         train_ds,
@@ -230,6 +248,11 @@ if __name__ == "__main__":
     )
 
     scaler = torch.cuda.amp.GradScaler(enabled=(args.dtype in ["float16", "bfloat16"]))
+    optimizer = optim.AdamW(model.parameters(),lr=args.learning_rate)
+    if ddp:
+        model._ddp_params_and_buffers_to_ignore = {"pos_cis"}
+        model = DistributedDataParallel(model,device_ids=[ddp_local_rank])
+
     iter_per_epoch = len(train_loader)
 
     for epoch in range(args.epochs):

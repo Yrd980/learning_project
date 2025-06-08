@@ -1,7 +1,6 @@
 import os
 import sys
 
-
 __package__ = "trainer"
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -10,18 +9,16 @@ import time
 import math
 import warnings
 import torch
-from torch import device, optim, nn
 import torch.distributed as dist
 from contextlib import nullcontext
+from torch import optim, nn
+from torch.nn.parallel import DistributedDataParallel
 from torch.utils.data import DataLoader, DistributedSampler
-from transformers import (
-    AutoTokenizer,
-    AutoModelForCausalLM,
-    NezhaForNextSentencePrediction,
-)
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from model.model_minimind import MiniMindConfig, MiniMindForCausalLM
 from dataset.lm_dataset import SFTDataset
-from model.model_lora import load_lora, save_lora, apply_lora
+
+warnings.filterwarnings("ignore")
 
 
 def Logger(content):
@@ -53,15 +50,16 @@ def train_epoch(epoch, wandb):
             loss = loss_fct(res.logits.view(-1, res.logits.size(-1)), Y.view(-1)).view(
                 Y.size()
             )
+
             loss = (loss * loss_mask).sum() / loss_mask.sum()
             loss += res.aux_loss
-            loss /= args.accumulation_steps
+            loss = loss / args.accumulation_steps
 
         scaler.scale(loss).backward()
 
         if (step + 1) % args.accumulation_steps == 0:
             scaler.unscale_(optimizer)
-            torch.nn.utils.clip_grad_norm_(lora_params, args.grad_clip)
+            torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
 
             scaler.step(optimizer)
             scaler.update()
@@ -92,27 +90,32 @@ def train_epoch(epoch, wandb):
                     }
                 )
 
-        if (step + 1) % args.save_interval == 0 and (
-            not ddp or dist,
-            dist.get_rank() == 0,
-        ):
+        if (step + 1) % args.save_interval == 0 and (not ddp or dist.get_rank() == 0):
             model.eval()
-            lora_save_path = (
-                f"{args.save_dir}/lora/{args.lora_name}_{lm_config.hidden_size}.pth"
-            )
-            os.makedirs(os.path.dirname(lora_save_path), exist_ok=True)
-            save_lora(model, lora_save_path)
+            moe_path = "_moe" if lm_config.use_moe else ""
+            ckp = f"{args.save_dir}/full_sft_{lm_config.hidden_size}{moe_path}.pth"
+            if isinstance(model, torch.nn.parallel.DistributedDataParallel):
+                state_dict = model.module.state_dict()
+            else:
+                state_dict = model.state_dict()
+            state_dict = {k: v.half() for k, v in state_dict.items()}  # 半精度保存
+            torch.save(state_dict, ckp)
             model.train()
 
 
 def init_model(lm_config):
-    tokenizer = AutoTokenizer.from_pretrained("../model/")
+    tokenizer = AutoTokenizer.from_pretrained("../model")
     model = MiniMindForCausalLM(lm_config)
     moe_path = "_moe" if lm_config.use_moe else ""
-    ckp = f"{args.save_dir}/full_sft_{lm_config.hidden_size}{moe_path}.pth"
+    ckp = f"{args.save_dir}/pretrain_{lm_config.hidden_size}{moe_path}.pth"
     state_dict = torch.load(ckp, map_location=args.device)
     model.load_state_dict(state_dict, strict=False)
-    return model.to(args.device), tokenizer
+
+    Logger(
+        f"LLM可训练总参数量：{sum(p.numel() for p in model.parameters() if p.requires_grad) / 1e6:.3f} 百万"
+    )
+    model = model.to(args.device)
+    return model, tokenizer
 
 
 def init_distributed_mode():
@@ -129,17 +132,17 @@ def init_distributed_mode():
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="MiniMind SFT with LoRA")
+    parser = argparse.ArgumentParser(description="MiniMind Full SFT")
     parser.add_argument("--out_dir", type=str, default="../out")
-    parser.add_argument("--epochs", type=int, default=10)
-    parser.add_argument("--batch_size", type=int, default=32)
-    parser.add_argument("--learning_rate", type=float, default=1e-4)
+    parser.add_argument("--epochs", type=int, default=2)
+    parser.add_argument("--batch_size", type=int, default=16)
+    parser.add_argument("--learning_rate", type=float, default=5e-7)
     parser.add_argument(
         "--device", type=str, default="cuda:0" if torch.cuda.is_available() else "cpu"
     )
     parser.add_argument("--dtype", type=str, default="bfloat16")
     parser.add_argument("--use_wandb", action="store_true")
-    parser.add_argument("--wandb_project", type=str, default="MiniMind-LoRA-SFT")
+    parser.add_argument("--wandb_project", type=str, default="MiniMind-Full-SFT")
     parser.add_argument("--num_workers", type=int, default=1)
     parser.add_argument("--ddp", action="store_true")
     parser.add_argument("--accumulation_steps", type=int, default=1)
@@ -153,14 +156,9 @@ if __name__ == "__main__":
     parser.add_argument("--max_seq_len", default=512, type=int)
     parser.add_argument("--use_moe", default=False, type=bool)
     parser.add_argument(
-        "--data_path", type=str, default="../dataset/lora_medical.jsonl"
+        "--data_path", type=str, default="../dataset/sft_mini_512.jsonl"
     )
-    parser.add_argument(
-        "--lora_name",
-        type=str,
-        default="lora_medical",
-        help="save lora",
-    )
+
     args = parser.parse_args()
 
     lm_config = MiniMindConfig(
@@ -171,11 +169,13 @@ if __name__ == "__main__":
     args.save_dir = os.path.join(args.out_dir)
     os.makedirs(args.save_dir, exist_ok=True)
     os.makedirs(args.out_dir, exist_ok=True)
-    tokens_pre_iter = args.batch_size * args.max_seq_len
+    tokens_per_iter = args.batch_size * args.max_seq_len
     device_type = "cuda" if "cuda" in args.device else "cpu"
 
+    args.wandb_run_name = f"MiniMind-Full-SFT-Epoch-{args.epochs}-BatchSize-{args.batch_size}-LearningRate-{args.learning_rate}"
+
     ctx = nullcontext() if device_type == "cpu" else torch.cuda.amp.autocast()
-    ddp = int(os.environ.get("RANK", -1)) != -1
+    ddp = int(os.environ.get("RANK", -1)) != -1  # is this a ddp run?
     ddp_local_rank, DEVICE = 0, "cuda:0"
     base_seed = 1337
     torch.manual_seed(base_seed)
@@ -186,9 +186,9 @@ if __name__ == "__main__":
         args.device = torch.device(DEVICE)
         rank = dist.get_rank()
         torch.manual_seed(base_seed + rank)
+        # 同时设置 CUDA 的随机种子
         torch.cuda.manual_seed(base_seed + rank)
 
-    args.wandb_run_name = f"MiniMind-Lora-SFT-Epoch-{args.epochs}-BatchSize-{args.batch_size}-LearningRate-{args.learning_rate}"
     if args.use_wandb and (not ddp or ddp_local_rank == 0):
         import wandb
 
@@ -197,26 +197,7 @@ if __name__ == "__main__":
         wandb = None
 
     model, tokenizer = init_model(lm_config)
-    apply_lora(model)
 
-    total_params = sum(p.numel() for p in model.parameters())
-    lora_params_count = sum(
-        p.numel() for name, p in model.named_parameters() if "lora" in name
-    )
-    if not ddp or dist.get_rank() == 0:
-        print(f"LLM parameters: {total_params}")
-        print(f"LoRA parameters: {lora_params_count}")
-        print(f"LoRA percent: {lora_params_count / total_params * 100:.2f}%")
-
-    for name, param in model.named_parameters():
-        if "lora" not in name:
-            param.requires_grad = False
-    lora_params = []
-    for name, param in model.named_parameters():
-        if "lora" in name:
-            lora_params.append(param)
-
-    optimizer = optim.AdamW(lora_params, lr=args.learning_rate)
     train_ds = SFTDataset(args.data_path, tokenizer, max_length=args.max_seq_len)
     train_sampler = DistributedSampler(train_ds) if ddp else None
     train_loader = DataLoader(
@@ -230,7 +211,12 @@ if __name__ == "__main__":
     )
 
     scaler = torch.cuda.amp.GradScaler(enabled=(args.dtype in ["float16", "bfloat16"]))
-    iter_per_epoch = len(train_loader)
+    optimizer = optim.AdamW(model.parameters(), lr=args.learning_rate)
 
+    if ddp:
+        model._ddp_params_and_buffers_to_ignore = {"pos_cis"}
+        model = DistributedDataParallel(model, device_ids=[ddp_local_rank])
+
+    iter_per_epoch = len(train_loader)
     for epoch in range(args.epochs):
         train_epoch(epoch, wandb)
