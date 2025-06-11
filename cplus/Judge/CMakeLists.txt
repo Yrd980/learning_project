@@ -27,31 +27,31 @@ find_package(QCoro6 REQUIRED COMPONENTS Core Network)
 
 set(PROJECT_SOURCES
         util/file.cpp
-        # util/script.cpp
-        # web/crawl.cpp
-        # web/parse.cpp
-        # web/aiClient.cpp
-        # res/resource.qrc
-        # ide/language.cpp
-        # ide/project.cpp
-        # ide/cmd.cpp
-        # ide/ide.cpp
-        # ide/highlighter.cpp
-        # ide/lsp.cpp
-        # ide/aiChat.cpp
-        # widgets/setting.cpp
-        # widgets/icon.cpp
-        # widgets/footer.cpp
-        # widgets/iconNav.cpp
-        # widgets/preview.cpp
-        # widgets/code.cpp
-        # widgets/fileTree.cpp
-        # widgets/terminal.cpp
-        # widgets/menu.cpp
-        # widgets/window.cpp
-        # widgets/ojPersonal.cpp
-        # widgets/aiAssistant.cpp
-        # main.cpp
+        util/script.cpp
+        web/crawl.cpp
+        web/parse.cpp
+        web/aiClient.cpp
+        res/resource.qrc
+        ide/language.cpp
+        ide/project.cpp
+        ide/cmd.cpp
+        ide/ide.cpp
+        ide/highlighter.cpp
+        ide/lsp.cpp
+        ide/aiChat.cpp
+        widgets/setting.cpp
+        widgets/icon.cpp
+        widgets/footer.cpp
+        widgets/iconNav.cpp
+        widgets/preview.cpp
+        widgets/code.cpp
+        widgets/fileTree.cpp
+        widgets/terminal.cpp
+        widgets/menu.cpp
+        widgets/window.cpp
+        widgets/ojPersonal.cpp
+        widgets/aiAssistant.cpp
+        main.cpp
 )
 qt_add_executable(Judge
         MANUAL_FINALIZATION
