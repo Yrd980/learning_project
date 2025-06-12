@@ -12,8 +12,8 @@ from sklearn.ensemble import RandomForestClassifier, StackingClassifier
 from sklearn.linear_model import LogisticRegression
 from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import TomekLinks
-from typing import Tuple, List, Dict, Callable
-from util.plot import plot_single_model
+from typing import Tuple, List
+from util.plot import plot_model
 
 
 def preprocess(file_path: str) -> Tuple[pd.DataFrame, pd.Series]:
@@ -123,30 +123,7 @@ def get_search_space(trial: optuna.Trial, model_name: str):
         raise ValueError(f"No tuning space defined for model: {model_name}")
 
 
-def optimize_model(model_name: str, X, y, n_trials: int = 30):
-
-    if model_name in ["Naive Bayes", "Stacking"]:
-        print(f"[INFO] {model_name} has no tuning space. Using default parameters.")
-        model = get_models()[model_name]
-        score = cross_val_score(model, X, y, scoring="f1", cv=3).mean()
-        return model, {}, score
-
-    def objective(trial):
-        model = get_search_space(trial, model_name)
-        score = cross_val_score(model, X, y, scoring="f1", cv=3).mean()
-        return score
-
-    study = optuna.create_study(direction="maximize")
-    study.optimize(objective, n_trials=n_trials)
-
-    best_params = study.best_params
-    best_score = study.best_value
-    best_model = get_search_space(study.best_trial, model_name)
-
-    return best_model, best_params, best_score
-
-
-def get_models() -> Dict[str, Callable]:
+def get_models():
     base_learners = [
         (
             "rf",
@@ -174,6 +151,29 @@ def get_models() -> Dict[str, Callable]:
     }
 
 
+def optimize_model(model_name: str, X, y, n_trials: int = 30):
+
+    if model_name in ["Naive Bayes", "Stacking"]:
+        print(f"[INFO] {model_name} has no tuning space. Using default parameters.")
+        model = get_models()[model_name]
+        score = cross_val_score(model, X, y, scoring="f1", cv=3).mean()
+        return model, {}, score
+
+    def objective(trial):
+        model = get_search_space(trial, model_name)
+        score = cross_val_score(model, X, y, scoring="f1", cv=3).mean()
+        return score
+
+    study = optuna.create_study(direction="maximize")
+    study.optimize(objective, n_trials=n_trials)
+
+    best_params = study.best_params
+    best_score = study.best_value
+    best_model = get_search_space(study.best_trial, model_name)
+
+    return best_model, best_params, best_score
+
+
 def main(file_path: str):
     X_raw, y_raw = preprocess(file_path)
     X_pca, y_processed = apply_resampling_and_pca(X_raw, y_raw)
@@ -181,12 +181,21 @@ def main(file_path: str):
     models = get_models()
 
     for name, model in models.items():
-        acc, prec, rec, f1 = evaluate_model(name, model, X_pca, y_processed)
-        best_model, best_params, best_score = optimize_model(name, X_pca, y_processed)
+        try:
+            print(f"Training {name}...")
+            acc, prec, rec, f1 = evaluate_model(name, model, X_pca, y_processed)
 
-        print(f"{name} best params:", best_params)
-        print(f"{name} best score:", best_score)
-        plot_single_model(name, acc, prec, rec, f1)
+            # Skip hyperparameter tuning if no search space defined
+            try:
+                _, best_params, best_score = optimize_model(name, X_pca, y_processed)
+                print(f"{name} best params:", best_params)
+                print(f"{name} best score:", best_score)
+            except ValueError as e:
+                print(f"Skipping tuning for {name}: {e}")
+
+            plot_model(name, acc, prec, rec, f1)
+        except Exception as e:
+            print(f"[ERROR] Model {name} failed: {e}")
 
 
 if __name__ == "__main__":

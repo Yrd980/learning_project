@@ -6,7 +6,7 @@ import os
 os.makedirs("results", exist_ok=True)
 
 
-def plot_single_model(model_name, accuracy, precision, recall, f1):
+def plot_model(model_name, accuracy, precision, recall, f1):
     """Plot metrics (Accuracy, Precision, Recall, F1) for a single model."""
     metrics = [accuracy, precision, recall, f1]
     metric_names = ["Accuracy", "Precision", "Recall", "F1"]
@@ -31,45 +31,3 @@ def plot_single_model(model_name, accuracy, precision, recall, f1):
     plt.savefig(save_path, dpi=300)
     plt.show()
 
-
-def plot_multi_model(
-    models, model_labels, colors, accuracy_data, precision_data, recall_data, f1_data
-):
-    """Plot all metrics for multiple models in a 2x2 grid."""
-    metrics_data = [accuracy_data, precision_data, recall_data, f1_data]
-    metric_names = ["Accuracy", "Precision", "Recall", "F1"]
-
-    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(12, 8))
-    axes = axes.flatten()
-    x = range(1, len(accuracy_data[0]) + 1)
-
-    img_name_parts = []
-
-    for model_idx in models:
-        label = model_labels[model_idx]
-        color = colors[model_idx]
-        img_name_parts.append(label)
-
-        for ax, metric, name in zip(axes, metrics_data, metric_names):
-            ax.plot(x, metric[model_idx], label=label, color=color)
-            ax.set_title(name)
-            ax.set_xlabel("Epoch")
-            ax.set_ylabel(name)
-
-    # Add legend to the last subplot
-    axes[-1].legend(
-        loc="upper center",
-        bbox_to_anchor=(-0.1, -0.2),
-        ncol=len(models),
-        shadow=True,
-        fancybox=True,
-    )
-
-    timestamp = datetime.now().strftime("%m-%d-%H-%M")
-    img_name = "-".join(img_name_parts) + f"_{timestamp}.png"
-    save_path = f"results/{img_name}"
-
-    print(f"Plot saved to: {save_path}")
-    plt.tight_layout()
-    plt.savefig(save_path, dpi=300)
-    plt.show()

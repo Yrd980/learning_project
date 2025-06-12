@@ -8,7 +8,7 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-from util.plot import plot_single_model
+from util.plot import plot_model
 
 
 class LMConfig(nn.Module):
@@ -102,7 +102,6 @@ def nural_networks(file_path):
             recall_p = torch.mean(torch.tensor(recall_s))
             f1_p = torch.mean(torch.tensor(f1_s))
 
-            # 去掉第一组数据
             if epoch != 0:
                 accuracy_list.append(accuracy_p)
                 precision_list.append(precision_p)
@@ -129,10 +128,9 @@ def ret_calculate(target, prediction):
 if __name__ == "__main__":
     filePath = "data/KC2.csv"
     accuracy_list, precision_list, recall_list, f1_list = nural_networks(filePath)
-    plot_single_model(
+    plot_model(
         "Neural Networks", accuracy_list, precision_list, recall_list, f1_list
     )
-    # 打印模型性能指标
     print("Accuracy:", accuracy_list)
     print("Precision:", precision_list)
     print("Recall:", recall_list)
