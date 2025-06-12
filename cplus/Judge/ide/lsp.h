@@ -155,11 +155,11 @@ public:
                                                const LSPPosition &position) const;
 };
 
-class ClangLanguageServer : public LanguageServer {
-    static ClangLanguageServer *instance;
+class ClangdLanguageServer : public LanguageServer {
+    static ClangdLanguageServer *instance;
 
 public:
-    static QCoro::Task<ClangLanguageServer *> getServer();
+    static QCoro::Task<ClangdLanguageServer *> getServer();
     QCoro::Task<> start() override;
 };
 
