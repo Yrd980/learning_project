@@ -198,5 +198,19 @@ def main(file_path: str):
             print(f"[ERROR] Model {name} failed: {e}")
 
 
+def model_view(file_path, model_name):
+    X_raw, y_raw = preprocess(file_path)
+    X_pca, y_processed = apply_resampling_and_pca(X_raw, y_raw)
+
+    model = get_models()[model_name]
+    acc, prec, rec, f1 = evaluate_model(model_name, model, X_pca, y_processed)
+    print(f"Training {model_name}...")
+    _, best_params, best_score = optimize_model(model_name, X_pca, y_processed)
+    print(f"{model_name} best params:", best_params)
+    print(f"{model_name} best score:", best_score)
+
+    plot_model(model_name, acc, prec, rec, f1)
+
+
 if __name__ == "__main__":
     main("data/KC2.csv")

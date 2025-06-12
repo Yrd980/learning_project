@@ -30,4 +30,3 @@ def plot_model(model_name, accuracy, precision, recall, f1):
     plt.tight_layout(rect=[0, 0.03, 1, 0.97])
     plt.savefig(save_path, dpi=300)
     plt.show()
-
