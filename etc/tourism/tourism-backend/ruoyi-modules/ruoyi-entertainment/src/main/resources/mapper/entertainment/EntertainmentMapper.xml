@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.entertainment.mapper.EntertainmentMapper">
+    
+    <resultMap type="Entertainment" id="EntertainmentResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="openingTime"    column="opening_time"    />
+        <result property="address"    column="address"    />
+        <result property="closingTime"    column="closing_time"    />
+        <result property="picUrl"    column="pic_url"    />
+        <result property="score"    column="score"    />
+    </resultMap>
+
+    <sql id="selectEntertainmentVo">
+        select id, name, opening_time, address, closing_time, pic_url, score from entertainment
+    </sql>
+
+    <select id="selectEntertainmentList" parameterType="Entertainment" resultMap="EntertainmentResult">
+        <include refid="selectEntertainmentVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="address != null  and address != ''"> and address like concat('%', #{address}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectEntertainmentById" parameterType="Long" resultMap="EntertainmentResult">
+        <include refid="selectEntertainmentVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEntertainment" parameterType="Entertainment" useGeneratedKeys="true" keyProperty="id">
+        insert into entertainment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="openingTime != null">opening_time,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="closingTime != null">closing_time,</if>
+            <if test="picUrl != null">pic_url,</if>
+            <if test="score != null">score,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="openingTime != null">#{openingTime},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="closingTime != null">#{closingTime},</if>
+            <if test="picUrl != null">#{picUrl},</if>
+            <if test="score != null">#{score},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEntertainment" parameterType="Entertainment">
+        update entertainment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="openingTime != null">opening_time = #{openingTime},</if>
+            <if test="address != null and address != ''">address = #{address},</if>
+            <if test="closingTime != null">closing_time = #{closingTime},</if>
+            <if test="picUrl != null">pic_url = #{picUrl},</if>
+            <if test="score != null">score = #{score},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEntertainmentById" parameterType="Long">
+        delete from entertainment where id = #{id}
+    </delete>
+
+    <delete id="deleteEntertainmentByIds" parameterType="String">
+        delete from entertainment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

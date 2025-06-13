@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.entertainment.mapper.DiningentertainmentMapper">
+    
+    <resultMap type="Diningentertainment" id="DiningentertainmentResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="name"    column="name"    />
+        <result property="openingTime"    column="opening_time"    />
+        <result property="address"    column="address"    />
+        <result property="closingTime"    column="closing_time"    />
+        <result property="picUrl"    column="pic_url"    />
+    </resultMap>
+
+    <sql id="selectDiningentertainmentVo">
+        select id, type, name, opening_time, address, closing_time, pic_url from diningentertainment
+    </sql>
+
+    <select id="selectDiningentertainmentList" parameterType="Diningentertainment" resultMap="DiningentertainmentResult">
+        <include refid="selectDiningentertainmentVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type like concat('%', #{type}, '%')</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="address != null  and address != ''"> and address like concat('%', #{address}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectDiningentertainmentById" parameterType="Long" resultMap="DiningentertainmentResult">
+        <include refid="selectDiningentertainmentVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDiningentertainment" parameterType="Diningentertainment" useGeneratedKeys="true" keyProperty="id">
+        insert into diningentertainment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null and type != ''">type,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="openingTime != null">opening_time,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="closingTime != null">closing_time,</if>
+            <if test="picUrl != null">pic_url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="openingTime != null">#{openingTime},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="closingTime != null">#{closingTime},</if>
+            <if test="picUrl != null">#{picUrl},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDiningentertainment" parameterType="Diningentertainment">
+        update diningentertainment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="openingTime != null">opening_time = #{openingTime},</if>
+            <if test="address != null and address != ''">address = #{address},</if>
+            <if test="closingTime != null">closing_time = #{closingTime},</if>
+            <if test="picUrl != null">pic_url = #{picUrl},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDiningentertainmentById" parameterType="Long">
+        delete from diningentertainment where id = #{id}
+    </delete>
+
+    <delete id="deleteDiningentertainmentByIds" parameterType="String">
+        delete from diningentertainment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

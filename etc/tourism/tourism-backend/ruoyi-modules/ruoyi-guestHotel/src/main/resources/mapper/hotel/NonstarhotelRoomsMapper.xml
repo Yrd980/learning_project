@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.guestHotel.mapper.NonstarhotelRoomsMapper">
+
+    <resultMap type="NonstarhotelRooms" id="NonstarhotelRoomsResult">
+        <result property="id"    column="id"    />
+        <result property="hotel_id"    column="hotel_id"    />
+        <result property="name"    column="name"    />
+        <result property="price"    column="price"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="sales"    column="sales"    />
+        <result property="imageUrl" column="imageUrl"/>
+    </resultMap>
+
+    <sql id="selectNonstarhotelRoomsVo">
+        select id, hotel_id, name, price, quantity, sales, imageUrl from nonstarroomtypes
+    </sql>
+
+    <select id="selectNonstarhotelRoomsList" parameterType="Long" resultMap="NonstarhotelRoomsResult">
+        <include refid="selectNonstarhotelRoomsVo"/>
+        where hotel_id = #{id}
+    </select>
+
+    <select id="selectNonstarhotelRoomsById" parameterType="Long" resultMap="NonstarhotelRoomsResult">
+        <include refid="selectNonstarhotelRoomsVo"/>
+        where id = #{id}
+    </select>
+
+</mapper>

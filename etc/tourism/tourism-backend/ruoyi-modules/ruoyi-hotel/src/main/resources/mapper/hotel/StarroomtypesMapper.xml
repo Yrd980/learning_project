@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hotel.mapper.StarroomtypesMapper">
+    
+    <resultMap type="Starroomtypes" id="StarroomtypesResult">
+        <result property="id"    column="id"    />
+        <result property="hotelId"    column="hotel_id"    />
+        <result property="name"    column="name"    />
+        <result property="price"    column="price"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="sales"    column="sales"    />
+        <result property="imageUrl"    column="imageUrl"    />
+        <result property="ownerId"    column="owner_id"    />
+    </resultMap>
+
+    <sql id="selectStarroomtypesVo">
+        select id, hotel_id, name, price, quantity, sales, imageUrl, owner_id from starroomtypes
+    </sql>
+
+    <select id="selectStarroomtypesList" parameterType="Starroomtypes" resultMap="StarroomtypesResult">
+        <include refid="selectStarroomtypesVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectStarroomtypesById" parameterType="Long" resultMap="StarroomtypesResult">
+        <include refid="selectStarroomtypesVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertStarroomtypes" parameterType="Starroomtypes" useGeneratedKeys="true" keyProperty="id">
+        insert into starroomtypes
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="hotelId != null">hotel_id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="price != null">price,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="sales != null">sales,</if>
+            <if test="imageUrl != null and imageUrl != ''">imageUrl,</if>
+            <if test="ownerId != null">owner_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="hotelId != null">#{hotelId},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="price != null">#{price},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="sales != null">#{sales},</if>
+            <if test="imageUrl != null and imageUrl != ''">#{imageUrl},</if>
+            <if test="ownerId != null">#{ownerId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStarroomtypes" parameterType="Starroomtypes">
+        update starroomtypes
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="hotelId != null">hotel_id = #{hotelId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="sales != null">sales = #{sales},</if>
+            <if test="imageUrl != null and imageUrl != ''">imageUrl = #{imageUrl},</if>
+            <if test="ownerId != null">owner_id = #{ownerId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStarroomtypesById" parameterType="Long">
+        delete from starroomtypes where id = #{id}
+    </delete>
+
+    <delete id="deleteStarroomtypesByIds" parameterType="String">
+        delete from starroomtypes where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

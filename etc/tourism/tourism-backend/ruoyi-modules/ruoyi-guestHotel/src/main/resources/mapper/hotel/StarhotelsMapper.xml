@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.guestHotel.mapper.StarhotelsMapper">
+    
+    <resultMap type="Starhotels" id="StarhotelsResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="starLevel"    column="star_level"    />
+        <result property="minPrice"    column="min_price"    />
+        <result property="totalQuantity"    column="total_quantity"    />
+        <result property="address"    column="address"    />
+        <result property="imageUrl"    column="image_url"    />
+    </resultMap>
+
+    <sql id="selectStarhotelsVo">
+        select id, name, star_level, min_price, total_quantity, address, image_url from starhotels
+    </sql>
+
+    <select id="selectStarhotelsList" parameterType="Starhotels" resultMap="StarhotelsResult">
+        <include refid="selectStarhotelsVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="starLevel != null "> and star_level &gt;= #{starLevel}</if>
+            <if test="minPrice != null "> and min_price &gt;= #{minPrice}</if>
+            <if test="address != null  and address != ''"> and address like concat('%', #{address}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectStarhotelsById" parameterType="Long" resultMap="StarhotelsResult">
+        <include refid="selectStarhotelsVo"/>
+        where id = #{id}
+    </select>
+
+</mapper>

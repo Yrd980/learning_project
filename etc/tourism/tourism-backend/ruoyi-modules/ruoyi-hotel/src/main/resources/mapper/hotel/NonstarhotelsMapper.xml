@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.hotel.mapper.NonstarhotelsMapper">
+    
+    <resultMap type="Nonstarhotels" id="NonstarhotelsResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="minPrice"    column="min_price"    />
+        <result property="totalQuantity"    column="total_quantity"    />
+        <result property="address"    column="address"    />
+        <result property="imageUrl"    column="image_url"    />
+        <result property="ownerId"    column="owner_id"    />
+    </resultMap>
+
+    <sql id="selectNonstarhotelsVo">
+        select id, name, min_price, total_quantity, address, image_url, owner_id from nonstarhotels
+    </sql>
+
+    <select id="selectNonstarhotelsList" parameterType="Nonstarhotels" resultMap="NonstarhotelsResult">
+        <include refid="selectNonstarhotelsVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectNonstarhotelsById" parameterType="Long" resultMap="NonstarhotelsResult">
+        <include refid="selectNonstarhotelsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertNonstarhotels" parameterType="Nonstarhotels" useGeneratedKeys="true" keyProperty="id">
+        insert into nonstarhotels
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="minPrice != null">min_price,</if>
+            <if test="totalQuantity != null">total_quantity,</if>
+            <if test="address != null and address != ''">address,</if>
+            <if test="imageUrl != null">image_url,</if>
+            <if test="ownerId != null">owner_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="minPrice != null">#{minPrice},</if>
+            <if test="totalQuantity != null">#{totalQuantity},</if>
+            <if test="address != null and address != ''">#{address},</if>
+            <if test="imageUrl != null">#{imageUrl},</if>
+            <if test="ownerId != null">#{ownerId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateNonstarhotels" parameterType="Nonstarhotels">
+        update nonstarhotels
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="minPrice != null">min_price = #{minPrice},</if>
+            <if test="totalQuantity != null">total_quantity = #{totalQuantity},</if>
+            <if test="address != null and address != ''">address = #{address},</if>
+            <if test="imageUrl != null">image_url = #{imageUrl},</if>
+            <if test="ownerId != null">owner_id = #{ownerId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteNonstarhotelsById" parameterType="Long">
+        delete from nonstarhotels where id = #{id}
+    </delete>
+
+    <delete id="deleteNonstarhotelsByIds" parameterType="String">
+        delete from nonstarhotels where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

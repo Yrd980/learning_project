@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.entertainment.mapper.ReviewsMapper">
+    
+    <resultMap type="Reviews" id="ReviewsResult">
+        <result property="id"    column="id"    />
+        <result property="diningEntertainmentId"    column="dining_entertainment_id"    />
+        <result property="content"    column="content"    />
+        <result property="guestName"    column="guest_name"    />
+        <result property="rating"    column="rating"    />
+    </resultMap>
+
+    <sql id="selectReviewsVo">
+        select id, dining_entertainment_id, content, guest_name, rating from reviews
+    </sql>
+
+    <select id="selectReviewsList" parameterType="Reviews" resultMap="ReviewsResult">
+        <include refid="selectReviewsVo"/>
+        <where>  
+            <if test="diningEntertainmentId != null "> and dining_entertainment_id = #{diningEntertainmentId}</if>
+            <if test="content != null  and content != ''"> and content like concat('%', #{content}, '%')</if>
+            <if test="guestName != null "> and guest_name like concat('%', #{guestName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectReviewsById" parameterType="Long" resultMap="ReviewsResult">
+        <include refid="selectReviewsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertReviews" parameterType="Reviews" useGeneratedKeys="true" keyProperty="id">
+        insert into reviews
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="diningEntertainmentId != null">dining_entertainment_id,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="guestName != null">guest_name,</if>
+            <if test="rating != null">rating,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="diningEntertainmentId != null">#{diningEntertainmentId},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="guestName != null">#{guestName},</if>
+            <if test="rating != null">#{rating},</if>
+         </trim>
+    </insert>
+
+    <update id="updateReviews" parameterType="Reviews">
+        update reviews
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="diningEntertainmentId != null">dining_entertainment_id = #{diningEntertainmentId},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="guestName != null">guest_name = #{guestName},</if>
+            <if test="rating != null">rating = #{rating},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteReviewsById" parameterType="Long">
+        delete from reviews where id = #{id}
+    </delete>
+
+    <delete id="deleteReviewsByIds" parameterType="String">
+        delete from reviews where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
