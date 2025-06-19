@@ -49,5 +49,3 @@ function copy_structure_with_assets
 
     echo "✅ Structure copied. Assets preserved, other files empty, .git skipped."
 end
-
-copy_structure_with_assets $argv
