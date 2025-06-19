@@ -1,0 +1,1087 @@
+# zh-CN.i18n.yaml
+# 主要的翻译文件，如果有特殊描述，请使用 '# 注释'
+common:
+  appName: Love Iwara
+  ok: 确定
+  cancel: 取消
+  save: 保存
+  delete: 删除
+  loading: 加载中...
+  scrollToTop: 滚动到顶部
+  # 隐私内容，不与展示
+  privacyHint: 隐私内容，不与展示
+  latest: 最新
+  likesCount: 点赞数
+  viewsCount: 观看次数
+  popular: 受欢迎的
+  trending: 趋势
+  commentList: 评论列表
+  sendComment: 发表评论
+  send: 发表
+  retry: 重试
+  premium: 高级会员
+  follower: 粉丝
+  friend: 朋友
+  video: 视频
+  following: 关注
+  expand: 展开
+  collapse: 收起
+  cancelFriendRequest: 取消申请
+  cancelSpecialFollow: 取消特别关注
+  addFriend: 添加朋友
+  removeFriend: 解除朋友
+  followed: 已关注
+  follow: 关注
+  unfollow: 取消关注
+  specialFollow: 特别关注
+  specialFollowed: 已特别关注
+  gallery: 图库
+  playlist: 播放列表
+  commentPostedSuccessfully: 评论发表成功
+  commentPostedFailed: 评论发表失败
+  success: 成功
+  commentDeletedSuccessfully: 评论已删除
+  commentUpdatedSuccessfully: 评论已更新
+  totalComments: '评论 ${count} 条'
+  writeYourCommentHere: 在此输入评论...
+  tmpNoReplies: 暂无回复
+  loadMore: 加载更多
+  noMoreDatas: 没有更多数据了
+  selectTranslationLanguage: 选择翻译语言
+  translate: 翻译
+  translateFailedPleaseTryAgainLater: 翻译失败，请稍后重试
+  translationResult: 翻译结果
+  justNow: 刚刚
+  minutesAgo: '${num}分钟前'
+  hoursAgo: '${num}小时前'
+  daysAgo: '${num}天前'
+  editedAt: '${num}编辑'
+  editComment: 编辑评论
+  commentUpdated: 评论已更新
+  replyComment: 回复评论
+  reply: 回复
+  edit: 编辑
+  unknownUser: 未知用户
+  me: 我
+  author: 作者
+  admin: 管理员
+  viewReplies: '查看回复 (${num})'
+  hideReplies: 隐藏回复
+  confirmDelete: 确认删除
+  areYouSureYouWantToDeleteThisItem: 确定要删除这条记录吗？
+  tmpNoComments: 暂无评论
+  refresh: 刷新
+  back: 返回
+  tips: 提示
+  linkIsEmpty: 链接地址为空
+  linkCopiedToClipboard: 链接地址已复制到剪贴板
+  imageCopiedToClipboard: 图片已复制到剪贴板
+  copyImageFailed: 复制图片失败
+  mobileSaveImageIsUnderDevelopment: 移动端的保存图片功能还在开发中
+  imageSavedTo: 图片已保存到
+  saveImageFailed: 保存图片失败
+  close: 关闭
+  more: 更多
+  moreFeaturesToBeDeveloped: 更多功能待开发
+  all: 全部
+  selectedRecords: '已选择 ${num} 条记录'
+  cancelSelectAll: 取消全选
+  selectAll: 全选
+  exitEditMode: 退出编辑模式
+  areYouSureYouWantToDeleteSelectedItems: '确定要删除选中的 ${num} 条记录吗？'
+  searchHistoryRecords: 搜索历史记录...
+  settings: 设置
+  subscriptions: 订阅
+  videoCount: '${num} 个视频'
+  share: 分享
+  areYouSureYouWantToShareThisPlaylist: 要分享这个播放列表吗?
+  editTitle: 编辑标题
+  editMode: 编辑模式
+  pleaseEnterNewTitle: 请输入新标题
+  createPlayList: 创建播放列表
+  create: 创建
+  checkNetworkSettings: 检查网络设置
+  general: 大众的
+  r18: R18
+  sensitive: 敏感
+  year: 年份
+  month: 月份
+  tag: 标签
+  private: 私密
+  noTitle: 无标题
+  search: 搜索
+  noContent: 没有内容哦
+  recording: 记录中
+  paused: 已暂停
+  clear: 清除
+  user: 用户
+  post: 投稿
+  seconds: 秒
+  comingSoon: 敬请期待
+  confirm: 确认
+  hour: 时
+  minute: 分
+  clickToRefresh: 点击刷新
+  history: 历史记录
+  favorites: 最爱
+  friends: 好友
+  playList: 播放列表
+  checkLicense: 查看许可
+  logout: 退出登录
+  fensi: 粉丝
+  accept: 接受
+  reject: 拒绝
+  clearAllHistory: 清空所有历史记录
+  clearAllHistoryConfirm: 确定要清空所有历史记录吗？
+  followingList: 关注列表
+  followersList: 粉丝列表
+  followers: 粉丝
+  follows: 关注 
+  fans: 粉丝
+  followsAndFans: 关注与粉丝
+  numViews: 观看次数
+  updatedAt: 更新时间
+  publishedAt: 发布时间
+  externalVideo: 站外视频
+  originalText: 原文
+  showOriginalText: 显示原始文本
+  showProcessedText: 显示处理后文本
+  preview: 预览
+  markdownSyntax: Markdown 语法
+  rules: 规则
+  agree: 同意
+  disagree: 不同意
+  agreeToRules: 同意规则
+  createPost: 创建投稿
+  title: 标题
+  enterTitle: 请输入标题
+  content: 内容
+  enterContent: 请输入内容
+  writeYourContentHere: 请输入内容...
+  tagBlacklist: 黑名单标签
+  noData: 没有数据
+  tagLimit: 标签上限
+  enableFloatingButtons: 启用浮动按钮
+  disableFloatingButtons: 禁用浮动按钮
+  enabledFloatingButtons: 已启用浮动按钮
+  disabledFloatingButtons: 已禁用浮动按钮
+  pendingCommentCount: 待审核评论
+  joined: '加入于 ${str}'
+  download: 下载
+  selectQuality: 选择画质
+  selectDateRange: 选择日期范围
+  selectDateRangeHint: 选择日期范围，默认选择最近30天
+  clearDateRange: 清除日期范围
+  followSuccessClickAgainToSpecialFollow: 已成功关注，再次点击以特别关注
+  exitConfirmTip: 确定要退出吗？
+  error: 错误
+  taskRunning: "任务正在进行中，请稍后再试。"
+  operationCancelled: "操作已取消。"
+  unsavedChanges: "您有未保存的更改"
+  specialFollowsManagementTip: 拖动可重新排序 • 向左滑动可移除
+  specialFollowsManagement: 特别关注管理
+  # 分页相关
+  pagination:
+    totalItems: '共 ${num} 项'
+    jumpToPage: '跳转到指定页面'
+    pleaseEnterPageNumber: '请输入页码 (1-${max})'
+    pageNumber: '页码'
+    jump: '跳转'
+    invalidPageNumber: '请输入有效页码 (1-${max})'
+    invalidInput: '请输入有效页码'
+    waterfall: '瀑布流'
+    pagination: '分页'
+auth:
+  tagLimit: 标签上限
+  login: 登录
+  logout: 退出登录
+  email: 邮箱
+  password: 密码
+  loginOrRegister: 登录 / 注册
+  register: 注册
+  pleaseEnterEmail: 请输入邮箱
+  pleaseEnterPassword: 请输入密码
+  passwordMustBeAtLeast6Characters: 密码至少需要6位
+  pleaseEnterCaptcha: 请输入验证码
+  captcha: 验证码
+  refreshCaptcha: 刷新验证码
+  captchaNotLoaded: 无法加载验证码
+  loginSuccess: 登录成功
+  emailVerificationSent: 邮箱指令已发送
+  notLoggedIn: 未登录
+  clickToLogin: 点击此处登录
+  logoutConfirmation: 你确定要退出登录吗？
+  logoutSuccess: 退出登录成功
+  logoutFailed: 退出登录失败
+  usernameOrEmail: 用户名或邮箱
+  pleaseEnterUsernameOrEmail: 请输入用户名或邮箱
+  username: 用户名或邮箱
+  pleaseEnterUsername: 请输入用户名或邮箱
+  rememberMe: "记住账号和密码"
+
+errors:
+  error: 错误
+  required: 此项必填
+  invalidEmail: 邮箱格式不正确
+  networkError: 网络错误，请重试
+  errorWhileFetching: 获取信息失败
+  commentCanNotBeEmpty: 评论内容不能为空
+  errorWhileFetchingReplies: 获取回复时出错，请检查网络连接
+  canNotFindCommentController: 无法找到评论控制器
+  errorWhileLoadingGallery: 在加载图库时出现了错误
+  howCouldThereBeNoDataItCantBePossible: 啊？怎么会没有数据呢？出错了吧 :<
+  unsupportedImageFormat: '不支持的图片格式: ${str}'
+  invalidGalleryId: 无效的图库ID
+  translationFailedPleaseTryAgainLater: 翻译失败，请稍后重试
+  errorOccurred: "发生错误，请稍后再试。"
+  errorOccurredWhileProcessingRequest: 处理请求时出错
+  errorWhileFetchingDatas: 获取数据时出错，请稍后再试
+  serviceNotInitialized: 服务未初始化
+  unknownType: 未知类型
+  errorWhileOpeningLink: '无法打开链接: ${link}'
+  invalidUrl: 无效的URL
+  failedToOperate: 操作失败
+  permissionDenied: 权限不足
+  youDoNotHavePermissionToAccessThisResource: 您没有权限访问此资源
+  loginFailed: 登录失败
+  unknownError: 未知错误
+  sessionExpired: 会话已过期
+  failedToFetchCaptcha: 获取验证码失败
+  emailAlreadyExists: 邮箱已存在
+  invalidCaptcha: 无效的验证码
+  registerFailed: 注册失败
+  failedToFetchComments: 获取评论失败
+  failedToFetchImageDetail: 获取图库详情失败
+  failedToFetchImageList: 获取图库列表失败
+  failedToFetchData: 获取数据失败
+  invalidParameter: 无效的参数
+  pleaseLoginFirst: 请先登录
+  errorWhileLoadingPost: 载入投稿内容时出错
+  errorWhileLoadingPostDetail: 载入投稿详情时出错
+  invalidPostId: 无效的投稿ID
+  forceUpdateNotPermittedToGoBack: 目前处于强制更新状态，无法返回
+  pleaseLoginAgain: 请重新登录
+  invalidLogin: 登录失败，请检查邮箱和密码
+  tooManyRequests: 请求过多，请稍后再试
+  exceedsMaxLength: '超出最大长度: ${max} 个字符'
+  contentCanNotBeEmpty: 内容不能为空
+  titleCanNotBeEmpty: 标题不能为空
+  tooManyRequestsPleaseTryAgainLaterText: "请求过多，请稍后再试，剩余时间"
+  remainingHours: "${num}小时"
+  remainingMinutes: "${num}分钟"
+  remainingSeconds: "${num}秒"
+  tagLimitExceeded: '标签上限超出，上限: ${limit}'
+  failedToRefresh: 更新失败
+  noPermission: 权限不足
+  resourceNotFound: 资源不存在
+  failedToSaveCredentials: "无法安全保存登录信息"
+  failedToLoadSavedCredentials: "加载保存的登录信息失败"
+  specialFollowLimitReached: '特别关注上限超出，上限: ${cnt}，请于关注列表页中调整'
+  notFound: '内容不存在或已被删除'
+friends:
+  clickToRestoreFriend: 点击恢复好友
+  friendsList: 好友列表
+  friendRequests: 好友请求
+  friendRequestsList: 好友请求列表
+  removingFriend: 正在解除好友关系...
+  failedToRemoveFriend: 解除好友关系失败
+  cancelingRequest: 正在取消好友申请...
+  failedToCancelRequest: 取消好友申请失败
+
+authorProfile:
+  noMoreDatas: 没有更多数据了
+  userProfile: 用户资料
+
+favorites:
+  clickToRestoreFavorite: 点击恢复最爱
+  myFavorites: 我的最爱
+
+galleryDetail:
+  galleryDetail: 图库详情
+  viewGalleryDetail: 查看图库详情
+  copyLink: 复制链接地址
+  copyImage: 复制图片
+  saveAs: 另存为
+  saveToAlbum: 保存到相册
+  publishedAt: 发布时间
+  viewsCount: 观看次数
+  imageLibraryFunctionIntroduction: 图库功能介绍
+  rightClickToSaveSingleImage: 右键保存单张图片
+  batchSave: 批量保存
+  keyboardLeftAndRightToSwitch: 键盘的左右控制切换
+  keyboardUpAndDownToZoom: 键盘的上下控制缩放
+  mouseWheelToSwitch: 鼠标的滚轮滑动控制切换
+  ctrlAndMouseWheelToZoom: CTRL + 鼠标滚轮控制缩放
+  moreFeaturesToBeDiscovered: 更多功能待发现...
+  authorOtherGalleries: 作者的其他图库
+  relatedGalleries: 相关图库
+  clickLeftAndRightEdgeToSwitchImage: 点击左右边缘以切换图片
+
+playList:
+  myPlayList: 我的播放列表
+  friendlyTips: 友情提示
+  dearUser: 亲爱的用户
+  iwaraPlayListSystemIsNotPerfectYet: iwara的播放列表系统目前还不太完善
+  notSupportSetCover: 不支持设置封面
+  notSupportDeleteList: 不能删除列表
+  notSupportSetPrivate: 无法设为私密
+  yesCreateListWillAlwaysExistAndVisibleToEveryone: 没错...创建的列表会一直存在且对所有人可见
+  smallSuggestion: 小建议
+  useLikeToCollectContent: 如果您比较注重隐私，建议使用"点赞"功能来收藏内容
+  welcomeToDiscussOnGitHub: 如果你有其他的建议或想法，欢迎来 GitHub 讨论!
+  iUnderstand: 明白了
+  searchPlaylists: 搜索播放列表...
+  newPlaylistName: 新播放列表名称
+  createNewPlaylist: 创建新播放列表
+  videos: 视频
+
+search:
+  googleSearchScope: 搜索范围
+  searchTags: 搜索标签...
+  contentRating: 内容分级
+  removeTag: 移除标签
+  pleaseEnterSearchContent: 请输入搜索内容
+  searchHistory: 搜索历史
+  searchSuggestion: 搜索建议
+  usedTimes: 使用次数
+  lastUsed: 最后使用
+  noSearchHistoryRecords: 没有搜索历史
+  notSupportCurrentSearchType: '暂未实现当前搜索类型 ${searchType}，敬请期待'
+  searchResult: 搜索结果
+  unsupportedSearchType: '不支持的搜索类型: ${searchType}'
+  googleSearch: "谷歌搜索"
+  googleSearchHint: "${webName} 的搜索功能不好用？尝试谷歌搜索！"
+  googleSearchDescription: "借助谷歌搜索的 :site 搜索运算符，你可以通过外部引擎来对站内的内容进行检索，此功能在搜索 视频、图库、播放列表、用户 时非常有用。"
+  googleSearchKeywordsHint: "输入要搜索的关键词"
+  openLinkJump: "打开链接跳转"
+  googleSearchButton: "谷歌搜索"
+  pleaseEnterSearchKeywords: "请输入搜索关键词"
+  googleSearchQueryCopied: "搜索语句已复制到剪贴板"
+  googleSearchBrowserOpenFailed: "无法打开浏览器: ${error}"
+mediaList:
+  personalIntroduction: 个人简介
+
+settings:
+  listViewMode: 列表显示模式
+  useTraditionalPaginationMode: 使用传统分页模式
+  useTraditionalPaginationModeDesc: 开启后列表将使用传统分页模式，关闭则使用瀑布流模式
+  showVideoProgressBottomBarWhenToolbarHidden: 显示底部进度条
+  showVideoProgressBottomBarWhenToolbarHiddenDesc: 此配置决定是否在工具栏隐藏时显示底部进度条
+  basicSettings: 基础设置
+  personalizedSettings: 个性化设置
+  otherSettings: 其他设置
+  searchConfig: 搜索配置
+  thisConfigurationDeterminesWhetherThePreviousConfigurationWillBeUsedWhenPlayingVideosAgain: 此配置决定当你之后播放视频时是否会沿用之前的配置。
+  playControl: 播放控制
+  fastForwardTime: 快进时间
+  fastForwardTimeMustBeAPositiveInteger: 快进时间必须是一个正整数。
+  rewindTime: 后退时间
+  rewindTimeMustBeAPositiveInteger: 后退时间必须是一个正整数。
+  longPressPlaybackSpeed: 长按播放倍速
+  longPressPlaybackSpeedMustBeAPositiveNumber: 长按播放倍速必须是一个正数。
+  repeat: 循环播放
+  renderVerticalVideoInVerticalScreen: 全屏播放时以竖屏模式渲染竖屏视频
+  thisConfigurationDeterminesWhetherTheVideoWillBeRenderedInVerticalScreenWhenPlayingInFullScreen: 此配置决定当你在全屏播放时是否以竖屏模式渲染竖屏视频。
+  rememberVolume: 记住音量
+  thisConfigurationDeterminesWhetherTheVolumeWillBeKeptWhenPlayingVideosAgain: 此配置决定当你之后播放视频时是否会沿用之前的音量设置。
+  rememberBrightness: 记住亮度
+  thisConfigurationDeterminesWhetherTheBrightnessWillBeKeptWhenPlayingVideosAgain: 此配置决定当你之后播放视频时是否会沿用之前的亮度设置。
+  playControlArea: 播放控制区域
+  leftAndRightControlAreaWidth: 左右控制区域宽度
+  thisConfigurationDeterminesTheWidthOfTheControlAreasOnTheLeftAndRightSidesOfThePlayer: 此配置决定播放器左右两侧的控制区域宽度。
+  proxyAddressCannotBeEmpty: 代理地址不能为空。
+  invalidProxyAddressFormatPleaseUseTheFormatOfIpPortOrDomainNamePort: 无效的代理地址格式。请使用 IP:端口 或 域名:端口 格式。
+  proxyNormalWork: 代理正常工作。
+  testProxyFailedWithStatusCode: '代理请求失败，状态码: ${code}'
+  testProxyFailedWithException: '代理请求出错: ${exception}'
+  proxyConfig: 代理配置
+  thisIsHttpProxyAddress: 此处为http代理地址
+  checkProxy: 检查代理
+  proxyAddress: 代理地址
+  pleaseEnterTheUrlOfTheProxyServerForExample1270018080: 请输入代理服务器的URL，例如 127.0.0.1:8080
+  enableProxy: 启用代理
+  left: 左侧
+  middle: 中间
+  right: 右侧
+  playerSettings: 播放器设置
+  networkSettings: 网络设置
+  customizeYourPlaybackExperience: 自定义您的播放体验
+  chooseYourFavoriteAppAppearance: 选择您喜欢的应用外观 
+  configureYourProxyServer: 配置您的代理服务器
+  settings: 设置
+  themeSettings: 主题设置
+  followSystem: 跟随系统
+  lightMode: 浅色模式
+  darkMode: 深色模式
+  presetTheme: 预设主题
+  basicTheme: 基础主题
+  needRestartToApply: 需要重启应用以应用设置
+  themeNeedRestartDescription: 主题设置需要重启应用以应用设置
+  about: 关于
+  currentVersion: 当前版本
+  latestVersion: 最新版本
+  checkForUpdates: 检查更新
+  update: 更新
+  newVersionAvailable: 发现新版本
+  projectHome: 开源地址
+  release: 版本发布
+  issueReport: 问题反馈
+  openSourceLicense: 开源许可
+  checkForUpdatesFailed: 检查更新失败，请稍后重试
+  autoCheckUpdate: "自动检查更新"
+  updateContent: "更新内容："
+  releaseDate: "发布日期"
+  ignoreThisVersion: "忽略此版本"
+  minVersionUpdateRequired: "当前版本过低，请尽快更新"
+  forceUpdateTip: "此版本为强制更新，请尽快更新到最新版本"
+  viewChangelog: 查看更新日志
+  alreadyLatestVersion: 已是最新版本
+  appSettings: 应用设置
+  configureYourAppSettings: 配置您的应用程序设置
+  history: 历史记录
+  autoRecordHistory: 自动记录历史记录
+  autoRecordHistoryDesc: 自动记录您观看过的视频和图库等信息
+  showUnprocessedMarkdownText: 显示未处理文本
+  showUnprocessedMarkdownTextDesc: 显示Markdown的原始文本
+  markdown: Markdown
+  activeBackgroundPrivacyMode: 隐私模式
+  activeBackgroundPrivacyModeDesc: 禁止截图、后台运行时隐藏画面...
+  privacy: 隐私
+  forum: 论坛
+  disableForumReplyQuote: 禁用论坛回复引用
+  disableForumReplyQuoteDesc: 禁用论坛回复时携带被回复楼层信息
+  theaterMode: 剧院模式
+  theaterModeDesc: 开启后，播放器背景会被设置为视频封面的模糊版本
+  appLinks: 应用链接
+  defaultBrowser: 默认浏览
+  defaultBrowserDesc: 请在系统设置中打开默认链接配置项，并添加网站链接
+  themeMode: 主题模式
+  themeModeDesc: 此配置决定应用的主题模式
+  dynamicColor: 动态颜色
+  dynamicColorDesc: 此配置决定应用是否使用动态颜色
+  useDynamicColor: 使用动态颜色
+  useDynamicColorDesc: 此配置决定应用是否使用动态颜色
+  presetColors: 预设颜色
+  customColors: 自定义颜色
+  pickColor: 选择颜色
+  cancel: 取消
+  confirm: 确认
+  noCustomColors: 没有自定义颜色
+  recordAndRestorePlaybackProgress: 记录和恢复播放进度
+  signature: 小尾巴
+  enableSignature: 小尾巴启用
+  enableSignatureDesc: 此配置决定回复时是否自动添加小尾巴
+  enterSignature: 输入小尾巴
+  editSignature: 编辑小尾巴
+  signatureContent: 小尾巴内容
+  exportConfig: "导出应用配置"
+  exportConfigDesc: "将应用配置导出为文件（不包含下载记录）"
+  importConfig: "导入应用配置"
+  importConfigDesc: "从文件导入应用配置"
+  exportConfigSuccess: "配置导出成功！"
+  exportConfigFailed: "配置导出失败"
+  importConfigSuccess: "配置导入成功！"
+  importConfigFailed: "配置导入失败"
+  historyUpdateLogs: "历代更新日志"
+  noUpdateLogs: "未获取到更新日志"
+  versionLabel: "版本: {version}"
+  releaseDateLabel: "发布日期: {date}"
+  noChanges: "暂无更新内容"
+  interaction: 交互
+  enableVibration: 启用震动
+  enableVibrationDesc: 启用应用交互时的震动反馈
+  defaultKeepVideoToolbarVisible: 保持工具栏常驻
+  defaultKeepVideoToolbarVisibleDesc: 此设置决定首次进入视频页面时是否保持工具栏常驻显示。
+  theaterModelHasPerformanceIssuesAndIDontKnowHowToFixItNowIfYouRRuningOnDeskTopYouCanOpenIt: 移动端开启剧院模式可能会造成性能问题，可酌情开启。
+  lockButtonPosition: 锁定按钮位置
+  lockButtonPositionBothSides: 两侧显示
+  lockButtonPositionLeftSide: 仅左侧显示
+  lockButtonPositionRightSide: 仅右侧显示
+  jumpLink: 跳转链接
+signIn:
+  pleaseLoginFirst: 请先登录
+  alreadySignedInToday: 您今天已经签到过了！
+  youDidNotStickToTheSignIn: 您未能坚持签到。
+  signInSuccess: 签到成功！
+  signInFailed: 签到失败，请稍后再试
+  consecutiveSignIns: 连续签到天数
+  failureReason: 未能坚持签到的原因
+  selectDateRange: 选择日期范围
+  startDate: 开始日期
+  endDate: 结束日期
+  invalidDate: 日期格式错误
+  invalidDateRange: 日期范围无效
+  errorFormatText: 日期格式错误
+  errorInvalidText: 日期范围无效
+  errorInvalidRangeText: 日期范围无效
+  dateRangeCantBeMoreThanOneYear: 日期范围不能超过1年
+  signIn: 签到
+  signInRecord: 签到记录
+  totalSignIns: 总成功签到
+  pleaseSelectSignInStatus: 请选择签到状态
+
+subscriptions:
+  pleaseLoginFirstToViewYourSubscriptions: 请登录以查看您的订阅内容。
+
+videoDetail:
+  pipMode: 画中画模式
+  resumeFromLastPosition: '从上次播放位置继续播放: ${position}'
+  videoIdIsEmpty: 视频ID为空
+  videoInfoIsEmpty: 视频信息为空
+  thisIsAPrivateVideo: 这是一个私密视频
+  getVideoInfoFailed: '获取视频信息失败，请稍后再试'
+  noVideoSourceFound: 未找到对应的视频源
+  tagCopiedToClipboard: '标签 "${tagId}" 已复制到剪贴板'
+  errorLoadingVideo: 在加载视频时出现了错误
+  play: 播放
+  pause: 暂停
+  exitAppFullscreen: 退出应用全屏
+  enterAppFullscreen: 应用全屏
+  exitSystemFullscreen: 退出系统全屏
+  enterSystemFullscreen: 系统全屏
+  seekTo: 跳转到指定时间
+  switchResolution: 切换分辨率  
+  switchPlaybackSpeed: 切换播放倍速
+  rewindSeconds: '后退${num}秒'
+  fastForwardSeconds: '快进${num}秒'
+  playbackSpeedIng: '正在以${rate}倍速播放'
+  brightness: 亮度
+  brightnessLowest: 亮度已最低
+  volume: 音量
+  volumeMuted: 音量已静音
+  home: 主页
+  videoPlayer: 视频播放器
+  videoPlayerInfo: 播放器信息
+  moreSettings: 更多设置
+  videoPlayerFeatureInfo: 播放器功能介绍
+  autoRewind: 自动重播
+  rewindAndFastForward: 左右两侧双击快进或后退
+  volumeAndBrightness: 左右两侧垂直滑动调整音量、亮度
+  centerAreaDoubleTapPauseOrPlay: 中心区域双击暂停或播放
+  showVerticalVideoInFullScreen: 在全屏时可以以竖屏方式显示竖屏视频
+  keepLastVolumeAndBrightness: 保持上次调整的音量、亮度
+  setProxy: 设置代理
+  moreFeaturesToBeDiscovered: 更多功能待发现...
+  videoPlayerSettings: 播放器设置
+  commentCount: '评论 ${num} 条'
+  writeYourCommentHere: 写下你的评论...
+  authorOtherVideos: 作者的其他视频
+  relatedVideos: 相关视频
+  privateVideo: 这是一个私密视频
+  externalVideo: 这是一个站外视频
+  openInBrowser: 在浏览器中打开
+  resourceDeleted: 这个视频貌似被删除了 :/
+  noDownloadUrl: 没有下载链接
+  startDownloading: 开始下载
+  downloadFailed: 下载失败，请稍后再试
+  downloadSuccess: 下载成功
+  download: 下载
+  downloadManager: 下载管理
+
+share:
+  sharePlayList: 分享播放列表
+  wowDidYouSeeThis: 哇哦，你看过这个吗？
+  nameIs: 名字叫做
+  clickLinkToView: 点击链接查看
+  iReallyLikeThis: 我真的是太喜欢这个了，你也来看看吧！
+  shareFailed: 分享失败，请稍后再试
+  share: 分享
+  shareAsImage: 分享为图片
+  shareAsText: 分享为文本
+  shareAsImageDesc: 将视频封面分享为图片
+  shareAsTextDesc: 将视频详情分享为文本
+  shareAsImageFailed: 分享视频封面为图片失败，请稍后再试
+  shareAsTextFailed: 分享视频详情为文本失败，请稍后再试
+  shareVideo: 分享视频
+  authorIs: 作者是
+  shareGallery: 分享图库
+  galleryTitleIs: 图库名字叫做
+  galleryAuthorIs: 图库作者是
+  shareUser: 分享用户
+  userNameIs: 用户名字叫做
+  userAuthorIs: 用户作者是
+  comments: 评论
+  shareThread: 分享帖子
+  views: 浏览
+  sharePost: 分享投稿
+  postTitleIs: 投稿名字叫做
+  postAuthorIs: 投稿作者是
+
+markdown:
+  markdownSyntax: Markdown 语法
+  iwaraSpecialMarkdownSyntax: Iwara 专用语法
+  internalLink: 站内链接
+  supportAutoConvertLinkBelow: '支持自动转换以下类型的链接：'
+  convertLinkExample: '🎬 视频链接\n🖼️ 图片链接\n👤 用户链接\n📌 论坛链接\n🎵 播放列表链接\n💬 投稿链接'
+  mentionUser: 提及用户
+  mentionUserDescription: '输入@后跟用户名，将自动转换为用户链接'
+  markdownBasicSyntax: Markdown 基本语法
+  paragraphAndLineBreak: 段落与换行
+  paragraphAndLineBreakDescription: '段落之间空一行，行末加两个空格实现换行'
+  paragraphAndLineBreakSyntax: '这是第一段文字\n\n这是第二段文字\n这一行后面加两个空格  \n就能换行了'
+  textStyle: 文本样式
+  textStyleDescription: '使用特殊符号包围文本来改变样式'
+  textStyleSyntax: '**粗体文本**\n*斜体文本*\n~~删除线文本~~\n`代码文本`'
+  quote: 引用
+  quoteDescription: '使用 > 符号创建引用，多个 > 创建多级引用'
+  quoteSyntax: '> 这是一级引用\n>> 这是二级引用'
+  list: 列表
+  listDescription: '使用数字+点号创建有序列表，使用 - 创建无序列表'
+  listSyntax: '1. 第一项\n2. 第二项\n\n- 无序项\n  - 子项\n  - 另一个子项'
+  linkAndImage: 链接与图片
+  linkAndImageDescription: '链接格式：[文字](URL)\n图片格式：![描述](URL)'
+  linkAndImageSyntax: '[链接文字](${link})\n![图片描述](${imgUrl})'
+  title: 标题
+  titleDescription: '使用 # 号创建标题，数量表示级别'
+  titleSyntax: '# 一级标题\n## 二级标题\n### 三级标题'
+  separator: 分隔线
+  separatorDescription: '使用三个或更多 - 号创建分隔线'
+  separatorSyntax: '---'
+  syntax: 语法
+
+forum:
+  recent: 最近
+  category: 分类
+  lastReply: 最后回复
+  errors:
+    pleaseSelectCategory: 请选择分类
+    threadLocked: 该主题已锁定，无法回复
+  createPost: 创建帖子
+  title: 标题
+  enterTitle: 输入标题
+  content: 内容
+  enterContent: 输入内容
+  writeYourContentHere: 在此输入内容...
+  posts: 帖子
+  threads: 主题
+  forum: 论坛
+  createThread: 创建主题
+  selectCategory: 选择分类
+  cooldownRemaining: '冷却剩余时间 ${minutes} 分 ${seconds} 秒'
+  groups:
+    administration: 管理
+    global: 全球
+    chinese: 中文
+    japanese: 日语
+    korean: 韩语
+    other: 其他
+  leafNames:
+    announcements: 公告
+    feedback: 反馈
+    support: 帮助
+    general: 一般
+    guides: 指南
+    questions: 问题
+    requests: 请求
+    sharing: 分享
+    'general_zh': 一般
+    'questions_zh': 问题
+    'requests_zh': 请求
+    'support_zh': 帮助
+    'general_ja': 一般
+    'questions_ja': 问题
+    'requests_ja': 请求
+    'support_ja': 帮助
+    korean: 韩语
+    other: 其他
+  leafDescriptions:
+    announcements: 官方重要通知和公告
+    feedback: 对网站功能和服务的反馈
+    support: 帮助解决网站相关问题
+    general: 讨论任何话题
+    guides: 分享你的经验和教程
+    questions: 提出你的疑问
+    requests: 发布你的请求
+    sharing: 分享有趣的内容
+    'general_zh': 讨论任何话题
+    'questions_zh': 提出你的疑问
+    'requests_zh': 发布你的请求
+    'support_zh': 帮助解决网站相关问题
+    'general_ja': 讨论任何话题
+    'questions_ja': 提出你的疑问
+    'requests_ja': 发布你的请求
+    'support_ja': 帮助解决网站相关问题
+    korean: 韩语相关讨论
+    other: 其他未分类的内容
+  reply: 回覆
+  pendingReview: 审核中
+  editedAt: 编辑时间
+  copySuccess: 已复制到剪贴板
+  copySuccessForMessage: '已复制到剪贴板: ${str}'
+  editReply: 编辑回覆
+  editTitle: 编辑标题
+  submit: 提交
+
+notifications:
+  errors:
+    unsupportedNotificationType: 暂不支持的通知类型
+    unknownUser: 未知用户
+    unsupportedNotificationTypeWithType: '暂不支持的通知类型: ${type}'
+    unknownNotificationType: 未知通知类型
+  notifications: 通知
+  video: 视频
+  profile: 个人主页
+  postedNewComment: 发表了评论
+  inYour: 在您的
+  copyInfoToClipboard: 复制通知信息到剪贴簿
+  copySuccess: 已复制到剪贴板
+  copySuccessForMessage: '已复制到剪贴板: ${str}'
+  markAllAsRead: 全部标记已读
+  markAllAsReadSuccess: 所有通知已标记为已读
+  markAllAsReadFailed: 全部标记已读失败
+  markSelectedAsRead: 标记选中项为已读
+  markSelectedAsReadSuccess: 选中的通知已标记为已读
+  markSelectedAsReadFailed: 标记选中项为已读失败
+  markAsRead: 标记已读
+  markAsReadSuccess: 已标记为已读
+  markAsReadFailed: 标记已读失败
+  notificationTypeHelp: 通知类型帮助
+  dueToLackOfNotificationTypeDetails: 通知类型的详细信息不足，目前支持的类型可能没有覆盖到您当前收到的消息
+  helpUsImproveNotificationTypeSupport: 如果您愿意帮助我们完善通知类型的支持
+  helpUsImproveNotificationTypeSupportLongText: '1. 📋 复制通知信息\n2. 🐞 前往项目仓库提交 issue\n\n⚠️ 注意：通知信息可能包含个人隐私，如果你不想公开，也可以通过邮件发送给项目作者。'
+  goToRepository: 前往项目仓库
+  copy: 复制
+  commentApproved: 评论已通过审核
+  repliedYourProfileComment: 回复了您的个人主页评论
+  repliedYourVideoComment: 回复了您的视频评论
+  kReplied: 回复了您在
+  kCommented: 评论了您的
+  kVideo: 视频
+  kGallery: 图库
+  kProfile: 主页
+  kThread: 主题
+  kPost: 投稿
+  kCommentSection: 下的评论
+  kApprovedComment: 评论审核通过
+  kApprovedVideo: 视频审核通过
+  kApprovedGallery: 图库审核通过
+  kApprovedThread: 帖子审核通过
+  kApprovedPost: 投稿审核通过
+  kUnknownType: 未知通知类型
+
+conversation:
+  errors:
+    pleaseSelectAUser: 请选择一个用户
+    pleaseEnterATitle: 请输入标题
+    clickToSelectAUser: 点击选择用户
+    loadFailedClickToRetry: 加载失败,点击重试
+    loadFailed: 加载失败
+    clickToRetry: 点击重试
+    noMoreConversations: 没有更多消息了
+  conversation: 会话
+  startConversation: 发起会话
+  noConversation: 暂无会话
+  selectFromLeftListAndStartConversation: 从左侧的会话列表选择一个对话开始聊天
+  title: 标题
+  body: 内容
+  selectAUser: 选择用户
+  searchUsers: 搜索用户...
+  tmpNoConversions: 暂无会话
+  deleteThisMessage: 删除此消息
+  deleteThisMessageSubtitle: 此操作不可撤销
+  writeMessageHere: 在此处输入消息
+  sendMessage: 发送消息
+
+splash:
+  errors:
+    initializationFailed: 初始化失败，请重启应用
+  preparing: 准备中...
+  initializing: 初始化中...
+  loading: 加载中...
+  ready: 准备完成
+  initializingMessageService: 初始化消息服务中...
+
+download:
+  errors:
+    imageModelNotFound: 图库信息不存在
+    downloadFailed: 下载失败
+    videoInfoNotFound: 视频信息不存在
+    unknown: 未知
+    downloadTaskAlreadyExists: 下载任务已存在
+    videoAlreadyDownloaded: 该视频已下载
+    downloadFailedForMessage: '添加下载任务失败: ${errorInfo}'
+    userPausedDownload: 用户暂停下载
+    fileSystemError: '文件系统错误: ${errorInfo}'
+    unknownError: '未知错误: ${errorInfo}'
+    connectionTimeout: 连接超时
+    sendTimeout: 发送超时
+    receiveTimeout: 接收超时
+    serverError: '服务器错误: ${errorInfo}'
+    unknownNetworkError: 未知网络错误
+    serviceIsClosing: 下载服务正在关闭
+    partialDownloadFailed: 部分内容下载失败
+    noDownloadTask: 暂无下载任务
+    taskNotFoundOrDataError: 任务不存在或数据错误
+    copyDownloadUrlFailed: '复制下载链接失败'
+    fileNotFound: '文件不存在'
+    openFolderFailed: '打开文件夹失败'
+    openFolderFailedWithMessage: '打开文件夹失败: ${message}'
+    directoryNotFound: '目录不存在'
+    copyFailed: '复制失败'
+    openFileFailed: '打开文件失败'
+    openFileFailedWithMessage: '打开文件失败: ${message}'
+    noDownloadSource: 没有下载源
+    noDownloadSourceNowPleaseWaitInfoLoaded: 暂无下载源，请等待信息加载完成后重试
+    noActiveDownloadTask: 暂无正在下载的任务
+    noFailedDownloadTask: 暂无失败的任务
+    noCompletedDownloadTask: 暂无已完成的任务
+    taskAlreadyCompletedDoNotAdd: 任务已完成，请勿重复添加
+    linkExpiredTryAgain: 链接已过期，正在重新获取下载链接
+    linkExpiredTryAgainSuccess: 链接已过期，正在重新获取下载链接成功
+    linkExpiredTryAgainFailed: 链接已过期,正在重新获取下载链接失败
+    taskDeleted: 任务已删除
+    unsupportedImageFormat: '不支持的图片格式: ${format}'
+    deleteFileError: '文件删除失败，可能是因为文件被占用'
+    deleteTaskError: '任务删除失败'
+    taskNotFound: '任务未找到'
+    canNotRefreshVideoTask: '无法刷新视频任务'
+    taskAlreadyProcessing: '任务已处理中'
+    failedToLoadTasks: '加载任务失败'
+    partialDownloadFailedWithMessage: '部分下载失败: ${message}'
+    unsupportedImageFormatWithMessage: '不支持的图片格式: ${extension}, 可以尝试下载到设备上查看'
+    imageLoadFailed: '图片加载失败'
+    pleaseTryOtherViewer: '请尝试使用其他查看器打开'
+  downloadList: 下载列表
+  download: 下载
+  forceDeleteTask: 强制删除任务
+  startDownloading: 开始下载...
+  clearAllFailedTasks: 清除全部失败任务
+  clearAllFailedTasksConfirmation: '确定要清除所有失败的下载任务吗？\n这些任务的文件也会被删除。'
+  clearAllFailedTasksSuccess: 已清除所有失败任务
+  clearAllFailedTasksError: 清除失败任务时出错
+  downloadStatus: 下载状态
+  imageList: 图片列表
+  retryDownload: 重试下载
+  notDownloaded: 未下载
+  downloaded: 已下载
+  waitingForDownload: 等待下载...
+  downloadingProgressForImageProgress: '下载中 (${downloaded}/${total}张 ${progress}%)'
+  downloadingSingleImageProgress: '下载中 (${downloaded}张)'
+  pausedProgressForImageProgress: '已暂停 (${downloaded}/${total}张 ${progress}%)'
+  pausedSingleImageProgress: '已暂停 (已下载${downloaded}张)'
+  downloadedProgressForImageProgress: '下载完成 (共${total}张)'
+  viewVideoDetail: 查看视频详情
+  viewGalleryDetail: 查看图库详情
+  moreOptions: 更多操作
+  openFile: 打开文件
+  pause: 暂停
+  resume: 继续
+  copyDownloadUrl: 复制下载链接
+  showInFolder: 在文件夹中显示
+  deleteTask: 删除任务
+  downloadingProgressForVideoTask: '下载中 ${downloaded}/${total} (${progress}%) • ${speed}MB/s'
+  downloadingOnlyDownloadedAndSpeed: '下载中 ${downloaded} • ${speed}MB/s'
+  pausedForDownloadedAndTotal: '已暂停 • ${downloaded}/${total} (${progress}%)'
+  pausedAndDownloaded: '已暂停 • 已下载 ${downloaded}'
+  downloadedWithSize: '下载完成 • ${size}'
+  copyDownloadUrlSuccess: '已复制下载链接'
+  totalImageNums: '${num}张'
+  downloadingDownloadedTotalProgressSpeed: '下载中 ${downloaded}/${total} (${progress}%) • ${speed}MB/s'
+  downloading: 下载中
+  failed: 失败
+  completed: 已完成
+  downloadDetail: 下载详情
+  copy: 复制
+  copySuccess: 已复制
+  waiting: 等待中
+  paused: 暂停中
+  downloadingOnlyDownloaded: '下载中 ${downloaded}'
+  galleryDownloadCompletedWithName: '图库下载完成: ${galleryName}'
+  downloadCompletedWithName: '下载完成: ${fileName}'
+  stillInDevelopment: 开发中
+  saveToAppDirectory: 保存到应用目录
+
+favorite:
+  errors:
+    addFailed: 追加失败
+    addSuccess: 追加成功
+    deleteFolderFailed: 删除文件夹失败
+    deleteFolderSuccess: 删除文件夹成功
+    folderNameCannotBeEmpty: 文件夹名称不能为空
+  add: 追加
+  addSuccess: 追加成功
+  addFailed: 追加失败
+  remove: 删除
+  removeSuccess: 删除成功
+  removeFailed: 删除失败
+  removeConfirmation: '确定要删除这个项目吗？'
+  removeConfirmationSuccess: '项目已从收藏夹中删除'
+  removeConfirmationFailed: '删除项目失败'
+  createFolderSuccess: '文件夹创建成功'
+  createFolderFailed: '创建文件夹失败'
+  createFolder: 创建文件夹
+  enterFolderName: 输入文件夹名称
+  enterFolderNameHere: 在此输入文件夹名称...
+  create: 创建
+  items: 项目
+  newFolderName: 新文件夹
+  searchFolders: 搜索文件夹...
+  searchItems: 搜索项目...
+  createdAt: 创建时间
+  myFavorites: 我的收藏
+  deleteFolderTitle: 删除文件夹
+  deleteFolderConfirmWithTitle: '确定要删除 ${title} 文件夹吗？'
+  removeItemTitle: 删除项目
+  removeItemConfirmWithTitle: '确定要删除 ${title} 项目吗？'
+  removeItemSuccess: 项目已从收藏夹中删除
+  removeItemFailed: 删除项目失败
+  localizeFavorite: 本地收藏
+  editFolderTitle: 编辑文件夹
+  editFolderSuccess: 文件夹更新成功
+  editFolderFailed: 文件夹更新失败
+  searchTags: 搜索标签
+
+translation:
+  testConnection: 测试连接
+  testConnectionSuccess: 测试连接成功
+  testConnectionFailed: 测试连接失败
+  testConnectionFailedWithMessage: '测试连接失败: ${message}'
+  translation: 翻译
+  needVerification: 需要验证
+  needVerificationContent: 请先通过连接测试才能启用AI翻译
+  confirm: 确定
+  disclaimer: 使用须知
+  riskWarning: 风险提示
+  dureToRisk1: '由于评论等文本为用户生成，可能包含违反AI服务商内容政策的内容'
+  dureToRisk2: '不当内容可能导致API密钥封禁或服务终止'
+  operationSuggestion: 操作建议
+  operationSuggestion1: '1. 使用前请严格审核待翻译内容'
+  operationSuggestion2: '2. 避免翻译涉及暴力、成人等敏感内容'
+  apiConfig: API配置
+  modifyConfigWillAutoCloseAITranslation: '修改配置将自动关闭AI翻译，需重新测试后打开'
+  apiAddress: API地址
+  modelName: 模型名称
+  modelNameHintText: '例如：gpt-4-turbo'
+  maxTokens: 最大Token数
+  maxTokensHintText: '例如：1024'
+  temperature: 温度系数
+  temperatureHintText: '0.0-2.0'
+  clickTestButtonToVerifyAPIConnection: '点击测试按钮验证API连接有效性'
+  requestPreview: 请求预览
+  enableAITranslation: AI翻译
+  enabled: 已启用
+  disabled: 已禁用
+  testing: 测试中...
+  testNow: 立即测试
+  connectionStatus: 连接状态
+  success: 成功
+  failed: 失败
+  information: 信息
+  viewRawResponse: 查看原始响应
+  pleaseCheckInputParametersFormat: 请检查输入参数格式
+  pleaseFillInAPIAddressModelNameAndKey: 请填写API地址、模型名称和密钥
+  pleaseFillInValidConfigurationParameters: 请填写有效的配置参数
+  pleaseCompleteConnectionTest: 请完成连接测试
+  notConfigured: 未配置
+  apiEndpoint: API端点
+  configuredKey: 已配置密钥
+  notConfiguredKey: 未配置密钥
+  authenticationStatus: 认证状态
+  thisFieldCannotBeEmpty: 此字段不能为空
+  apiKey: API密钥
+  apiKeyCannotBeEmpty: API密钥不能为空
+  pleaseEnterValidNumber: 请输入有效数字
+  range: 范围
+  mustBeGreaterThan: 必须大于
+  invalidAPIResponse: 无效的API响应
+  connectionFailedForMessage: '连接失败: ${message}'
+  aiTranslationNotEnabledHint: AI翻译未启用，请在设置中启用
+  goToSettings: 前往设置
+  disableAITranslation: 禁用AI翻译
+  currentValue: 当前值
+  configureTranslationStrategy: 配置翻译策略
+  advancedSettings: "高级设置"
+  translationPrompt: "翻译提示词"
+  promptHint: "请输入翻译提示词,使用[TL]作为目标语言的占位符"
+  promptHelperText: "提示词必须包含[TL]作为目标语言的占位符"  
+  promptMustContainTargetLang: "提示词必须包含[TL]占位符"
+  aiTranslationWillBeDisabled: "AI翻译将被自动关闭"
+  aiTranslationWillBeDisabledDueToConfigChange: "由于修改了基础配置,AI翻译将被自动关闭"
+  aiTranslationWillBeDisabledDueToPromptChange: "由于修改了翻译提示词,AI翻译将被自动关闭" 
+  aiTranslationWillBeDisabledDueToParamChange: "由于修改了参数配置,AI翻译将被自动关闭"
+  onlyOpenAIAPISupported: "当前仅支持OpenAI兼容的API格式（application/json请求体格式）"
+  streamingTranslation: "流式翻译"
+  streamingTranslationSupported: "支持流式翻译"
+  streamingTranslationNotSupported: "不支持流式翻译"
+  streamingTranslationDescription: "流式翻译可以在翻译过程中实时显示结果，提供更好的用户体验"
+  usingFullUrlWithHash: "使用完整URL（以#结尾）"
+  baseUrlInputHelperText: "当以#结尾时，将以输入的URL作为实际请求地址"
+  currentActualUrl: "当前实际URL: ${url}"
+  urlEndingWithHashTip: "URL以#结尾时，将以输入的URL作为实际请求地址"
+  streamingTranslationWarning: "注意：此功能需要API服务支持流式传输，部分模型可能不支持"
+
+linkInputDialog:
+  title: "输入链接"
+  supportedLinksHint: "支持智能识别多个${webName}链接，并快速跳转到应用内对应页面(链接与其他文本之间用空格隔开)"
+  inputHint: "请输入${webName}链接"
+  validatorEmptyLink: "请输入链接"
+  validatorNoIwaraLink: "未检测到有效的${webName}链接"
+  multipleLinksDetected: "检测到多个链接，请选择一个："
+  notIwaraLink: "不是有效的${webName}链接"
+  linkParseError: "链接解析出错: ${error}"
+  unsupportedLinkDialogTitle: "不支持的链接"
+  unsupportedLinkDialogContent: "该链接类型当前应用无法直接打开，需要使用外部浏览器访问。\n\n是否使用浏览器打开此链接？"
+  openInBrowser: "用浏览器打开"
+  confirmOpenBrowserDialogTitle: "确认打开浏览器"
+  confirmOpenBrowserDialogContent: "即将使用外部浏览器打开以下链接："
+  confirmContinueBrowserOpen: "确定要继续吗？"
+  browserOpenFailed: "无法打开链接"
+  unsupportedLink: "不支持的链接"
+  cancel: "取消"
+  confirm: "用浏览器打开"
+
+log:
+  logManagement: 日志管理
+  enableLogPersistence: 启用日志持久化
+  enableLogPersistenceDesc: 将日志保存到数据库以便于分析问题
+  logDatabaseSizeLimit: 日志数据库大小上限
+  logDatabaseSizeLimitDesc: '当前: ${size}'
+  exportCurrentLogs: 导出当前日志
+  exportCurrentLogsDesc: 导出当天应用日志以帮助开发者诊断问题
+  exportHistoryLogs: 导出历史日志
+  exportHistoryLogsDesc: 导出指定日期范围的日志
+  exportMergedLogs: 导出合并日志
+  exportMergedLogsDesc: 导出指定日期范围的合并日志
+  showLogStats: 显示日志统计信息
+  logExportSuccess: 日志导出成功
+  logExportFailed: '日志导出失败: ${error}'
+  showLogStatsDesc: 查看各种类型日志的统计数据
+  logExtractFailed: '获取日志统计失败: ${error}'
+  clearAllLogs: 清理所有日志
+  clearAllLogsDesc: 清理所有日志数据
+  confirmClearAllLogs: 确认清理
+  confirmClearAllLogsDesc: 确定要清理所有日志数据吗？此操作不可撤销。
+  clearAllLogsSuccess: 日志清理成功
+  clearAllLogsFailed: '清理日志失败: ${error}'
+  unableToGetLogSizeInfo: 无法获取日志大小信息
+  currentLogSize: '当前日志大小:'
+  logCount: '日志数量:'
+  logCountUnit: '条'
+  logSizeLimit: '大小上限:'
+  usageRate: '使用率:'
+  exceedLimit: '超出限制'
+  remaining: '剩余'
+  currentLogSizeExceededPleaseCleanOldLogsOrIncreaseLogSizeLimit: '当前日志大小已超出限制，建议立即清理旧日志或增加空间限制'
+  currentLogSizeAlmostExceededPleaseCleanOldLogs: '当前日志大小即将用尽，建议清理旧日志'
+  cleaningOldLogs: '正在自动清理旧日志...'
+  logCleaningCompleted: '日志清理完成'
+  logCleaningProcessMayNotBeCompleted: '日志清理过程可能未完成'
+  cleanExceededLogs: '清理超出限制的日志'
+  noLogsToExport: '没有可导出的日志数据'
+  exportingLogs: '正在导出日志...'
+  noHistoryLogsToExport: '尚无可导出的历史日志，请先使用应用一段时间再尝试'
+  selectLogDate: '选择日志日期'
+  today: '今天'
+  selectMergeRange: '选择合并范围'
+  selectMergeRangeHint: '请选择要合并的日志时间范围'
+  selectMergeRangeDays: '最近 ${days} 天'
+  logStats: '日志统计信息'
+  todayLogs: '今日日志: ${count} 条'
+  recent7DaysLogs: '最近7天: ${count} 条'
+  totalLogs: '总计日志: ${count} 条'
+  setLogDatabaseSizeLimit: '设置日志数据库大小上限'
+  currentLogSizeWithSize: '当前日志大小: ${size}'
+  warning: '警告'
+  newSizeLimit: '新的大小限制: ${size}'
+  confirmToContinue: '确定要继续吗？'
+  logSizeLimitSetSuccess: '日志大小上限已设置为 ${size}'

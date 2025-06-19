@@ -1,0 +1,1084 @@
+# ja-JP.i18n.yaml
+common:
+  appName: Love Iwara
+  ok: 確定
+  cancel: キャンセル
+  save: 保存
+  delete: 削除
+  loading: 読み込み中...
+  scrollToTop: トップに戻る
+  # プライバシー内容、表示しない
+  privacyHint: プライバシー内容、表示しません
+  latest: 最新
+  likesCount: いいね数
+  viewsCount: 視聴回数
+  popular: 人気
+  trending: トレンド
+  commentList: コメント一覧
+  sendComment: コメントを投稿
+  send: 送信
+  retry: 再試行
+  premium: プレミアム会員
+  follower: フォロワー
+  friend: 友達
+  video: ビデオ
+  following: フォロー中
+  expand: 展開
+  collapse: 收起
+  cancelFriendRequest: 友達申請を取り消す
+  cancelSpecialFollow: 特別フォローを解除
+  addFriend: 友達を追加
+  removeFriend: 友達を解除
+  followed: フォロー済み
+  follow: フォローする
+  unfollow: フォロー解除
+  specialFollow: 特別フォロー
+  specialFollowed: 特別フォロー済み
+  specialFollowsManagementTip: ドラッグして並べ替え • 左スワイプで削除
+  specialFollowsManagement: 特別フォロー管理
+  gallery: ギャラリー
+  playlist: プレイリスト
+  commentPostedSuccessfully: コメントが正常に投稿されました
+  commentPostedFailed: コメントの投稿に失敗しました
+  success: 成功
+  commentDeletedSuccessfully: コメントが削除されました
+  commentUpdatedSuccessfully: コメントが更新されました
+  totalComments: '${count} 件のコメント'
+  writeYourCommentHere: ここにコメントを入力...
+  tmpNoReplies: 返信はありません
+  loadMore: もっと読み込む
+  noMoreDatas: これ以上データはありません
+  selectTranslationLanguage: 翻訳言語を選択
+  translate: 翻訳
+  translateFailedPleaseTryAgainLater: 翻訳に失敗しました。後でもう一度お試しください
+  translationResult: 翻訳結果
+  justNow: たった今
+  minutesAgo: '${num} 分前'
+  hoursAgo: '${num} 時間前'
+  daysAgo: '${num} 日前'
+  editedAt: '${num} 編集'
+  editComment: コメントを編集
+  commentUpdated: コメントが更新されました
+  replyComment: コメントに返信
+  reply: 返信
+  edit: 編集
+  unknownUser: 不明なユーザー
+  me: 私
+  author: 作者
+  admin: 管理者
+  viewReplies: '返信を表示 (${num})'
+  hideReplies: 返信を非表示
+  confirmDelete: 削除を確認
+  areYouSureYouWantToDeleteThisItem: この項目を削除してもよろしいですか？
+  tmpNoComments: コメントがありません
+  refresh: 更新
+  back: 戻る
+  tips: ヒント
+  linkIsEmpty: リンクアドレスが空です
+  linkCopiedToClipboard: リンクアドレスがクリップボードにコピーされました
+  imageCopiedToClipboard: 画像がクリップボードにコピーされました
+  copyImageFailed: 画像のコピーに失敗しました
+  mobileSaveImageIsUnderDevelopment: モバイル端末での画像保存機能は現在開発中です
+  imageSavedTo: '画像が保存されました'
+  saveImageFailed: 画像の保存に失敗しました
+  close: 閉じる
+  more: もっと見る
+  moreFeaturesToBeDeveloped: さらに機能が開発中です
+  all: すべて
+  selectedRecords: '${num} 件のレコードが選択されました'
+  cancelSelectAll: すべての選択を解除
+  selectAll: すべて選択
+  exitEditMode: 編集モードを終了
+  areYouSureYouWantToDeleteSelectedItems: '選択した ${num} 件のレコードを削除してもよろしいですか？'
+  searchHistoryRecords: 検索履歴...
+  settings: 設定
+  subscriptions: サブスクリプション
+  videoCount: '${num} 本の動画'
+  share: 共有
+  areYouSureYouWantToShareThisPlaylist: このプレイリストを共有してもよろしいですか？
+  editTitle: タイトルを編集
+  editMode: 編集モード
+  pleaseEnterNewTitle: 新しいタイトルを入力してください
+  createPlayList: プレイリストを作成
+  create: 作成
+  checkNetworkSettings: ネットワーク設定を確認
+  general: 一般
+  r18: R18
+  sensitive: センシティブ
+  year: 年
+  month: 月
+  tag: タグ
+  private: プライベート
+  noTitle: タイトルなし
+  search: 検索
+  noContent: コンテンツがありません
+  recording: 録画中
+  paused: 一時停止
+  clear: クリア
+  user: ユーザー
+  post: 投稿
+  seconds: 秒
+  comingSoon: 近日公開
+  confirm: 確認
+  hour: 時
+  minute: 分
+  clickToRefresh: クリックして更新
+  history: 履歴
+  favorites: お気に入り
+  friends: 友達
+  playList: プレイリスト
+  checkLicense: ライセンスを確認
+  logout: ログアウト
+  fensi: フォロワー
+  accept: 受け入れる
+  reject: 拒否
+  clearAllHistory: すべての履歴をクリア
+  clearAllHistoryConfirm: すべての履歴をクリアしてもよろしいですか？
+  followingList: フォロー中リスト
+  followersList: フォロワーリスト
+  follows: フォロー
+  fans: フォロワー
+  followsAndFans: フォローとフォロワー
+  numViews: 視聴回数
+  updatedAt: 更新時間
+  publishedAt: 発表時間
+  externalVideo: 站外動画
+  originalText: 原文
+  showOriginalText: 原文を表示
+  showProcessedText: 処理後の原文を表示
+  preview: プレビュー
+  rules: ルール
+  agree: 同意
+  disagree: 不同意
+  agreeToRules: 同意ルール
+  createPost: 投稿を作成
+  title: タイトル
+  enterTitle: タイトルを入力してください
+  content: 内容
+  enterContent: 内容を入力してください
+  writeYourContentHere: 内容を入力してください...
+  tagBlacklist: ブラックリストタグ
+  noData: データがありません
+  tagLimit: タグ上限
+  enableFloatingButtons: フローティングボタンを有効
+  disableFloatingButtons: フローティングボタンを無効
+  enabledFloatingButtons: フローティングボタンが有効
+  disabledFloatingButtons: フローティングボタンが無効
+  pendingCommentCount: 未審核コメント
+  joined: '${str} に参加'
+  download: ダウンロード
+  selectQuality: 画質を選択
+  selectDateRange: 日付範囲を選択
+  selectDateRangeHint: 日付範囲を選択，デフォルトは最近30日
+  clearDateRange: 日付範囲をクリア
+  followSuccessClickAgainToSpecialFollow: フォローに成功しました。再度クリックして特別フォロー
+  exitConfirmTip: 本当に退出しますか？
+  error: エラー
+  taskRunning: "既にタスクが実行中です。しばらくお待ちください。"
+  operationCancelled: "操作がキャンセルされました。"
+  unsavedChanges: "未保存の変更があります"
+  # ページネーション関連
+  pagination:
+    totalItems: '全 ${num} 件'
+    jumpToPage: 'ページ指定'
+    pleaseEnterPageNumber: 'ページ番号を入力してください (1-${max})'
+    pageNumber: 'ページ番号'
+    jump: '移動'
+    invalidPageNumber: '有効なページ番号を入力してください (1-${max})'
+    invalidInput: '有効なページ番号を入力してください'
+    waterfall: 'ウォーターフォール'
+    pagination: 'ページネーション'
+auth:
+  login: ログイン
+  logout: ログアウト
+  email: メールアドレス
+  password: パスワード
+  loginOrRegister: ログイン / 新規登録
+  register: 新規登録
+  pleaseEnterEmail: メールアドレスを入力してください
+  pleaseEnterPassword: パスワードを入力してください
+  passwordMustBeAtLeast6Characters: パスワードは6文字以上必要です
+  pleaseEnterCaptcha: キャプチャを入力してください
+  captcha: キャプチャ
+  refreshCaptcha: キャプチャを更新
+  captchaNotLoaded: キャプチャを読み込めませんでした
+  loginSuccess: ログインに成功しました
+  emailVerificationSent: メール認証が送信されました
+  notLoggedIn: ログインしていません
+  clickToLogin: こちらをクリックしてログイン
+  logoutConfirmation: 本当にログアウトしますか？
+  logoutSuccess: ログアウトに成功しました
+  logoutFailed: ログアウトに失敗しました
+  usernameOrEmail: ユーザー名またはメールアドレス
+  pleaseEnterUsernameOrEmail: ユーザー名またはメールアドレスを入力してください
+  rememberMe: ユーザー名とパスワードを記憶
+
+errors:
+  error: エラー
+  required: この項目は必須です
+  invalidEmail: メールアドレスの形式が正しくありません
+  networkError: ネットワークエラーが発生しました。再試行してください
+  errorWhileFetching: 情報の取得に失敗しました
+  commentCanNotBeEmpty: コメント内容は空にできません
+  errorWhileFetchingReplies: 返信の取得中にエラーが発生しました。ネットワーク接続を確認してください
+  canNotFindCommentController: コメントコントローラーが見つかりません
+  errorWhileLoadingGallery: ギャラリーの読み込み中にエラーが発生しました
+  howCouldThereBeNoDataItCantBePossible: え？データがありません。エラーが発生した可能性があります :<
+  unsupportedImageFormat: 'サポートされていない画像形式: ${str}'
+  invalidGalleryId: 無効なギャラリーIDです
+  translationFailedPleaseTryAgainLater: 翻訳に失敗しました。後でもう一度お試しください
+  errorOccurred: "エラーが発生しました。しばらくしてから再試行してください。"
+  errorOccurredWhileProcessingRequest: リクエストの処理中にエラーが発生しました
+  errorWhileFetchingDatas: データの取得中にエラーが発生しました。後でもう一度お試しください
+  serviceNotInitialized: サービスが初期化されていません
+  unknownType: 不明なタイプです
+  errorWhileOpeningLink: 'リンクを開けませんでした: ${link}'
+  invalidUrl: 無効なURLです
+  failedToOperate: 操作に失敗しました
+  permissionDenied: 権限がありません
+  youDoNotHavePermissionToAccessThisResource: このリソースにアクセスする権限がありません
+  loginFailed: ログインに失敗しました
+  unknownError: 不明なエラーです
+  sessionExpired: セッションが期限切れです
+  failedToFetchCaptcha: キャプチャの取得に失敗しました
+  emailAlreadyExists: メールアドレスは既に存在します
+  invalidCaptcha: 無効なキャプチャです
+  registerFailed: 登録に失敗しました
+  failedToFetchComments: コメントの取得に失敗しました
+  failedToFetchImageDetail: 画像の取得に失敗しました
+  failedToFetchImageList: 画像の取得に失敗しました
+  failedToFetchData: データの取得に失敗しました
+  invalidParameter: 無効なパラメータです
+  pleaseLoginFirst: ログインしてください
+  errorWhileLoadingPost: 投稿の取得中にエラーが発生しました
+  errorWhileLoadingPostDetail: 投稿詳細の取得中にエラーが発生しました
+  invalidPostId: 無効な投稿IDです
+  forceUpdateNotPermittedToGoBack: 現在強制更新状態です。戻ることはできません
+  pleaseLoginAgain: ログインしてください
+  invalidLogin: ログインに失敗しました。メールアドレスとパスワードを確認してください
+  tooManyRequests: リクエストが多すぎます。後でもう一度お試しください
+  exceedsMaxLength: '最大長さを超えています: ${max}'
+  contentCanNotBeEmpty: コンテンツは空にできません
+  titleCanNotBeEmpty: タイトルは空にできません
+  tooManyRequestsPleaseTryAgainLaterText: "リクエストが多すぎます。後でもう一度お試しください。残り時間"
+  remainingHours: "${num}時間"
+  remainingMinutes: "${num}分"
+  remainingSeconds: "${num}秒"
+  tagLimitExceeded: 'タグの上限を超えています。上限: ${limit}'
+  failedToRefresh: 更新に失敗しました
+  noPermission: 権限がありません
+  resourceNotFound: リソースが見つかりません
+  failedToSaveCredentials: "ログイン情報の保存に失敗しました"
+  failedToLoadSavedCredentials: "保存されたログイン情報の読み込みに失敗しました"
+  specialFollowLimitReached: '特別フォローの上限を超えています。上限: ${cnt}，フォローリストページで調整してください'
+  notFound: 'コンテンツが見つかりませんまたは削除されました'
+friends:
+  clickToRestoreFriend: 友達を復元するにはクリックしてください
+  friendsList: 友達リスト
+  friendRequests: 友達リクエスト
+  friendRequestsList: 友達リクエスト一覧
+  removingFriend: フレンド解除中...
+  failedToRemoveFriend: フレンド解除に失敗しました
+  cancelingRequest: フレンド申請をキャンセル中...
+  failedToCancelRequest: フレンド申請のキャンセルに失敗しました
+
+authorProfile:
+  noMoreDatas: これ以上データはありません
+  userProfile: ユーザープロフィール
+
+favorites:
+  clickToRestoreFavorite: お気に入りを復元するにはクリックしてください
+  myFavorites: 私のお気に入り
+
+galleryDetail:
+  galleryDetail: ギャラリー詳細
+  viewGalleryDetail: ギャラリー詳細を表示
+  copyLink: リンクをコピー
+  copyImage: 画像をコピー
+  saveAs: 名前を付けて保存
+  saveToAlbum: アルバムに保存
+  publishedAt: 公開日時
+  viewsCount: 視聴回数
+  imageLibraryFunctionIntroduction: ギャラリー機能の紹介
+  rightClickToSaveSingleImage: 右クリックで単一画像を保存
+  batchSave: バッチ保存
+  keyboardLeftAndRightToSwitch: キーボードの左右キーで切り替え
+  keyboardUpAndDownToZoom: キーボードの上下キーでズーム
+  mouseWheelToSwitch: マウスホイールで切り替え
+  ctrlAndMouseWheelToZoom: CTRL + マウスホイールでズーム
+  moreFeaturesToBeDiscovered: さらに機能が発見されます...
+  authorOtherGalleries: 作者の他のギャラリー
+  relatedGalleries: 関連ギャラリー
+  clickLeftAndRightEdgeToSwitchImage: 左端と右端をクリックして切り替え
+
+playList:
+  myPlayList: 私のプレイリスト
+  friendlyTips: フレンドリーティップス
+  dearUser: 親愛なるユーザー
+  iwaraPlayListSystemIsNotPerfectYet: iwaraのプレイリストシステムはまだ完全ではありません
+  notSupportSetCover: カバー設定はサポートされていません
+  notSupportDeleteList: リストの削除はできません
+  notSupportSetPrivate: プライベート設定はできません
+  yesCreateListWillAlwaysExistAndVisibleToEveryone: はい...作成されたリストは常に存在し、全員に表示されます
+  smallSuggestion: 小さな提案
+  useLikeToCollectContent: プライバシーを重視する場合は、「いいね」機能を使用してコンテンツを収集することをお勧めします
+  welcomeToDiscussOnGitHub: その他の提案やアイデアがある場合は、GitHubでのディスカッションを歓迎します！
+  iUnderstand: わかりました
+  searchPlaylists: プレイリストを検索...
+  newPlaylistName: 新しいプレイリスト名
+  createNewPlaylist: 新しいプレイリストを作成
+  videos: 動画
+
+search:
+  googleSearchScope: 検索範囲
+  searchTags: タグを検索...
+  contentRating: コンテンツレーティング
+  removeTag: タグを削除
+  pleaseEnterSearchContent: 検索内容を入力してください
+  searchHistory: 検索履歴
+  searchSuggestion: 検索提案
+  usedTimes: 使用回数
+  lastUsed: 最後の使用
+  noSearchHistoryRecords: 検索履歴がありません
+  notSupportCurrentSearchType: '現在の検索タイプ ${searchType} はまだ実装されていません。お楽しみに'
+  searchResult: 検索結果
+  unsupportedSearchType: 'サポートされていない検索タイプ: ${searchType}'
+  googleSearch: "グーグル検索"
+  googleSearchHint: "${webName} の検索機能は使いにくいですか？ グーグル検索を試してみてください！"
+  googleSearchDescription: "Google Search の :site 検索演算子を使用して、サイトのコンテンツを検索します。これは、動画、ギャラリー、プレイリスト、ユーザーを検索する際に非常に便利です。"
+  googleSearchKeywordsHint: "検索するキーワードを入力してください"
+  openLinkJump: "リンクジャンプを開く"
+  googleSearchButton: "グーグル検索"
+  pleaseEnterSearchKeywords: "検索するキーワードを入力してください"
+  googleSearchQueryCopied: "検索語句をクリップボードにコピーしました"
+  googleSearchBrowserOpenFailed: "ブラウザを開けませんでした: ${error}"
+mediaList:
+  personalIntroduction: 個人紹介
+
+settings:
+  listViewMode: リスト表示モード
+  useTraditionalPaginationMode: 従来のページネーションモードを使用
+  useTraditionalPaginationModeDesc: 従来のページネーションモードを使用すると、ページネーションモードが無効になります。
+  showVideoProgressBottomBarWhenToolbarHidden: 底部プログレスバー
+  showVideoProgressBottomBarWhenToolbarHiddenDesc: この設定は、ツールバーが非表示のときに底部プログレスバーを表示するかどうかを決定します。
+  basicSettings: 基本設定
+  personalizedSettings: 個性化設定
+  otherSettings: その他設定
+  searchConfig: 検索設定
+  thisConfigurationDeterminesWhetherThePreviousConfigurationWillBeUsedWhenPlayingVideosAgain: この設定は、今後動画を再生する際に以前の設定を使用するかどうかを決定します。
+  playControl: 再生コントロール
+  fastForwardTime: 早送り時間
+  fastForwardTimeMustBeAPositiveInteger: 早送り時間は正の整数でなければなりません。
+  rewindTime: 巻き戻し時間
+  rewindTimeMustBeAPositiveInteger: 巻き戻し時間は正の整数でなければなりません。
+  longPressPlaybackSpeed: 長押し再生速度
+  longPressPlaybackSpeedMustBeAPositiveNumber: 長押し再生速度は正の数でなければなりません。
+  repeat: リピート
+  renderVerticalVideoInVerticalScreen: 全画面再生時に縦向きビデオを縦画面モードでレンダリング
+  thisConfigurationDeterminesWhetherTheVideoWillBeRenderedInVerticalScreenWhenPlayingInFullScreen: この設定は、全画面再生時に縦向きビデオを縦画面モードでレンダリングするかどうかを決定します。
+  rememberVolume: 音量を記憶
+  thisConfigurationDeterminesWhetherTheVolumeWillBeKeptWhenPlayingVideosAgain: この設定は、今後動画を再生する際に以前の音量設定を使用するかどうかを決定します。
+  rememberBrightness: 明るさを記憶
+  thisConfigurationDeterminesWhetherTheBrightnessWillBeKeptWhenPlayingVideosAgain: この設定は、今後動画を再生する際に以前の明るさ設定を使用するかどうかを決定します。
+  playControlArea: 再生コントロールエリア
+  leftAndRightControlAreaWidth: 左右コントロールエリアの幅
+  thisConfigurationDeterminesTheWidthOfTheControlAreasOnTheLeftAndRightSidesOfThePlayer: この設定は、プレイヤーの左右にあるコントロールエリアの幅を決定します。
+  proxyAddressCannotBeEmpty: プロキシアドレスは空にできません。
+  invalidProxyAddressFormatPleaseUseTheFormatOfIpPortOrDomainNamePort: 無効なプロキシアドレス形式です。IP:ポート または ドメイン名:ポート の形式を使用してください。
+  proxyNormalWork: プロキシが正常に動作しています。
+  testProxyFailedWithStatusCode: 'プロキシリクエストが失敗しました。ステータスコード: ${code}'
+  testProxyFailedWithException: 'プロキシリクエスト中にエラーが発生しました: ${exception}'
+  proxyConfig: プロキシ設定
+  thisIsHttpProxyAddress: ここにHTTPプロキシアドレスを入力してください
+  checkProxy: プロキシを確認
+  proxyAddress: プロキシアドレス
+  pleaseEnterTheUrlOfTheProxyServerForExample1270018080: 'プロキシサーバーのURLを入力してください（例: 127.0.0.1:8080）'
+  enableProxy: プロキシを有効にする
+  left: 左
+  middle: 中央
+  right: 右
+  playerSettings: プレイヤー設定
+  networkSettings: ネットワーク設定
+  customizeYourPlaybackExperience: 再生体験をカスタマイズ
+  chooseYourFavoriteAppAppearance: お好みのアプリ外観を選択
+  configureYourProxyServer: プロキシサーバーを設定
+  settings: 設定
+  themeSettings: テーマ設定
+  followSystem: システムに従う
+  lightMode: ライトモード
+  darkMode: ダークモード
+  presetTheme: プリセットテーマ
+  basicTheme: ベーシックテーマ
+  needRestartToApply: アプリを再起動して設定を適用してください
+  themeNeedRestartDescription: テーマ設定はアプリを再起動して設定を適用してください
+  about: アバウト
+  currentVersion: 現在のバージョン
+  latestVersion: 最新バージョン
+  checkForUpdates: 更新をチェック
+  update: 更新
+  newVersionAvailable: 新しいバージョンが利用可能です
+  projectHome: プロジェクトホーム
+  release: リリース
+  issueReport: 問題報告
+  openSourceLicense: オープンソースライセンス
+  checkForUpdatesFailed: 更新のチェックに失敗しました。後でもう一度お試しください
+  autoCheckUpdate: 自動更新
+  updateContent: 更新内容
+  releaseDate: リリース日
+  ignoreThisVersion: このバージョンを無視
+  minVersionUpdateRequired: 現在のバージョンが低すぎます。すぐに更新してください
+  forceUpdateTip: "これは必須アップデートです。できるだけ早く最新バージョンにアップデートしてください"
+  viewChangelog: 更新内容を表示
+  alreadyLatestVersion: すでに最新バージョンです
+  appSettings: アプリ設定
+  configureYourAppSettings: アプリ設定を設定
+  history: 履歴
+  autoRecordHistory: 自動記録履歴
+  autoRecordHistoryDesc: 視聴した動画やギャラリーなどの情報を自動的に記録します
+  showUnprocessedMarkdownText: 未処理のMarkdownテキストを表示
+  showUnprocessedMarkdownTextDesc: Markdownの元のテキストを表示
+  markdown: Markdown
+  activeBackgroundPrivacyMode: プライバシーモード
+  activeBackgroundPrivacyModeDesc: スクリーンショットを禁止し、バックグラウンド実行時に画面を隠す...
+  privacy: プライバシー
+  forum: フォーラム
+  disableForumReplyQuote: フォーラム返信引用を無効にする
+  disableForumReplyQuoteDesc: フォーラム返信時の返信階層情報の携帯を無効にする
+  theaterMode: 劇院モード
+  theaterModeDesc: 開啟後、プレーヤー背景がビデオカバーのぼかしバージョンに設定されます
+  appLinks: アプリリンク
+  defaultBrowser: デフォルトブラウザ
+  defaultBrowserDesc: システム設定でデフォルトリンク設定項目を開き、iwara.tvサイトリンクを追加してください
+  themeMode: テーマモード
+  themeModeDesc: この設定はアプリのテーマモードを決定します
+  dynamicColor: ダイナミックカラー
+  dynamicColorDesc: この設定はアプリがダイナミックカラーを使用するかどうかを決定します
+  useDynamicColor: ダイナミックカラーを使用
+  useDynamicColorDesc: この設定はアプリがダイナミックカラーを使用するかどうかを決定します
+  presetColors: プリセットカラー
+  customColors: カスタムカラー
+  pickColor: カラーを選択
+  cancel: キャンセル
+  confirm: 確認
+  noCustomColors: カスタムカラーがありません
+  recordAndRestorePlaybackProgress: 再生進度を記録して復元
+  signature: 小尾巴
+  enableSignature: 小尾巴を有効にする
+  enableSignatureDesc: この設定はアプリが回覆時に小尾巴を有効にするかどうかを決定します
+  enterSignature: 小尾巴を入力
+  editSignature: 小尾巴を編集
+  signatureContent: 小尾巴の内容
+  exportConfig: "アプリ設定をエクスポート"
+  exportConfigDesc: "ダウンロード記録を除いたアプリ設定をファイルにエクスポートします"
+  importConfig: "アプリ設定をインポート"
+  importConfigDesc: "ファイルからアプリ設定をインポートします"
+  exportConfigSuccess: "設定が正常にエクスポートされました"
+  exportConfigFailed: "設定のエクスポートに失敗しました"
+  importConfigSuccess: "設定が正常にインポートされました"
+  importConfigFailed: "設定のインポートに失敗しました"
+  historyUpdateLogs: "歴代アップデートログ"
+  noUpdateLogs: "アップデートログが取得できませんでした"
+  versionLabel: "バージョン: {version}"
+  releaseDateLabel: "リリース日: {date}"
+  noChanges: "更新内容がありません"
+  interaction: インタラクション
+  enableVibration: バイブレーション
+  enableVibrationDesc: アプリの操作時にバイブレーションフィードバックを有効にする
+  defaultKeepVideoToolbarVisible: ツールバーを常に表示
+  defaultKeepVideoToolbarVisibleDesc: この設定は、動画ページに入った時にツールバーを常に表示するかどうかを決定します。
+  theaterModelHasPerformanceIssuesAndIDontKnowHowToFixItNowIfYouRRuningOnDeskTopYouCanOpenIt: モバイル端でシアターモードを有効にすると、パフォーマンスの問題が発生する可能性があるため、状況に応じてご利用ください。
+  lockButtonPosition: ロックボタンの位置
+  lockButtonPositionBothSides: 両側に表示
+  lockButtonPositionLeftSide: 左側のみ表示
+  lockButtonPositionRightSide: 右側のみ表示
+  jumpLink: リンクをジャンプ
+signIn:
+  pleaseLoginFirst: サインインする前にログインしてください
+  alreadySignedInToday: 今日は既にサインインしています！
+  youDidNotStickToTheSignIn: サインインを続けることができませんでした。
+  signInSuccess: サインインに成功しました！
+  signInFailed: サインインに失敗しました。後でもう一度お試しください
+  consecutiveSignIns: 連続サインイン日数
+  failureReason: サインインに失敗した理由
+  selectDateRange: 日付範囲を選択
+  startDate: 開始日
+  endDate: 終了日
+  invalidDate: 日付形式が正しくありません
+  invalidDateRange: 日付範囲が無効です
+  errorFormatText: 日付形式が正しくありません
+  errorInvalidText: 日付範囲が無効です
+  errorInvalidRangeText: 日付範囲が無効です
+  dateRangeCantBeMoreThanOneYear: 日付範囲は1年を超えることはできません
+  signIn: サインイン
+  signInRecord: サインイン記録
+  totalSignIns: 合計サインイン数
+  pleaseSelectSignInStatus: サインインステータスを選択してください
+
+subscriptions:
+  pleaseLoginFirstToViewYourSubscriptions: サブスクリプションを表示するにはログインしてください。
+
+videoDetail:
+  pipMode: ピプモード
+  resumeFromLastPosition: '${position} から続けて再生'
+  videoIdIsEmpty: ビデオIDが空です
+  videoInfoIsEmpty: ビデオ情報が空です
+  thisIsAPrivateVideo: これはプライベートビデオです
+  getVideoInfoFailed: 'ビデオ情報の取得に失敗しました。後でもう一度お試しください'
+  noVideoSourceFound: 対応するビデオソースが見つかりません
+  tagCopiedToClipboard: 'タグ "${tagId}" がクリップボードにコピーされました'
+  errorLoadingVideo: ビデオの読み込み中にエラーが発生しました
+  play: 再生
+  pause: 一時停止
+  exitAppFullscreen: アプリの全画面表示を終了
+  enterAppFullscreen: アプリを全画面表示
+  exitSystemFullscreen: システム全画面表示を終了
+  enterSystemFullscreen: システム全画面表示
+  seekTo: 指定時間にシーク
+  switchResolution: 解像度を変更
+  switchPlaybackSpeed: 再生速度を変更
+  rewindSeconds: '${num} 秒巻き戻し'
+  fastForwardSeconds: '${num} 秒早送り'
+  playbackSpeedIng: '${rate} 倍速で再生中'
+  brightness: 明るさ
+  brightnessLowest: 明るさが最低になっています
+  volume: 音量
+  volumeMuted: 音量がミュートされています
+  home: ホーム
+  videoPlayer: ビデオプレーヤー
+  videoPlayerInfo: プレーヤー情報
+  moreSettings: さらに設定
+  videoPlayerFeatureInfo: プレーヤー機能の紹介
+  autoRewind: 自動リワインド
+  rewindAndFastForward: 両側をダブルクリックして早送りまたは巻き戻し
+  volumeAndBrightness: 両側を上下にスワイプして音量と明るさを調整
+  centerAreaDoubleTapPauseOrPlay: 中央エリアをダブルタップして一時停止または再生
+  showVerticalVideoInFullScreen: 全画面表示時に縦向きビデオを表示
+  keepLastVolumeAndBrightness: 前回の音量と明るさを保持
+  setProxy: プロキシを設定
+  moreFeaturesToBeDiscovered: さらに機能が発見されます...
+  videoPlayerSettings: プレーヤー設定
+  commentCount: '${num} 件のコメント'
+  writeYourCommentHere: ここにコメントを入力...
+  authorOtherVideos: 作者の他のビデオ
+  relatedVideos: 関連ビデオ
+  privateVideo: これはプライベートビデオです
+  externalVideo: これは站外ビデオです
+  openInBrowser: ブラウザで開く
+  resourceDeleted: このビデオは削除されたようです :/
+  noDownloadUrl: ダウンロードURLがありません
+  startDownloading: ダウンロードを開始
+  downloadFailed: ダウンロードに失敗しました。後でもう一度お試しください
+  downloadSuccess: ダウンロードに成功しました
+  download: ダウンロード
+  downloadManager: ダウンロード管理
+
+share:
+  sharePlayList: プレイリストを共有
+  wowDidYouSeeThis: ああ、見たの？
+  nameIs: 名前は
+  clickLinkToView: リンクをクリックして見る
+  iReallyLikeThis: 本当に好きです
+  shareFailed: 共有に失敗しました。後でもう一度お試しください
+  share: 共有
+  shareAsImage: 画像として共有
+  shareAsText: テキストとして共有
+  shareAsImageDesc: 動画のサムネイルを画像として共有
+  shareAsTextDesc: 動画の詳細をテキストとして共有
+  shareAsImageFailed: サムネイルの共有に失敗しました。後でもう一度お試しください
+  shareAsTextFailed: 詳細の共有に失敗しました。後でもう一度お試しください
+  shareVideo: 動画を共有
+  authorIs: 作者は
+  shareGallery: ギャラリーを共有
+  galleryTitleIs: ギャラリーのタイトルは
+  galleryAuthorIs: ギャラリーの作者は
+  shareUser: ユーザーを共有
+  userNameIs: ユーザーの名前は
+  userAuthorIs: ユーザーの作者は
+  comments: コメント
+  shareThread: スレッドを共有
+  views: 閲覧
+  sharePost: 投稿を共有
+  postTitleIs: 投稿のタイトルは
+  postAuthorIs: 投稿の作者は
+
+
+markdown:
+  markdownSyntax: Markdown 構文
+  iwaraSpecialMarkdownSyntax: Iwara 専用構文
+  internalLink: 站内鏈接
+  supportAutoConvertLinkBelow: '以下のタイプのリンクを自動変換します：'
+  convertLinkExample: '🎬 ビデオリンク\n🖼️ 画像リンク\n👤 ユーザーリンク\n📌 フォーラムリンク\n🎵 プレイリストリンク\n💬 スレッドリンク'
+  mentionUser: ユーザーを言及
+  mentionUserDescription: '@後にユーザー名を入力すると、ユーザーリンクに自動変換されます'
+  markdownBasicSyntax: Markdown 基本構文
+  paragraphAndLineBreak: 段落と改行
+  paragraphAndLineBreakDescription: '段落間に空行を入れ、行末に2つのスペースを追加すると改行されます'
+  paragraphAndLineBreakSyntax: 'これは第一段落です\n\nこれは第二段落です\nこの行の後に2つのスペースを追加して  \n改行されます'
+  textStyle: テキストスタイル
+  textStyleDescription: '特殊記号でテキストのスタイルを変更'
+  textStyleSyntax: '**太字テキスト**\n*斜体テキスト*\n~~削除線テキスト~~\n`コードテキスト`'
+  quote: 引用
+  quoteDescription: '> 符号で引用を作成し、複数の > で多段引用を作成'
+  quoteSyntax: '> これは一階引用です\n>> これは二階引用です'
+  list: リスト
+  listDescription: '数字+点号で順序付きリストを作成し、- で順序なしリストを作成'
+  listSyntax: '1. 第一項\n2. 第二項\n\n- 順序なし項\n  - 子項\n  - 別の子項'
+  linkAndImage: リンクと画像
+  linkAndImageDescription: 'リンク形式：[テキスト](URL)\n画像形式：![説明](URL)'
+  linkAndImageSyntax: '[リンクテキスト](${link})\n![画像説明](${imgUrl})'
+  title: タイトル
+  titleDescription: '＃ 号でタイトルを作成し、数でレベルを表示'
+  titleSyntax: '# 一階タイトル\n## 二階タイトル\n### 三階タイトル'
+  separator: 分隔線
+  separatorDescription: '三個以上の - 号で分隔線を作成'
+  separatorSyntax: '---'
+  syntax: 語法
+
+forum:
+  recent: 最近
+  category: カテゴリ
+  lastReply: 最終返信
+  errors:
+    pleaseSelectCategory: カテゴリを選択してください
+    threadLocked: このスレッドはロックされています。
+  title: タイトル
+  createPost: 投稿を作成
+  enterTitle: タイトルを入力してください
+  content: コンテンツ
+  enterContent: コンテンツを入力してください
+  writeYourContentHere: ここにコンテンツを入力...
+  posts: 投稿
+  threads: スレッド
+  forum: フォーラム
+  createThread: スレッドを作成
+  selectCategory: カテゴリを選択
+  cooldownRemaining: 'クールダウン残り時間 ${minutes} 分 ${seconds} 秒'
+  groups:
+    administration: 管理
+    global: グローバル
+    chinese: 中国語
+    japanese: 日本語
+    korean: 韓国語
+    other: その他
+  leafNames:
+    announcements: お知らせ
+    feedback: フィードバック
+    support: サポート
+    general: 一般
+    guides: ガイド
+    questions: 質問
+    requests: リクエスト
+    sharing: シェア
+    'general_zh': 一般
+    'questions_zh': 質問
+    'requests_zh': リクエスト
+    'support_zh': サポート
+    'general_ja': 一般
+    'questions_ja': 質問
+    'requests_ja': リクエスト
+    'support_ja': サポート
+    korean: 韓国語
+    other: その他
+  leafDescriptions:
+    announcements: 公式の重要なお知らせと通知
+    feedback: サイトの機能やサービスに対するフィードバック
+    support: サイト関連の問題を解決する手助け
+    general: あらゆる話題を議論する
+    guides: 経験やチュートリアルを共有する
+    questions: 疑問を提起する
+    requests: リクエストを投稿する
+    sharing: 面白いコンテンツを共有する
+    'general_zh': あらゆる話題を議論する
+    'questions_zh': 疑問を提起する
+    'requests_zh': リクエストを投稿する
+    'support_zh': サイト関連の問題を解決する手助け
+    'general_ja': あらゆる話題を議論する
+    'questions_ja': 疑問を提起する
+    'requests_ja': リクエストを投稿する
+    'support_ja': サイト関連の問題を解決する手助け
+    korean: 韓国語に関する議論
+    other: その他の未分類のコンテンツ
+  reply: 回覆
+  pendingReview: 審査中
+  editedAt: 編集日時
+  copySuccess: クリップボードにコピーされました
+  copySuccessForMessage: 'クリップボードにコピーされました: ${str}'
+  editReply: 編集回覆
+  editTitle: 編集タイトル
+  submit: 提出
+
+notifications:
+  errors:
+    unsupportedNotificationType: サポートされていない通知タイプ
+    unknownUser: 未知ユーザー
+    unsupportedNotificationTypeWithType: 'サポートされていない通知タイプ: ${type}'
+    unknownNotificationType: 未知通知タイプ
+  notifications: 通知
+  profile: 個人主頁
+  postedNewComment: 新しいコメントを投稿
+  inYour: あなたの
+  video: ビデオ
+  repliedYourVideoComment: あなたのビデオコメントに返信しました
+  copyInfoToClipboard: 通知情報をクリップボードにコピー
+  copySuccess: クリップボードにコピーされました
+  copySuccessForMessage: 'クリップボードにコピーされました: ${str}'
+  markAllAsRead: 全てを既読にする
+  markAllAsReadSuccess: 全ての通知が既読になりました
+  markAllAsReadFailed: 全てを既読にするに失敗しました
+  markSelectedAsRead: 選択した通知を既読にする
+  markSelectedAsReadSuccess: 選択した通知が既読になりました
+  markSelectedAsReadFailed: 選択した通知を既読にするに失敗しました
+  markAsRead: 既読にする
+  markAsReadSuccess: 通知が既読になりました
+  markAsReadFailed: 通知を既読にするに失敗しました
+  notificationTypeHelp: 通知タイプのヘルプ
+  dueToLackOfNotificationTypeDetails: 通知タイプの詳細情報が不足しているため、現在サポートされているタイプが受信したメッセージをカバーしていない可能性があります
+  helpUsImproveNotificationTypeSupport: 通知タイプのサポート改善にご協力いただける場合
+  helpUsImproveNotificationTypeSupportLongText: '1. 📋 通知情報をコピー\n2. 🐞 プロジェクトリポジトリに issue を提出\n\n⚠️ 注意：通知情報には個人情報が含まれている場合があります。公開したくない場合は、プロジェクト作者にメールで送信することもできます。'
+  goToRepository: リポジトリに移動
+  copy: コピー
+  commentApproved: コメントが承認されました
+  repliedYourProfileComment: あなたの個人主頁コメントに返信しました
+  kReplied: さんが
+  kCommented: さんが
+  kVideo: ビデオ
+  kGallery: ギャラリー
+  kProfile: プロフィール
+  kThread: スレッド
+  kPost: 投稿
+  kCommentSection: ''
+  kApprovedComment: コメントが承認されました
+  kApprovedVideo: 動画が承認されました
+  kApprovedGallery: ギャラリーが承認されました
+  kApprovedThread: スレッドが承認されました
+  kApprovedPost: 投稿が承認されました
+  kUnknownType: 不明な通知タイプ
+
+conversation:
+  errors:
+    pleaseSelectAUser: ユーザーを選択してください
+    pleaseEnterATitle: タイトルを入力してください
+    clickToSelectAUser: ユーザーを選択してください
+    loadFailedClickToRetry: 読み込みに失敗しました。クリックして再試行
+    loadFailed: 読み込みに失敗しました
+    clickToRetry: クリックして再試行
+    noMoreConversations: もう会話がありません
+  conversation: 会話
+  startConversation: 会話を開始
+  noConversation: 会話がありません
+  selectFromLeftListAndStartConversation: 左側の会話リストから会話を選択して開始
+  title: タイトル
+  body: 内容
+  selectAUser: ユーザーを選択
+  searchUsers: ユーザーを検索...
+  tmpNoConversions: 会話がありません
+  deleteThisMessage: このメッセージを削除
+  deleteThisMessageSubtitle: この操作は取り消せません
+  writeMessageHere: ここにメッセージを入力...
+  sendMessage: メッセージを送信
+
+splash:
+  errors:
+    initializationFailed: 初期化に失敗しました。アプリを再起動してください
+  preparing: 準備中...
+  initializing: 初期化中...
+  loading: 読み込み中...
+  ready: 準備完了
+  initializingMessageService: メッセージサービスを初期化中...
+
+
+download:
+  errors:
+    imageModelNotFound: 画像モデルが見つかりません
+    downloadFailed: ダウンロードに失敗しました
+    videoInfoNotFound: ビデオ情報が見つかりません
+    unknown: 不明
+    downloadTaskAlreadyExists: ダウンロードタスクが既に存在します
+    videoAlreadyDownloaded: ビデオはすでにダウンロードされています
+    downloadFailedForMessage: 'ダウンロードタスクの追加に失敗しました: ${errorInfo}'
+    userPausedDownload: ユーザーがダウンロードを一時停止
+    fileSystemError: 'ファイルシステムエラー: ${errorInfo}'
+    unknownError: '不明なエラー: ${errorInfo}'
+    connectionTimeout: 接続タイムアウト
+    sendTimeout: 送信タイムアウト
+    receiveTimeout: 受信タイムアウト
+    serverError: 'サーバーエラー: ${errorInfo}'
+    unknownNetworkError: 不明なネットワークエラー
+    serviceIsClosing: ダウンロードサービスが閉じています
+    partialDownloadFailed: 部分内容ダウンロード失敗
+    noDownloadTask: ダウンロードタスクがありません
+    taskNotFoundOrDataError: タスクが見つかりませんまたはデータが正しくありません
+    copyDownloadUrlFailed: 'ダウンロードリンクのコピーに失敗しました'
+    fileNotFound: 'ファイルが見つかりません'
+    openFolderFailed: 'ファイルフォルダーを開くのに失敗しました'
+    openFolderFailedWithMessage: 'ファイルフォルダーを開くのに失敗しました: ${message}'
+    directoryNotFound: 'ディレクトリが見つかりません'
+    copyFailed: 'コピーに失敗しました'
+    openFileFailed: 'ファイルを開くのに失敗しました'
+    openFileFailedWithMessage: 'ファイルを開くのに失敗しました: ${message}'
+    noDownloadSource: ダウンロードソースがありません
+    noDownloadSourceNowPleaseWaitInfoLoaded: ダウンロードソースがありません。情報を読み込んだ後、もう一度お試しください。
+    noActiveDownloadTask: ダウンロード中のタスクがありません
+    noFailedDownloadTask: 失敗したタスクがありません
+    noCompletedDownloadTask: 完了したタスクがありません
+    taskAlreadyCompletedDoNotAdd: タスクはすでに完了しています。再度追加しないでください
+    linkExpiredTryAgain: リンクが期限切れです。新しいダウンロードリンクを取得しています
+    linkExpiredTryAgainSuccess: リンクが期限切れです。新しいダウンロードリンクを取得しました
+    linkExpiredTryAgainFailed: リンクが期限切れです。新しいダウンロードリンクを取得に失敗しました
+    taskDeleted: タスクが削除されました
+    unsupportedImageFormat: 'サポートされていない画像形式: ${format}'
+    deleteFileError: 'ファイルの削除に失敗しました。ファイルが他のプロセスによって使用されている可能性があります'
+    deleteTaskError: 'タスクの削除に失敗しました'
+    taskNotFound: 'タスクが見つかりません'
+    canNotRefreshVideoTask: 'ビデオタスクの更新に失敗しました'
+    taskAlreadyProcessing: 'タスクはすでに処理中です'
+    failedToLoadTasks: 'タスクの読み込みに失敗しました'
+    partialDownloadFailedWithMessage: '部分ダウンロードに失敗しました: ${message}'
+    unsupportedImageFormatWithMessage: 'サポートされていない画像形式: ${extension}, デバイスにダウンロードして表示することができます'
+    imageLoadFailed: '画像の読み込みに失敗しました'
+    pleaseTryOtherViewer: '他のビューアーを使用してみてください'
+  downloadList: ダウンロードリスト
+  download: ダウンロード
+  forceDeleteTask: 強制削除タスク
+  startDownloading: ダウンロードを開始
+  clearAllFailedTasks: すべての失敗タスクをクリア
+  clearAllFailedTasksConfirmation: 'すべての失敗タスクをクリアしますか？\nこれらのタスクのファイルも削除されます。'
+  clearAllFailedTasksSuccess: すべての失敗タスクをクリアしました
+  clearAllFailedTasksError: 失敗タスクのクリア中にエラーが発生しました
+  downloadStatus: ダウンロード状態
+  imageList: 画像リスト
+  retryDownload: 再試行ダウンロード
+  notDownloaded: 未ダウンロード
+  downloaded: ダウンロード済み
+  waitingForDownload: ダウンロード待機中
+  downloadingProgressForImageProgress: 'ダウンロード中 (${downloaded}/${total}枚 ${progress}%)'
+  downloadingSingleImageProgress: 'ダウンロード中 (${downloaded}枚)'
+  pausedProgressForImageProgress: 'ダウンロード一時停止中 (${downloaded}/${total}枚 ${progress}%)'
+  pausedSingleImageProgress: 'ダウンロード一時停止中 (${downloaded}枚)'
+  downloadedProgressForImageProgress: 'ダウンロード完了 (合計${total}枚)'
+  viewVideoDetail: ビデオ詳細を表示
+  viewGalleryDetail: ギャラリー詳細を表示
+  moreOptions: もっと操作
+  openFile: ファイルを開く
+  pause: 一時停止
+  resume: 継続
+  copyDownloadUrl: ダウンロードリンクをコピー
+  showInFolder: フォルダーで表示
+  deleteTask: タスクを削除
+  downloadingProgressForVideoTask: 'ダウンロード中 ${downloaded}/${total} (${progress}%) • ${speed}MB/s'
+  downloadingOnlyDownloadedAndSpeed: 'ダウンロード中 ${downloaded} • ${speed}MB/s'
+  pausedForDownloadedAndTotal: '一時停止中 ${downloaded}/${total} (${progress}%)'
+  pausedAndDownloaded: '一時停止中 • ダウンロード済み ${downloaded}'
+  downloadedWithSize: 'ダウンロード完了 • ${size}'
+  copyDownloadUrlSuccess: 'ダウンロードリンクをコピーしました'
+  totalImageNums: '${num}枚'
+  downloadingDownloadedTotalProgressSpeed: 'ダウンロード中 ${downloaded}/${total} (${progress}%) • ${speed}MB/s'
+  downloading: ダウンロード中
+  failed: 失敗
+  completed: 完了
+  downloadDetail: ダウンロード詳細
+  copy: コピー
+  copySuccess: コピーしました
+  waiting: 待機中
+  paused: 一時停止中
+  downloadingOnlyDownloaded: 'ダウンロード中 ${downloaded}'
+  galleryDownloadCompletedWithName: 'ギャラリーのダウンロードが完了しました: ${galleryName}'
+  downloadCompletedWithName: 'ダウンロードが完了しました: ${fileName}'
+  stillInDevelopment: 開発中
+  saveToAppDirectory: アプリケーションディレクトリに保存
+
+favorite:
+  errors:
+    addFailed: 追加に失敗しました
+    addSuccess: 追加に成功しました
+    deleteFolderFailed: フォルダーの削除に失敗しました
+    deleteFolderSuccess: フォルダーの削除に成功しました
+    folderNameCannotBeEmpty: フォルダー名を入力してください
+
+  add: 追加
+  addSuccess: 追加に成功しました
+  addFailed: 追加に失敗しました
+  remove: 削除
+  removeSuccess: 削除に成功しました
+  removeFailed: 削除に失敗しました
+  removeConfirmation: 'このアイテムをお気に入りから削除しますか？'
+  removeConfirmationSuccess: 'アイテムがお気に入りから削除されました'
+  removeConfirmationFailed: 'アイテムをお気に入りから削除に失敗しました'
+  createFolderSuccess: 'フォルダーが作成されました'
+  createFolderFailed: 'フォルダーの作成に失敗しました'
+  createFolder: フォルダーを作成
+  enterFolderName: フォルダー名を入力
+  enterFolderNameHere: フォルダー名を入力してください...
+  create: 作成
+  items: アイテム
+  newFolderName: 新しいフォルダー
+  searchFolders: フォルダーを検索...
+  searchItems: アイテムを検索...
+  createdAt: 作成日時
+  myFavorites: お気に入り
+  deleteFolderTitle: フォルダーを削除
+  deleteFolderConfirmWithTitle: '${title} フォルダーを削除しますか？'
+  removeItemTitle: アイテムを削除
+  removeItemConfirmWithTitle: '${title} アイテムを削除しますか？'
+  removeItemSuccess: アイテムがお気に入りから削除されました
+  removeItemFailed: アイテムをお気に入りから削除に失敗しました
+  localizeFavorite: ローカライズお気に入り
+  editFolderTitle: フォルダー名を編集
+  editFolderSuccess: フォルダー名を更新しました
+  editFolderFailed: フォルダー名の更新に失敗しました
+  searchTags: タグを検索
+
+translation:
+  testConnection: テスト接続
+  testConnectionSuccess: テスト接続成功
+  testConnectionFailed: テスト接続失敗
+  testConnectionFailedWithMessage: 'テスト接続失敗: ${message}'
+  translation: 翻訳
+  needVerification: 検証が必要です
+  needVerificationContent: まず接続テストを行ってからAI翻訳を有効にしてください
+  confirm: 確定
+  disclaimer: 使用須知
+  riskWarning: 風險提示
+  dureToRisk1: 'ユーザーが生成したテキストが原因で、AIサービスプロバイダーのコンテンツポリシーに違反する内容が含まれる場合があります'
+  dureToRisk2: '不当なコンテンツはAPIキーの停止やサービスの終了を引き起こす可能性があります'
+  operationSuggestion: 操作推奨
+  operationSuggestion1: '1. 翻訳前に内容を厳格に審査してください'
+  operationSuggestion2: '2. 暴力、成人向けコンテンツなどを翻訳しないでください'
+  apiConfig: API設定
+  modifyConfigWillAutoCloseAITranslation: '設定を変更するとAI翻訳が自動的に閉じられます。再度開くには接続テストを行ってください'
+  apiAddress: APIアドレス
+  modelName: モデル名
+  modelNameHintText: '例：gpt-4-turbo'
+  maxTokens: 最大トークン数
+  maxTokensHintText: '例：1024'
+  temperature: 温度係数
+  temperatureHintText: '0.0-2.0'
+  clickTestButtonToVerifyAPIConnection: 'テストボタンをクリックしてAPI接続を検証'
+  requestPreview: リクエストプレビュー
+  enableAITranslation: AI翻訳
+  enabled: 有効
+  disabled: 無効
+  testing: テスト中...
+  testNow: 今すぐテスト
+  connectionStatus: 接続状態
+  success: 成功
+  failed: 失敗
+  information: 情報
+  viewRawResponse: 生の応答を表示
+  pleaseCheckInputParametersFormat: 入力パラメーターの形式を確認してください
+  pleaseFillInAPIAddressModelNameAndKey: APIアドレス、モデル名、およびキーを入力してください
+  pleaseFillInValidConfigurationParameters: 有効な設定パラメーターを入力してください
+  pleaseCompleteConnectionTest: 接続テストを完了してください
+  notConfigured: 未設定
+  apiEndpoint: APIエンドポイント
+  configuredKey: 設定済みキー
+  notConfiguredKey: 未設定キー
+  authenticationStatus: 認証状態
+  thisFieldCannotBeEmpty: このフィールドは空にできません
+  apiKey: APIキー
+  apiKeyCannotBeEmpty: APIキーは空にできません
+  pleaseEnterValidNumber: 有効な数値を入力してください
+  range: 範囲
+  mustBeGreaterThan: 以上
+  invalidAPIResponse: 無効なAPI応答
+  connectionFailedForMessage: '接続失敗: ${message}'
+  aiTranslationNotEnabledHint: AI翻訳は有効にされていません。設定で有効にしてください
+  goToSettings: 設定に移動
+  disableAITranslation: AI翻訳を無効にする
+  currentValue: 現在値
+  configureTranslationStrategy: 翻訳戦略を設定
+  advancedSettings: "高度な設定"
+  translationPrompt: "翻訳プロンプト"
+  promptHint: "翻訳プロンプトを入力してください。[TL]を目標言語のプレースホルダーとして使用します"
+  promptHelperText: "プロンプトには[TL]を目標言語のプレースホルダーとして含めてください"
+  promptMustContainTargetLang: "プロンプトには[TL]プレースホルダーを含めてください"
+  aiTranslationWillBeDisabled: "AI翻訳が自動的に無効にされます"
+  aiTranslationWillBeDisabledDueToConfigChange: "基本設定を変更したため、AI翻訳が自動的に無効にされます"
+  aiTranslationWillBeDisabledDueToPromptChange: "翻訳プロンプトを変更したため、AI翻訳が自動的に無効にされます" 
+  aiTranslationWillBeDisabledDueToParamChange: "パラメーター設定を変更したため、AI翻訳が自動的に無効にされます"
+  onlyOpenAIAPISupported: "現在、OpenAI互換のAPI形式（application/jsonリクエストボディ形式）のみサポートされています"
+  streamingTranslation: "ストリーミング翻訳"
+  streamingTranslationSupported: "ストリーミング翻訳対応"
+  streamingTranslationNotSupported: "ストリーミング翻訳非対応"
+  streamingTranslationDescription: "ストリーミング翻訳は翻訳プロセス中にリアルタイムで結果を表示し、より良いユーザー体験を提供します"
+  baseUrlInputHelperText: "末尾が#の場合、入力されたURLを実際のリクエストアドレスとして使用します"
+  currentActualUrl: "現在の実際のURL: ${url}"
+  usingFullUrlWithHash: "完全なURL（#で終わる）を使用"
+  urlEndingWithHashTip: "URLが#で終わる場合、入力されたURLを実際のリクエストアドレスとして使用します"
+  streamingTranslationWarning: "注意：この機能はAPIサービスがストリーミング伝送をサポートする必要があり、一部のモデルではサポートされていない場合があります"
+
+linkInputDialog:
+  title: "リンクを入力"
+  supportedLinksHint: "複数の${webName}リンクをインテリジェントに識別し、アプリ内の対応するページにすばやくジャンプすることをサポートします（リンクと他のテキストはスペースで区切ります）"
+  inputHint: "${webName}リンクを入力してください"
+  validatorEmptyLink: "リンクを入力してください"
+  validatorNoIwaraLink: "有効な${webName}リンクが検出されませんでした"
+  multipleLinksDetected: "複数のリンクが検出されました。1つ選択してください："
+  notIwaraLink: "有効な${webName}リンクではありません"
+  linkParseError: "リンク解析エラー: ${error}"
+  unsupportedLinkDialogTitle: "サポートされていないリンク"
+  unsupportedLinkDialogContent: "このリンクタイプは現在アプリ内で直接開くことができず、外部ブラウザを使用してアクセスする必要があります。\n\nブラウザでこのリンクを開きますか？"
+  openInBrowser: "ブラウザで開く"
+  confirmOpenBrowserDialogTitle: "ブラウザを開くことを確認"
+  confirmOpenBrowserDialogContent: "次のリンクを外部ブラウザで開こうとしています："
+  confirmContinueBrowserOpen: "続行してもよろしいですか？"
+  browserOpenFailed: "リンクを開けませんでした"
+  unsupportedLink: "サポートされていないリンク"
+  cancel: "キャンセル"
+  confirm: "ブラウザで開く"
+
+log:
+  logManagement: "ログ管理"
+  enableLogPersistence: "ログ保存を有効にする"
+  enableLogPersistenceDesc: "ログをデータベースに保存して分析に使用"
+  logDatabaseSizeLimit: "ログデータベースサイズ上限"
+  logDatabaseSizeLimitDesc: "現在: ${size}"
+  exportCurrentLogs: "現在のログをエクスポート"
+  exportCurrentLogsDesc: "現在のアプリケーションログを開発者が診断に使用できるようにエクスポート"
+  exportHistoryLogs: "履歴ログをエクスポート"
+  exportHistoryLogsDesc: "指定された日付範囲内のログをエクスポート"
+  exportMergedLogs: "マージログをエクスポート"
+  exportMergedLogsDesc: "指定された日付範囲内のマージログをエクスポート"
+  showLogStats: "ログ統計情報を表示"
+  logExportSuccess: "ログエクスポート成功"
+  logExportFailed: "ログエクスポート失敗: ${error}"
+  showLogStatsDesc: "様々なタイプのログの統計情報を表示"
+  logExtractFailed: "ログ統計情報の取得に失敗しました: ${error}"
+  clearAllLogs: "すべてのログをクリア"
+  clearAllLogsDesc: "すべてのログデータをクリア"
+  confirmClearAllLogs: "確認クリア"
+  confirmClearAllLogsDesc: "すべてのログデータをクリアしますか？この操作は元に戻すことができません"
+  clearAllLogsSuccess: "ログクリア成功"
+  clearAllLogsFailed: "ログクリア失敗: ${error}"
+  unableToGetLogSizeInfo: "ログサイズ情報を取得できません"
+  currentLogSize: "現在のログサイズ:"
+  logCount: "ログ数:"
+  logCountUnit: "ログ"
+  logSizeLimit: "ログサイズ上限:"
+  usageRate: "使用率:"
+  exceedLimit: "超過"
+  remaining: "残り"
+  currentLogSizeExceededPleaseCleanOldLogsOrIncreaseLogSizeLimit: "現在のログサイズが超過しています。古いログをクリアするか、ログサイズ上限を増加してください"
+  currentLogSizeAlmostExceededPleaseCleanOldLogs: "現在のログサイズがほぼ超過しています。古いログをクリアしてください"
+  cleaningOldLogs: "古いログを自動的にクリアしています..."
+  logCleaningCompleted: "ログクリアが完了しました"
+  logCleaningProcessMayNotBeCompleted: "ログクリア過程が完了しない可能性があります"
+  cleanExceededLogs: "超過ログをクリア"
+  noLogsToExport: "エクスポート可能なログデータがありません"
+  exportingLogs: "ログをエクスポートしています..."
+  noHistoryLogsToExport: "履歴ログをエクスポートするのに十分なデータがありません。アプリを使用してからしばらくしてから再試行してください"
+  selectLogDate: "ログ日付を選択"
+  today: "今日"
+  selectMergeRange: "マージ範囲を選択"
+  selectMergeRangeHint: "マージするログの日付範囲を選択してください"
+  selectMergeRangeDays: "最近 ${days} 日"
+  logStats: "ログ統計情報"
+  todayLogs: "今日のログ: ${count} 件"
+  recent7DaysLogs: "最近7日のログ: ${count} 件"
+  totalLogs: "合計ログ: ${count} 件"
+  setLogDatabaseSizeLimit: "ログデータベースサイズ上限を設定"
+  currentLogSizeWithSize: "現在のログサイズ: ${size}"
+  warning: "警告"
+  newSizeLimit: "新しいサイズ上限: ${size}"
+  confirmToContinue: "続行してもよろしいですか？"
+  logSizeLimitSetSuccess: "ログサイズ上限を ${size} に設定しました"

@@ -1,0 +1,1080 @@
+# en.i18n.yaml
+common:
+  appName: Love Iwara
+  ok: OK
+  cancel: Cancel
+  save: Save
+  delete: Delete
+  loading: Loading...
+  scrollToTop: Scroll to Top
+  privacyHint: Privacy content, not displayed
+  latest: Latest
+  likesCount: Likes
+  viewsCount: Views
+  popular: Popular
+  trending: Trending
+  commentList: Comment List
+  sendComment: Send Comment
+  send: Send
+  retry: Retry
+  premium: Premium
+  follower: Follower
+  friend: Friend
+  video: Video
+  following: Following
+  expand: Expand
+  collapse: Collapse
+  cancelFriendRequest: Cancel Request
+  cancelSpecialFollow: Cancel Special Follow
+  addFriend: Add Friend
+  removeFriend: Remove Friend
+  followed: Followed
+  follow: Follow
+  unfollow: Unfollow
+  specialFollow: Special Follow
+  specialFollowed: Special Followed
+  gallery: Gallery
+  playlist: Playlist
+  commentPostedSuccessfully: Comment Posted Successfully
+  commentPostedFailed: Comment Posted Failed
+  success: Success
+  commentDeletedSuccessfully: Comment Deleted Successfully
+  commentUpdatedSuccessfully: Comment Updated Successfully
+  totalComments: '${count} Comments'
+  writeYourCommentHere: Write your comment here...
+  tmpNoReplies: No replies yet
+  loadMore: Load More
+  noMoreDatas: No more data
+  selectTranslationLanguage: Select Translation Language
+  translate: Translate
+  translateFailedPleaseTryAgainLater: Translate failed, please try again later
+  translationResult: Translation Result
+  justNow: Just Now
+  minutesAgo: '${num} minutes ago'
+  hoursAgo: '${num} hours ago'
+  daysAgo: '${num} days ago'
+  editedAt: '${num} edited'
+  editComment: Edit Comment
+  commentUpdated: Comment Updated
+  replyComment: Reply Comment
+  reply: Reply
+  edit: Edit
+  unknownUser: Unknown User
+  me: Me
+  author: Author
+  admin: Admin
+  viewReplies: 'View Replies (${num})'
+  hideReplies: Hide Replies
+  confirmDelete: Confirm Delete
+  areYouSureYouWantToDeleteThisItem: Are you sure you want to delete this item?
+  tmpNoComments: No comments yet
+  refresh: Refresh
+  back: Back
+  tips: Tips
+  linkIsEmpty: Link is empty
+  linkCopiedToClipboard: Link copied to clipboard
+  imageCopiedToClipboard: Image copied to clipboard
+  copyImageFailed: Copy image failed
+  mobileSaveImageIsUnderDevelopment: Mobile save image is under development
+  imageSavedTo: Image saved to
+  saveImageFailed: Save image failed
+  close: Close
+  more: More
+  moreFeaturesToBeDeveloped: More features to be developed
+  all: All
+  selectedRecords: 'Selected ${num} records'
+  cancelSelectAll: Cancel Select All
+  selectAll: Select All
+  exitEditMode: Exit Edit Mode
+  areYouSureYouWantToDeleteSelectedItems: 'Are you sure you want to delete selected ${num} items?'
+  searchHistoryRecords: Search History Records...
+  settings: Settings
+  subscriptions: Subscriptions
+  videoCount: '${num} videos'
+  share: Share
+  areYouSureYouWantToShareThisPlaylist: Are you sure you want to share this playlist?
+  editTitle: Edit Title
+  editMode: Edit Mode
+  pleaseEnterNewTitle: Please enter new title
+  createPlayList: Create Play List
+  create: Create
+  checkNetworkSettings: Check Network Settings
+  general: General
+  r18: R18
+  sensitive: Sensitive
+  year: Year
+  month: Month
+  tag: Tag
+  private: Private
+  noTitle: No Title
+  search: Search
+  noContent: No content
+  recording: Recording
+  paused: Paused
+  clear: Clear
+  user: User
+  post: Post
+  seconds: Seconds
+  comingSoon: Coming Soon
+  confirm: Confirm
+  hour: Hour
+  minute: Minute
+  clickToRefresh: Click to Refresh
+  history: History
+  favorites: Favorites
+  friends: Friends
+  playList: Play List
+  checkLicense: Check License
+  logout: Logout
+  fensi: Fans
+  accept: Accept
+  reject: Reject
+  clearAllHistory: Clear All History
+  clearAllHistoryConfirm: Are you sure you want to clear all history?
+  followingList: Following List
+  followersList: Followers List
+  follows: Follows
+  fans: Fans
+  followsAndFans: Follows and Fans
+  numViews: Views
+  updatedAt: Updated At
+  publishedAt: Published At
+  externalVideo: External Video
+  originalText: Original Text
+  showOriginalText: Show Original Text
+  showProcessedText: Show Processed Text
+  preview: Preview
+  rules: Rules
+  agree: Agree
+  disagree: Disagree
+  agreeToRules: Agree to Rules
+  createPost: Create Post
+  title: Title
+  enterTitle: Please enter title
+  content: Content
+  enterContent: Please enter content
+  writeYourContentHere: Please enter content...
+  tagBlacklist: Tag Blacklist
+  noData: No data
+  tagLimit: Tag Limit
+  enableFloatingButtons: Enable Floating Buttons
+  disableFloatingButtons: Disable Floating Buttons
+  enabledFloatingButtons: Enabled Floating Buttons
+  disabledFloatingButtons: Disabled Floating Buttons
+  pendingCommentCount: Pending Comment Count
+  joined: 'Joined at ${str}'
+  download: Download
+  selectQuality: Select Quality
+  selectDateRange: Select Date Range
+  selectDateRangeHint: Select date range, default is recent 30 days
+  clearDateRange: Clear Date Range
+  followSuccessClickAgainToSpecialFollow: Followed successfully, click again to special follow
+  exitConfirmTip: Are you sure you want to exit?
+  error: Error
+  taskRunning: "A task is already running, please wait."
+  operationCancelled: "Operation cancelled."
+  unsavedChanges: "You have unsaved changes"
+  specialFollowsManagementTip: Drag to reorder • Swipe left to remove
+  specialFollowsManagement: Special Follows Management
+  # Pagination related
+  pagination:
+    totalItems: 'Total ${num} items'
+    jumpToPage: 'Jump to page'
+    pleaseEnterPageNumber: 'Please enter page number (1-${max})'
+    pageNumber: 'Page number'
+    jump: 'Jump'
+    invalidPageNumber: 'Please enter a valid page number (1-${max})'
+    invalidInput: 'Please enter a valid page number'
+    waterfall: 'Waterfall'
+    pagination: 'Pagination'
+auth:
+  login: Login
+  logout: Logout
+  email: Email
+  password: Password
+  loginOrRegister: Login / Register
+  register: Register
+  pleaseEnterEmail: Please enter email
+  pleaseEnterPassword: Please enter password
+  passwordMustBeAtLeast6Characters: Password must be at least 6 characters
+  pleaseEnterCaptcha: Please enter captcha
+  captcha: Captcha
+  refreshCaptcha: Refresh Captcha
+  captchaNotLoaded: Captcha not loaded
+  loginSuccess: Login Success
+  emailVerificationSent: Email verification sent
+  notLoggedIn: Not Logged In
+  clickToLogin: Click to Login
+  logoutConfirmation: Are you sure you want to logout?
+  logoutSuccess: Logout Success
+  logoutFailed: Logout Failed
+  usernameOrEmail: Username or Email
+  pleaseEnterUsernameOrEmail: Please enter username or email
+  rememberMe: "Remember Username and Password"
+
+errors:
+  error: Error
+  required: This field is required
+  invalidEmail: Invalid email address
+  networkError: Network error, please try again
+  errorWhileFetching: Error while fetching
+  commentCanNotBeEmpty: Comment content cannot be empty
+  errorWhileFetchingReplies: Error while fetching replies, please check network connection
+  canNotFindCommentController: Can not find comment controller
+  errorWhileLoadingGallery: Error while loading gallery
+  howCouldThereBeNoDataItCantBePossible: How could there be no data? It can't be possible :<
+  unsupportedImageFormat: 'Unsupported image format: ${str}'
+  invalidGalleryId: Invalid gallery ID
+  translationFailedPleaseTryAgainLater: Translation failed, please try again later
+  errorOccurred: "An error occurred, please try again later."
+  errorOccurredWhileProcessingRequest: Error occurred while processing request
+  errorWhileFetchingDatas: Error while fetching datas, please try again later
+  serviceNotInitialized: Service not initialized
+  unknownType: Unknown type
+  errorWhileOpeningLink: 'Error while opening link: ${link}'
+  invalidUrl: Invalid URL
+  failedToOperate: Failed to operate
+  permissionDenied: Permission Denied
+  youDoNotHavePermissionToAccessThisResource: You do not have permission to access this resource
+  loginFailed: Login Failed
+  unknownError: Unknown Error
+  sessionExpired: Session Expired
+  failedToFetchCaptcha: Failed to fetch captcha
+  emailAlreadyExists: Email already exists
+  invalidCaptcha: Invalid Captcha
+  registerFailed: Register Failed
+  failedToFetchComments: Failed to fetch comments
+  failedToFetchImageDetail: Failed to fetch image detail
+  failedToFetchImageList: Failed to fetch image list
+  failedToFetchData: Failed to fetch data
+  invalidParameter: Invalid parameter
+  pleaseLoginFirst: Please login first
+  errorWhileLoadingPost: Error while loading post
+  errorWhileLoadingPostDetail: Error while loading post detail
+  invalidPostId: Invalid post ID
+  forceUpdateNotPermittedToGoBack: Currently in force update state, cannot go back
+  pleaseLoginAgain: Please login again
+  invalidLogin: Invalid login, Please check your email and password
+  tooManyRequests: Too many requests, please try again later
+  exceedsMaxLength: 'Exceeds max length: ${max}'
+  contentCanNotBeEmpty: Content cannot be empty
+  titleCanNotBeEmpty: Title cannot be empty
+  tooManyRequestsPleaseTryAgainLaterText: "Too many requests, please try again later, remaining"
+  remainingHours: "${num} hours"
+  remainingMinutes: "${num} minutes"
+  remainingSeconds: "${num} seconds"
+  tagLimitExceeded: 'Tag limit exceeded, limit: ${limit}'
+  failedToRefresh: Failed to refresh
+  noPermission: No permission
+  resourceNotFound: Resource not found
+  failedToSaveCredentials: "Failed to save login credentials"
+  failedToLoadSavedCredentials: "Failed to load saved credentials"
+  specialFollowLimitReached: 'Special follow limit exceeded, limit: ${cnt}, please adjust in the follow list page'
+  notFound: 'Content not found or has been deleted'
+friends:
+  clickToRestoreFriend: Click to restore friend
+  friendsList: Friends List
+  friendRequests: Friend Requests
+  friendRequestsList: Friend Requests List
+  removingFriend: Removing friend...
+  failedToRemoveFriend: Failed to remove friend
+  cancelingRequest: Canceling friend request...
+  failedToCancelRequest: Failed to cancel friend request
+
+authorProfile:
+  noMoreDatas: No more data
+  userProfile: User Profile
+
+favorites:
+  clickToRestoreFavorite: Click to restore favorite
+  myFavorites: My Favorites
+
+galleryDetail:
+  galleryDetail: Gallery Detail
+  viewGalleryDetail: View Gallery Detail
+  copyLink: Copy Link
+  copyImage: Copy Image
+  saveAs: Save As
+  saveToAlbum: Save to Album
+  publishedAt: Published At
+  viewsCount: Views Count
+  imageLibraryFunctionIntroduction: Image Library Function Introduction
+  rightClickToSaveSingleImage: Right Click to Save Single Image
+  batchSave: Batch Save
+  keyboardLeftAndRightToSwitch: Keyboard Left and Right to Switch
+  keyboardUpAndDownToZoom: Keyboard Up and Down to Zoom
+  mouseWheelToSwitch: Mouse Wheel to Switch
+  ctrlAndMouseWheelToZoom: CTRL + Mouse Wheel to Zoom
+  moreFeaturesToBeDiscovered: More Features to Be Discovered...
+  authorOtherGalleries: Author's Other Galleries
+  relatedGalleries: Related Galleries
+  clickLeftAndRightEdgeToSwitchImage: Click Left and Right Edge to Switch Image
+
+playList:
+  myPlayList: My Play List
+  friendlyTips: Friendly Tips
+  dearUser: Dear User
+  iwaraPlayListSystemIsNotPerfectYet: iwara's play list system is not perfect yet
+  notSupportSetCover: Not support set cover
+  notSupportDeleteList: Not support delete list
+  notSupportSetPrivate: Not support set private
+  yesCreateListWillAlwaysExistAndVisibleToEveryone: Yes... create list will always exist and visible to everyone
+  smallSuggestion: Small Suggestion
+  useLikeToCollectContent: If you are more concerned about privacy, it is recommended to use the "like" function to collect content
+  welcomeToDiscussOnGitHub: If you have other suggestions or ideas, welcome to discuss on GitHub!
+  iUnderstand: I Understand
+  searchPlaylists: Search Playlists...
+  newPlaylistName: New Playlist Name
+  createNewPlaylist: Create New Playlist
+  videos: Videos
+
+search:
+  googleSearchScope: Search Scope
+  searchTags: Search Tags...
+  contentRating: Content Rating
+  removeTag: Remove Tag
+  pleaseEnterSearchContent: Please enter search content
+  searchHistory: Search History
+  searchSuggestion: Search Suggestion
+  usedTimes: Used Times
+  lastUsed: Last Used
+  noSearchHistoryRecords: No search history
+  notSupportCurrentSearchType: 'Not support current search type ${searchType}, please wait for the update'
+  searchResult: Search Result
+  unsupportedSearchType: 'Unsupported search type: ${searchType}'
+  googleSearch: "Google Search"
+  googleSearchHint: "${webName} 's search function is not easy to use? Try Google Search!"
+  googleSearchDescription: "Use the :site search operator of Google Search to search for content on the site. This is very useful when searching for videos, galleries, playlists, and users."
+  googleSearchKeywordsHint: "Enter keywords to search"
+  openLinkJump: "Open Link Jump"
+  googleSearchButton: "Google Search"
+  pleaseEnterSearchKeywords: "Please enter search keywords"
+  googleSearchQueryCopied: "Search query copied to clipboard"
+  googleSearchBrowserOpenFailed: "Failed to open browser: ${error}"
+mediaList:
+  personalIntroduction: Personal Introduction
+
+settings:
+  listViewMode: List View Mode
+  useTraditionalPaginationMode: Use Traditional Pagination Mode
+  useTraditionalPaginationModeDesc: Enable traditional pagination mode, disable waterfall mode
+  showVideoProgressBottomBarWhenToolbarHidden: Show Video Progress Bottom Bar When Toolbar Hidden
+  showVideoProgressBottomBarWhenToolbarHiddenDesc: This configuration determines whether the video progress bottom bar will be shown when the toolbar is hidden.
+  basicSettings: Basic Settings
+  personalizedSettings: Personalized Settings
+  otherSettings: Other Settings
+  searchConfig: Search Config
+  thisConfigurationDeterminesWhetherThePreviousConfigurationWillBeUsedWhenPlayingVideosAgain: This configuration determines whether the previous configuration will be used when playing videos again.
+  playControl: Play Control
+  fastForwardTime: Fast Forward Time
+  fastForwardTimeMustBeAPositiveInteger: Fast forward time must be a positive integer.
+  rewindTime: Rewind Time
+  rewindTimeMustBeAPositiveInteger: Rewind time must be a positive integer.
+  longPressPlaybackSpeed: Long Press Playback Speed
+  longPressPlaybackSpeedMustBeAPositiveNumber: Long press playback speed must be a positive number.
+  repeat: Repeat
+  renderVerticalVideoInVerticalScreen: Render Vertical Video in Vertical Screen
+  thisConfigurationDeterminesWhetherTheVideoWillBeRenderedInVerticalScreenWhenPlayingInFullScreen: This configuration determines whether the video will be rendered in vertical screen when playing in full screen.
+  rememberVolume: Remember Volume
+  thisConfigurationDeterminesWhetherTheVolumeWillBeKeptWhenPlayingVideosAgain: This configuration determines whether the volume will be kept when playing videos again.
+  rememberBrightness: Remember Brightness
+  thisConfigurationDeterminesWhetherTheBrightnessWillBeKeptWhenPlayingVideosAgain: This configuration determines whether the brightness will be kept when playing videos again.
+  playControlArea: Play Control Area
+  leftAndRightControlAreaWidth: Left and Right Control Area Width
+  thisConfigurationDeterminesTheWidthOfTheControlAreasOnTheLeftAndRightSidesOfThePlayer: This configuration determines the width of the control areas on the left and right sides of the player.
+  proxyAddressCannotBeEmpty: Proxy address cannot be empty.
+  invalidProxyAddressFormatPleaseUseTheFormatOfIpPortOrDomainNamePort: Invalid proxy address format. Please use the format of IP:port or domain name:port.
+  proxyNormalWork: Proxy normal work.
+  testProxyFailedWithStatusCode: 'Test proxy failed, status code: ${code}'
+  testProxyFailedWithException: 'Test proxy failed, exception: ${exception}'
+  proxyConfig: Proxy Config
+  thisIsHttpProxyAddress: This is http proxy address
+  checkProxy: Check Proxy
+  proxyAddress: Proxy Address
+  pleaseEnterTheUrlOfTheProxyServerForExample1270018080: Please enter the URL of the proxy server, for example 127.0.0.1:8080
+  enableProxy: Enable Proxy
+  left: Left
+  middle: Middle
+  right: Right
+  playerSettings: Player Settings
+  networkSettings: Network Settings
+  customizeYourPlaybackExperience: Customize Your Playback Experience
+  chooseYourFavoriteAppAppearance: Choose Your Favorite App Appearance
+  configureYourProxyServer: Configure Your Proxy Server
+  settings: Settings
+  themeSettings: Theme Settings
+  followSystem: Follow System
+  lightMode: Light Mode
+  darkMode: Dark Mode
+  presetTheme: Preset Theme
+  basicTheme: Basic Theme
+  needRestartToApply: Need to restart the app to apply the settings
+  themeNeedRestartDescription: The theme settings need to restart the app to apply the settings
+  about: About
+  currentVersion: Current Version
+  latestVersion: Latest Version
+  checkForUpdates: Check for Updates
+  update: Update
+  newVersionAvailable: New Version Available
+  projectHome: Project Home
+  release: Release
+  issueReport: Issue Report
+  openSourceLicense: Open Source License
+  checkForUpdatesFailed: Check for updates failed, please try again later
+  autoCheckUpdate: Auto Check Update
+  updateContent: Update Content
+  releaseDate: Release Date
+  ignoreThisVersion: Ignore This Version
+  minVersionUpdateRequired: Current version is too low, please update as soon as possible
+  forceUpdateTip: "This is a mandatory update. Please update to the latest version as soon as possible"
+  viewChangelog: View Changelog
+  alreadyLatestVersion: Already the latest version
+  appSettings: App Settings
+  configureYourAppSettings: Configure Your App Settings
+  history: History
+  autoRecordHistory: Auto Record History
+  autoRecordHistoryDesc: Auto record the videos and images you have watched
+  showUnprocessedMarkdownText: Show Unprocessed Markdown Text
+  showUnprocessedMarkdownTextDesc: Show the original text of the markdown
+  markdown: Markdown
+  activeBackgroundPrivacyMode: Privacy Mode
+  activeBackgroundPrivacyModeDesc: Prevent screenshots, hide screen when running in the background...
+  privacy: Privacy
+  forum: Forum
+  disableForumReplyQuote: Disable Forum Reply Quote
+  disableForumReplyQuoteDesc: Disable carrying replied floor information when replying in forum
+  theaterMode: Theater Mode
+  theaterModeDesc: After opening, the player background will be set to the blurred version of the video cover
+  appLinks: App Links
+  defaultBrowser: Default Browse
+  defaultBrowserDesc: Please open the default link configuration item in the system settings and add the iwara.tv website link
+  themeMode: Theme Mode
+  themeModeDesc: This configuration determines the theme mode of the app
+  dynamicColor: Dynamic Color
+  dynamicColorDesc: This configuration determines whether the app uses dynamic color
+  useDynamicColor: Use Dynamic Color
+  useDynamicColorDesc: This configuration determines whether the app uses dynamic color
+  presetColors: Preset Colors
+  customColors: Custom Colors
+  pickColor: Pick Color
+  cancel: Cancel
+  confirm: Confirm
+  noCustomColors: No custom colors
+  recordAndRestorePlaybackProgress: Record and Restore Playback Progress
+  signature: Signature
+  enableSignature: Enable Signature
+  enableSignatureDesc: This configuration determines whether the app will add signature when replying
+  enterSignature: Enter Signature
+  editSignature: Edit Signature
+  signatureContent: Signature Content
+  exportConfig: "Export App Configuration"
+  exportConfigDesc: "Export app configuration to a file (excluding download records)"
+  importConfig: "Import App Configuration"
+  importConfigDesc: "Import app configuration from a file"
+  exportConfigSuccess: "Configuration exported successfully!"
+  exportConfigFailed: "Failed to export configuration"
+  importConfigSuccess: "Configuration imported successfully!"
+  importConfigFailed: "Failed to import configuration"
+  historyUpdateLogs: "History Update Logs"
+  noUpdateLogs: "No update logs available"
+  versionLabel: "Version: {version}"
+  releaseDateLabel: "Release Date: {date}"
+  noChanges: "No update content available"
+  interaction: Interaction
+  enableVibration: Enable Vibration
+  enableVibrationDesc: Enable vibration feedback when interacting with the app
+  defaultKeepVideoToolbarVisible: Keep Video Toolbar Visible
+  defaultKeepVideoToolbarVisibleDesc: This setting determines whether the video toolbar remains visible when first entering the video page.
+  theaterModelHasPerformanceIssuesAndIDontKnowHowToFixItNowIfYouRRuningOnDeskTopYouCanOpenIt: Mobile devices enable theater mode, which may cause performance issues. You can choose to enable it.
+  lockButtonPosition: Lock Button Position
+  lockButtonPositionBothSides: Both Sides
+  lockButtonPositionLeftSide: Left Side
+  lockButtonPositionRightSide: Right Side
+  jumpLink: Jump Link
+signIn:
+  pleaseLoginFirst: Please login first
+  alreadySignedInToday: You have already signed in today!
+  youDidNotStickToTheSignIn: You did not stick to the sign in.
+  signInSuccess: Sign in successfully!
+  signInFailed: Sign in failed, please try again later
+  consecutiveSignIns: Consecutive Sign Ins
+  failureReason: Failure Reason
+  selectDateRange: Select Date Range
+  startDate: Start Date
+  endDate: End Date
+  invalidDate: Invalid Date
+  invalidDateRange: Invalid Date Range
+  errorFormatText: Date Format Error
+  errorInvalidText: Invalid Date Range
+  errorInvalidRangeText: Invalid Date Range
+  dateRangeCantBeMoreThanOneYear: Date range cannot be more than one year
+  signIn: Sign In
+  signInRecord: Sign In Record
+  totalSignIns: Total Sign Ins
+  pleaseSelectSignInStatus: Please select sign in status
+
+subscriptions:
+  pleaseLoginFirstToViewYourSubscriptions: Please login first to view your subscriptions.
+
+videoDetail:
+  pipMode: PiP Mode
+  resumeFromLastPosition: 'Resume from last position: ${position}'
+  videoIdIsEmpty: Video ID is empty
+  videoInfoIsEmpty: Video info is empty
+  thisIsAPrivateVideo: This is a private video
+  getVideoInfoFailed: 'Get video info failed, please try again later'
+  noVideoSourceFound: No video source found
+  tagCopiedToClipboard: 'Tag "${tagId}" copied to clipboard'
+  errorLoadingVideo: Error loading video
+  play: Play
+  pause: Pause
+  exitAppFullscreen: Exit App Fullscreen
+  enterAppFullscreen: Enter App Fullscreen
+  exitSystemFullscreen: Exit System Fullscreen
+  enterSystemFullscreen: Enter System Fullscreen
+  seekTo: Seek To
+  switchResolution: Switch Resolution
+  switchPlaybackSpeed: Switch Playback Speed
+  rewindSeconds: 'Rewind ${num} seconds'
+  fastForwardSeconds: 'Fast Forward ${num} seconds'
+  playbackSpeedIng: 'Playing at ${rate}x speed'
+  brightness: Brightness
+  brightnessLowest: Brightness is lowest
+  volume: Volume
+  volumeMuted: Volume is muted
+  home: Home
+  videoPlayer: Video Player
+  videoPlayerInfo: Video Player Info
+  moreSettings: More Settings
+  videoPlayerFeatureInfo: Video Player Feature Info
+  autoRewind: Auto Rewind
+  rewindAndFastForward: Rewind and Fast Forward
+  volumeAndBrightness: Volume and Brightness
+  centerAreaDoubleTapPauseOrPlay: Center Area Double Tap Pause or Play
+  showVerticalVideoInFullScreen: Show Vertical Video in Full Screen
+  keepLastVolumeAndBrightness: Keep Last Volume and Brightness
+  setProxy: Set Proxy
+  moreFeaturesToBeDiscovered: More Features to Be Discovered...
+  videoPlayerSettings: Video Player Settings
+  commentCount: '${num} comments'
+  writeYourCommentHere: Write your comment here...
+  authorOtherVideos: Author's Other Videos
+  relatedVideos: Related Videos
+  privateVideo: This is a private video
+  externalVideo: This is an external video
+  openInBrowser: Open in Browser
+  resourceDeleted: This video seems to have been deleted :/
+  noDownloadUrl: No download URL
+  startDownloading: Start downloading
+  downloadFailed: Download failed, please try again later
+  downloadSuccess: Download success
+  download: Download
+  downloadManager: Download Manager
+
+share:
+  sharePlayList: Share Play List
+  wowDidYouSeeThis: Wow, did you see this?
+  nameIs: Name is
+  clickLinkToView: Click link to view
+  iReallyLikeThis: I really like this
+  shareFailed: Share failed, please try again later
+  share: Share
+  shareAsImage: Share as Image
+  shareAsText: Share as Text
+  shareAsImageDesc: Share the video cover as an image
+  shareAsTextDesc: Share the video details as text
+  shareAsImageFailed: Share the video cover as an image failed, please try again later
+  shareAsTextFailed: Share the video details as text failed, please try again later
+  shareVideo: Share Video
+  authorIs: Author is
+  shareGallery: Share Gallery
+  galleryTitleIs: Gallery title is
+  galleryAuthorIs: Gallery author is
+  shareUser: Share User
+  userNameIs: User name is
+  userAuthorIs: User author is
+  comments: Comments
+  shareThread: Share Thread
+  views: Views
+  sharePost: Share Post
+  postTitleIs: Post title is
+  postAuthorIs: Post author is
+markdown:
+  markdownSyntax: Markdown Syntax
+  iwaraSpecialMarkdownSyntax: Iwara Special Markdown Syntax
+  internalLink: Internal Link
+  supportAutoConvertLinkBelow: 'Support auto convert link below:'
+  convertLinkExample: '🎬 Video Link\n🖼️ Image Link\n👤 User Link\n📌 Forum Link\n🎵 Playlist Link\n💬 Thread Link'
+  mentionUser: Mention User
+  mentionUserDescription: 'Input @ followed by username, will be automatically converted to user link'
+  markdownBasicSyntax: Markdown Basic Syntax
+  paragraphAndLineBreak: Paragraph and Line Break
+  paragraphAndLineBreakDescription: 'Paragraphs are separated by a line, and two spaces at the end of the line will be converted to a line break'
+  paragraphAndLineBreakSyntax: 'This is the first paragraph\n\nThis is the second paragraph\nThis line ends with two spaces  \nwill be converted to a line break'
+  textStyle: Text Style
+  textStyleDescription: 'Use special symbols to surround text to change style'
+  textStyleSyntax: '**Bold Text**\n*Italic Text*\n~~Strikethrough Text~~\n`Code Text`'
+  quote: Quote
+  quoteDescription: 'Use > symbol to create quote, multiple > to create multi-level quote'
+  quoteSyntax: '> This is a first-level quote\n>> This is a second-level quote'
+  list: List
+  listDescription: 'Create ordered list with number+dot, create unordered list with -'
+  listSyntax: '1. First item\n2. Second item\n\n- Unordered item\n  - Subitem\n  - Another subitem'
+  linkAndImage: Link and Image
+  linkAndImageDescription: 'Link format: [text](URL)\nImage format: ![description](URL)'
+  linkAndImageSyntax: '[link text](${link})\n![image description](${imgUrl})'
+  title: Title
+  titleDescription: 'Use # symbol to create title, number to show level'
+  titleSyntax: '# First-level title\n## Second-level title\n### Third-level title'
+  separator: Separator
+  separatorDescription: 'Create separator with three or more - symbols'
+  separatorSyntax: '---'
+  syntax: Syntax
+
+forum:
+  recent: Recent
+  category: Category
+  lastReply: Last Reply
+  errors:
+    pleaseSelectCategory: Please select a category
+    threadLocked: This thread is locked, cannot reply
+  createPost: Create Post
+  title: Title
+  enterTitle: Enter Title
+  content: Content
+  enterContent: Enter Content
+  writeYourContentHere: Write your content here...
+  posts: Posts
+  threads: Threads
+  forum: Forum
+  createThread: Create Thread
+  selectCategory: Select Category
+  cooldownRemaining: 'Cooldown remaining ${minutes} minutes ${seconds} seconds'
+  groups:
+    administration: Administration
+    global: Global
+    chinese: Chinese
+    japanese: Japanese
+    korean: Korean
+    other: Other
+  leafNames:
+    announcements: Announcements
+    feedback: Feedback
+    support: Support
+    general: General
+    guides: Guides
+    questions: Questions
+    requests: Requests
+    sharing: Sharing
+    'general_zh': General
+    'questions_zh': Questions
+    'requests_zh': Requests
+    'support_zh': Support
+    'general_ja': General
+    'questions_ja': Questions
+    'requests_ja': Requests
+    'support_ja': Support
+    korean: Korean
+    other: Other
+  leafDescriptions:
+    announcements: Official important notifications and announcements
+    feedback: Feedback on the website's features and services
+    support: Help to resolve website-related issues
+    general: Discuss any topic
+    guides: Share your experiences and tutorials
+    questions: Raise your inquiries
+    requests: Post your requests
+    sharing: Share interesting content
+    'general_zh': Discuss any topic
+    'questions_zh': Raise your inquiries
+    'requests_zh': Post your requests
+    'support_zh': Help to resolve website-related issues
+    'general_ja': Discuss any topic
+    'questions_ja': Raise your inquiries
+    'requests_ja': Post your requests
+    'support_ja': Help to resolve website-related issues
+    korean: Discussions related to Korean
+    other: Other unclassified content
+  reply: Reply
+  pendingReview: Pending Review
+  editedAt: Edited At
+  copySuccess: Copied to clipboard
+  copySuccessForMessage: 'Copied to clipboard: ${str}'
+  editReply: Edit Reply
+  editTitle: Edit Title
+  submit: Submit
+
+notifications:
+  errors:
+    unsupportedNotificationType: Unsupported notification type
+    unknownUser: Unknown user
+    unsupportedNotificationTypeWithType: 'Unsupported notification type: ${type}'
+    unknownNotificationType: Unknown notification type
+  notifications: Notifications
+  profile: Profile
+  postedNewComment: Posted new comment
+  inYour: In your
+  video: Video
+  repliedYourVideoComment: Replied your video comment
+  copyInfoToClipboard: Copy notification info to clipboard
+  copySuccess: Copied to clipboard
+  copySuccessForMessage: 'Copied to clipboard: ${str}'
+  markAllAsRead: Mark all as read
+  markAllAsReadSuccess: All notifications have been marked as read
+  markAllAsReadFailed: Mark all as read failed
+  markSelectedAsRead: Mark selected as read
+  markSelectedAsReadSuccess: Selected notifications have been marked as read
+  markSelectedAsReadFailed: Mark selected as read failed
+  markAsRead: Mark as read
+  markAsReadSuccess: Notification has been marked as read
+  markAsReadFailed: Notification marked as read failed
+  notificationTypeHelp: Notification Type Help
+  dueToLackOfNotificationTypeDetails: Due to the lack of notification type details, the supported types may not cover the messages you currently receive
+  helpUsImproveNotificationTypeSupport: If you are willing to help us improve the support for notification types
+  helpUsImproveNotificationTypeSupportLongText: '1. 📋 Copy the notification information\n2. 🐞 Submit an issue to the project repository\n\n⚠️ Note: Notification information may contain personal privacy, if you do not want to public, you can also send it to the project author by email.'
+  goToRepository: Go to Repository
+  copy: Copy
+  commentApproved: Comment Approved
+  repliedYourProfileComment: Replied your profile comment
+  kReplied: replied to your comment on
+  kCommented: commented on your
+  kVideo: video
+  kGallery: gallery
+  kProfile: profile
+  kThread: thread
+  kPost: post
+  kCommentSection: comment section
+  kApprovedComment: Comment approved
+  kApprovedVideo: Video approved
+  kApprovedGallery: Gallery approved
+  kApprovedThread: Thread approved
+  kApprovedPost: Post approved
+  kUnknownType: Unknown notification type
+
+conversation:
+  errors:
+    pleaseSelectAUser: Please select a user
+    pleaseEnterATitle: Please enter a title
+    clickToSelectAUser: Click to select a user
+    loadFailedClickToRetry: Load failed, click to retry
+    loadFailed: Load failed
+    clickToRetry: Click to retry
+    noMoreConversations: No more conversations
+  conversation: Conversation
+  startConversation: Start Conversation
+  noConversation: No conversation
+  selectFromLeftListAndStartConversation: Select from left list and start conversation
+  title: Title
+  body: Body
+  selectAUser: Select a user
+  searchUsers: Search users...
+  tmpNoConversions: No conversions
+  deleteThisMessage: Delete this message
+  deleteThisMessageSubtitle: This operation cannot be undone
+  writeMessageHere: Write message here...
+  sendMessage: Send message
+
+splash:
+  errors:
+    initializationFailed: Initialization failed, please restart the app
+  preparing: Preparing...
+  initializing: Initializing...
+  loading: Loading...
+  ready: Ready
+  initializingMessageService: Initializing message service...
+
+
+download:
+  errors:
+    imageModelNotFound: Image model not found
+    downloadFailed: Download failed
+    videoInfoNotFound: Video info not found
+    downloadTaskAlreadyExists: Download task already exists
+    videoAlreadyDownloaded: Video already downloaded
+    downloadFailedForMessage: 'Add download task failed: ${errorInfo}'
+    userPausedDownload: User paused download
+    unknown: Unknown
+    fileSystemError: 'File system error: ${errorInfo}'
+    unknownError: 'Unknown error: ${errorInfo}'
+    connectionTimeout: Connection timeout
+    sendTimeout: Send timeout
+    receiveTimeout: Receive timeout
+    serverError: 'Server error: ${errorInfo}'
+    unknownNetworkError: Unknown network error
+    serviceIsClosing: Download service is closing
+    partialDownloadFailed: Partial content download failed
+    noDownloadTask: No download task
+    taskNotFoundOrDataError: Task not found or data error
+    fileNotFound: File not found
+    openFolderFailed: Failed to open folder
+    copyDownloadUrlFailed: 'Failed to copy download URL'
+    openFolderFailedWithMessage: 'Failed to open folder: ${message}'
+    directoryNotFound: Directory not found
+    copyFailed: Copy failed
+    openFileFailed: Failed to open file
+    openFileFailedWithMessage: 'Failed to open file: ${message}'
+    noDownloadSource: No download source
+    noDownloadSourceNowPleaseWaitInfoLoaded: No download source, please wait for information loading to be completed and try again
+    noActiveDownloadTask: No active download task
+    noFailedDownloadTask: No failed download task
+    noCompletedDownloadTask: No completed download task
+    taskAlreadyCompletedDoNotAdd: Task already completed, do not add again
+    linkExpiredTryAgain: Link expired, trying to get new download link
+    linkExpiredTryAgainSuccess: Link expired, trying to get new download link success
+    linkExpiredTryAgainFailed: Link expired, trying to get new download link failed
+    taskDeleted: Task deleted
+    unsupportedImageFormat: 'Unsupported image format: ${format}'
+    deleteFileError: 'Failed to delete file, possibly because the file is being used by another process'
+    deleteTaskError: 'Failed to delete task'
+    canNotRefreshVideoTask: 'Failed to refresh video task'
+    taskAlreadyProcessing: 'Task already processing'
+    taskNotFound: 'Task not found'
+    failedToLoadTasks: 'Failed to load tasks'
+    partialDownloadFailedWithMessage: 'Partial download failed: ${message}'
+    unsupportedImageFormatWithMessage: 'Unsupported image format: ${extension}, you can try to download it to your device to view it'
+    imageLoadFailed: 'Image load failed'
+    pleaseTryOtherViewer: 'Please try using other viewers to open'
+  downloadList: Download List
+  download: Download
+  startDownloading: Start Downloading
+  clearAllFailedTasks: Clear All Failed Tasks
+  clearAllFailedTasksConfirmation: 'Are you sure you want to clear all failed download tasks? The files of these tasks will also be deleted.'
+  clearAllFailedTasksSuccess: Cleared all failed tasks
+  clearAllFailedTasksError: Error occurred while clearing failed tasks
+  downloadStatus: Download Status
+  imageList: Image List
+  retryDownload: Retry Download
+  notDownloaded: Not Downloaded
+  downloaded: Downloaded
+  waitingForDownload: Waiting for Download
+  downloadingProgressForImageProgress: 'Downloading (${downloaded}/${total} images ${progress}%)'
+  downloadingSingleImageProgress: 'Downloading (${downloaded} images)'
+  pausedProgressForImageProgress: 'Paused (${downloaded}/${total} images ${progress}%)'
+  pausedSingleImageProgress: 'Paused (${downloaded} images)'
+  downloadedProgressForImageProgress: 'Downloaded (Total ${total} images)'
+  viewVideoDetail: View Video Detail
+  viewGalleryDetail: View Gallery Detail
+  moreOptions: More Options
+  openFile: Open File
+  pause: Pause
+  resume: Resume
+  copyDownloadUrl: Copy Download URL
+  showInFolder: Show in Folder
+  deleteTask: Delete Task
+  forceDeleteTask: Force Delete Task
+  downloadingProgressForVideoTask: 'Downloading ${downloaded}/${total} (${progress}%) • ${speed}MB/s'
+  downloadingOnlyDownloadedAndSpeed: 'Downloading ${downloaded} • ${speed}MB/s'
+  pausedForDownloadedAndTotal: 'Paused ${downloaded}/${total} (${progress}%)'
+  pausedAndDownloaded: 'Paused • Downloaded ${downloaded}'
+  downloadedWithSize: 'Downloaded • ${size}'
+  copyDownloadUrlSuccess: 'Download URL copied'
+  totalImageNums: '${num} images'
+  downloadingDownloadedTotalProgressSpeed: 'Downloading ${downloaded}/${total} (${progress}%) • ${speed}MB/s'
+  downloading: Downloading
+  failed: Failed
+  completed: Completed
+  downloadDetail: Download Detail
+  copy: Copy
+  copySuccess: Copied
+  waiting: Waiting
+  paused: Paused
+  downloadingOnlyDownloaded: 'Downloading ${downloaded}'
+  galleryDownloadCompletedWithName: 'Gallery Download Completed: ${galleryName}'
+  downloadCompletedWithName: 'Download Completed: ${fileName}'
+  stillInDevelopment: Still in development
+  saveToAppDirectory: Save to app directory
+
+favorite:
+  errors:
+    addFailed: Add failed
+    addSuccess: Add success
+    deleteFolderFailed: Delete folder failed
+    deleteFolderSuccess: Delete folder success
+    folderNameCannotBeEmpty: Folder name cannot be empty
+  add: Add
+  addSuccess: Add success
+  addFailed: Add failed
+  remove: Remove
+  removeSuccess: Remove success
+  removeFailed: Remove failed
+  removeConfirmation: 'Are you sure you want to remove this item from favorites?'
+  removeConfirmationSuccess: 'Item removed from favorites'
+  removeConfirmationFailed: 'Failed to remove item from favorites'
+  createFolderSuccess: 'Folder created successfully'
+  createFolderFailed: 'Failed to create folder'
+  createFolder: Create Folder
+  enterFolderName: Enter folder name
+  enterFolderNameHere: Enter folder name here...
+  create: Create
+  items: Items
+  newFolderName: New Folder
+  searchFolders: Search folders...
+  searchItems: Search items...
+  createdAt: Created At
+  myFavorites: My Favorites
+  deleteFolderTitle: Delete Folder
+  deleteFolderConfirmWithTitle: 'Are you sure you want to delete ${title} folder?'
+  removeItemTitle: Remove Item
+  removeItemConfirmWithTitle: 'Are you sure you want to delete ${title} item?'
+  removeItemSuccess: Item removed from favorites
+  removeItemFailed: Failed to remove item from favorites
+  localizeFavorite: Local Favorite
+  editFolderTitle: Edit Folder
+  editFolderSuccess: Folder updated successfully
+  editFolderFailed: Failed to update folder
+  searchTags: Search tags
+
+translation:
+  testConnection: Test Connection
+  testConnectionSuccess: Test connection success
+  testConnectionFailed: Test connection failed
+  testConnectionFailedWithMessage: 'Test connection failed: ${message}'
+  translation: Translation
+  needVerification: Need Verification
+  needVerificationContent: Please test the connection first before enabling AI translation
+  confirm: Confirm
+  disclaimer: Disclaimer
+  riskWarning: Risk Warning
+  dureToRisk1: 'Due to the text being generated by users, it may contain content that violates the content policy of the AI service provider'
+  dureToRisk2: 'Inappropriate content may lead to API key suspension or service termination'
+  operationSuggestion: Operation Suggestion
+  operationSuggestion1: '1. Use before strictly reviewing the content to be translated'
+  operationSuggestion2: '2. Avoid translating content involving violence, adult content, etc.'
+  apiConfig: API Config
+  modifyConfigWillAutoCloseAITranslation: 'Modify configuration will automatically close AI translation, need to test again after opening'
+  apiAddress: API Address
+  modelName: Model Name
+  modelNameHintText: 'For example: gpt-4-turbo'
+  maxTokens: Max Tokens
+  maxTokensHintText: 'For example: 1024'
+  temperature: Temperature
+  temperatureHintText: '0.0-2.0'
+  clickTestButtonToVerifyAPIConnection: 'Click test button to verify API connection validity'
+  requestPreview: Request Preview
+  enableAITranslation: Enable AI
+  enabled: Enabled
+  disabled: Disabled
+  testing: Testing...
+  testNow: Test Now
+  connectionStatus: Connection Status
+  success: Success
+  failed: Failed
+  information: Information
+  viewRawResponse: View Raw Response
+  pleaseCheckInputParametersFormat: Please check input parameters format
+  pleaseFillInAPIAddressModelNameAndKey: Please fill in API address, model name and key
+  pleaseFillInValidConfigurationParameters: Please fill in valid configuration parameters
+  pleaseCompleteConnectionTest: Please complete connection test
+  notConfigured: Not Configured
+  apiEndpoint: API Endpoint
+  configuredKey: Configured Key
+  notConfiguredKey: Not Configured Key
+  authenticationStatus: Authentication Status
+  thisFieldCannotBeEmpty: This field cannot be empty
+  apiKey: API Key
+  apiKeyCannotBeEmpty: API key cannot be empty
+  pleaseEnterValidNumber: Please enter valid number
+  range: Range
+  mustBeGreaterThan: Must be greater than
+  invalidAPIResponse: Invalid API response
+  connectionFailedForMessage: 'Connection failed: ${message}'
+  aiTranslationNotEnabledHint: AI translation is not enabled, please enable it in settings
+  goToSettings: Go to Settings
+  disableAITranslation: Disable AI Translation
+  currentValue: Current Value
+  configureTranslationStrategy: Configure Translation Strategy
+  advancedSettings: "Advanced Settings"
+  translationPrompt: "Translation Prompt"
+  promptHint: "Please enter translation prompt, use [TL] as the placeholder for the target language"
+  promptHelperText: "The prompt must contain [TL] as the placeholder for the target language"  
+  promptMustContainTargetLang: "The prompt must contain [TL] placeholder"
+  aiTranslationWillBeDisabled: "AI translation will be disabled"
+  aiTranslationWillBeDisabledDueToConfigChange: "Due to the change of basic configuration, AI translation will be disabled"
+  aiTranslationWillBeDisabledDueToPromptChange: "Due to the change of translation prompt, AI translation will be disabled" 
+  aiTranslationWillBeDisabledDueToParamChange: "Due to the change of parameter configuration, AI translation will be disabled"
+  onlyOpenAIAPISupported: "Currently only supports OpenAI-compatible API format (application/json request body)"
+  streamingTranslation: "Streaming Translation"
+  streamingTranslationSupported: "Streaming Translation Supported"
+  streamingTranslationNotSupported: "Streaming Translation Not Supported"
+  streamingTranslationDescription: "Streaming translation can display results in real-time during the translation process, providing a better user experience"
+  usingFullUrlWithHash: "Using full URL (ending with #)"
+  baseUrlInputHelperText: "When ending with #, it will be used as the actual request address"
+  currentActualUrl: "Current actual URL: ${url}"
+  urlEndingWithHashTip: "URL ending with # will be used directly without adding any suffix"
+  streamingTranslationWarning: "Note: This feature requires API service support for streaming transmission, some models may not support it"
+
+linkInputDialog:
+  title: "Input Link"
+  supportedLinksHint: "Support intelligently identify multiple ${webName} links and quickly jump to the corresponding page in the app (separate links from other text with spaces)"
+  inputHint: "Please enter ${webName} link"
+  validatorEmptyLink: "Please enter link"
+  validatorNoIwaraLink: "No valid ${webName} link detected"
+  multipleLinksDetected: "Multiple links detected, please select one:"
+  notIwaraLink: "Not a valid ${webName} link"
+  linkParseError: "Link parsing error: ${error}"
+  unsupportedLinkDialogTitle: "Unsupported Link"
+  unsupportedLinkDialogContent: "This link type cannot be opened directly in the app and needs to be accessed using an external browser.\n\nDo you want to open this link in a browser?"
+  openInBrowser: "Open in Browser"
+  confirmOpenBrowserDialogTitle: "Confirm Open Browser"
+  confirmOpenBrowserDialogContent: "The following link is about to be opened in an external browser:"
+  confirmContinueBrowserOpen: "Are you sure you want to continue?"
+  browserOpenFailed: "Failed to open link"
+  unsupportedLink: "Unsupported Link"
+  cancel: "Cancel"
+  confirm: "Open in Browser"
+
+log:
+  logManagement: Log Management
+  enableLogPersistence: Enable Log Persistence
+  enableLogPersistenceDesc: Save logs to the database for analysis
+  logDatabaseSizeLimit: Log Database Size Limit
+  logDatabaseSizeLimitDesc: 'Current: ${size}'
+  exportCurrentLogs: Export Current Logs
+  exportCurrentLogsDesc: Export the current application logs to help developers diagnose problems
+  exportHistoryLogs: Export History Logs
+  exportHistoryLogsDesc: Export logs within a specified date range
+  exportMergedLogs: Export Merged Logs
+  exportMergedLogsDesc: Export merged logs within a specified date range
+  showLogStats: Show Log Stats
+  logExportSuccess: Log export success
+  logExportFailed: 'Log export failed: ${error}'
+  showLogStatsDesc: View statistics of various types of logs
+  logExtractFailed: 'Failed to get log statistics: ${error}'
+  clearAllLogs: Clear All Logs
+  clearAllLogsDesc: Clear all log data
+  confirmClearAllLogs: Confirm Clear
+  confirmClearAllLogsDesc: Are you sure you want to clear all log data? This operation cannot be undone.
+  clearAllLogsSuccess: Log cleared successfully
+  clearAllLogsFailed: 'Failed to clear logs: ${error}'
+  unableToGetLogSizeInfo: Unable to get log size information
+  currentLogSize: 'Current Log Size:'
+  logCount: 'Log Count:'
+  logCountUnit: 'logs'
+  logSizeLimit: 'Log Size Limit:'
+  usageRate: 'Usage Rate:'
+  exceedLimit: 'Exceed Limit'
+  remaining: 'Remaining'
+  currentLogSizeExceededPleaseCleanOldLogsOrIncreaseLogSizeLimit: 'Current log size exceeded, please clean old logs or increase log size limit'
+  currentLogSizeAlmostExceededPleaseCleanOldLogs: 'Current log size almost exceeded, please clean old logs'
+  cleaningOldLogs: 'Cleaning old logs...'
+  logCleaningCompleted: 'Log cleaning completed'
+  logCleaningProcessMayNotBeCompleted: 'Log cleaning process may not be completed'
+  cleanExceededLogs: 'Clean exceeded logs'
+  noLogsToExport: 'No logs to export'
+  exportingLogs: 'Exporting logs...'
+  noHistoryLogsToExport: 'No history logs to export, please try using the app for a while first'
+  selectLogDate: 'Select Log Date'
+  today: 'Today'
+  selectMergeRange: 'Select Merge Range'
+  selectMergeRangeHint: 'Please select the log time range to merge'
+  selectMergeRangeDays: 'Recent ${days} days'
+  logStats: 'Log Stats'
+  todayLogs: 'Today Logs: ${count} logs'
+  recent7DaysLogs: 'Recent 7 Days Logs: ${count} logs'
+  totalLogs: 'Total Logs: ${count} logs'
+  setLogDatabaseSizeLimit: 'Set Log Database Size Limit'
+  currentLogSizeWithSize: 'Current Log Size: ${size}'
+  warning: 'Warning'
+  newSizeLimit: 'New size limit: ${size}'
+  confirmToContinue: 'Confirm to continue'
+  logSizeLimitSetSuccess: 'Log size limit set to ${size}'
