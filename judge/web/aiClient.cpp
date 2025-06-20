@@ -10,6 +10,7 @@
 #include <qjsonarray.h>
 #include <qjsondocument.h>
 #include <qjsonobject.h>
+#include <qjsonparseerror.h>
 #include <qnetworkreply.h>
 #include <qnetworkrequest.h>
 #include <qobject.h>
@@ -76,4 +77,31 @@ AIClient::sendRequest(const QString &prompt, int maxTokens, double temperature) 
         delete reply;
         co_return std::unexpected(errorMsg);
     }
+
+    QByteArray responseData = reply->readAll();
+    delete reply;
+
+    QJsonParseError parseError;
+    QJsonDocument doc = QJsonDocument::fromJson(responseData, &parseError);
+
+    if (parseError.error != QJsonParseError::NoError) {
+        co_return std::unexpected("JSON parse error: " + parseError.errorString());
+    }
+
+    QJsonObject responseJson = doc.object();
+
+    if (responseData.contains("error")) {
+        QString errorMsg = responseJson["error"].toObject()["message"].toString();
+        co_return std::unexpected(errorMsg);
+    }
+
+    QString choices = responseJson["choices"].toArray();
+    if (choices.isEmpty()) {
+        co_return std::unexpected(tr("api response empty"));
+    }
+
+    QString responseText = choices[0].toObject()["message"].toObject()["content"].toString();
+    emit requestCompleted(true, responseText);
+
+    co_return responseText;
 }
