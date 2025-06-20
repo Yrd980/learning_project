@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-function copy_structure_with_assets
+function copy_empty_structure
     set src $argv[1]
     set dest $argv[2]
 
