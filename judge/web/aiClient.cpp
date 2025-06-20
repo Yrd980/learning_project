@@ -4,7 +4,16 @@
 #include <QJsonArray>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <expected>
+#include <qcontainerfwd.h>
+#include <qcorotask.h>
+#include <qjsonarray.h>
+#include <qjsondocument.h>
+#include <qjsonobject.h>
+#include <qnetworkreply.h>
+#include <qnetworkrequest.h>
 #include <qobject.h>
+#include <qurl.h>
 
 #include "../util/file.h"
 
@@ -25,4 +34,46 @@ AIClient &AIClient::getInstance() {
 void AIClient::setApiKey(const QString &key) {
     apiKey = key;
     Configs::instance().set("aiAssistant.apiKey", key);
+}
+
+bool AIClient::hasApiKey() const { return !apiKey.isEmpty(); }
+
+QJsonObject AIClient::buildRequestJson(const QString &prompt, int maxTokens, double temperature) {
+    QJsonObject message;
+    message["role"] = "user";
+    message["content"] = prompt;
+
+    QJsonArray messages;
+    messages.append(message);
+
+    QJsonObject json;
+    json["model"] = "deepseek-coder"; // Using DeepSeek Coder model
+    json["messages"] = messages;
+    json["max_tokens"] = maxTokens;
+    json["temperature"] = temperature;
+
+    return json;
+}
+
+QCoro::Task<std::expected<QString, QString>>
+AIClient::sendRequest(const QString &prompt, int maxTokens, double temperature) {
+    if (!hasApiKey()) {
+        co_return std::unexpected(tr("not set api key"));
+    }
+
+    QNetworkRequest request;
+    request.setUrl(QUrl(apiEndpoint));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader("Authorization", QString("Bearer %1").arg(apiKey).toUtf8());
+
+    QJsonObject requestJson = buildRequestJson(prompt, maxTokens, temperature);
+    QByteArray requestData = QJsonDocument(requestJson).toJson();
+
+    QNetworkReply *reply = co_await nam.post(request, requestData);
+
+    if (reply->error()) {
+        QString errorMsg = reply->errorString();
+        delete reply;
+        co_return std::unexpected(errorMsg);
+    }
 }

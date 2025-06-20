@@ -33,7 +33,7 @@ public:
     QCoro::Task<std::expected<QString, QString>>
     sendRequest(const QString &prompt, int maxTokens = 1024 * 2, double temperature = 0.7);
 
-    static QJsonObject buildRequestJson(const QString &prompt, int maxTOkens, double temperature);
+    static QJsonObject buildRequestJson(const QString &prompt, int maxTokens, double temperature);
 
 signals:
     void requestCompleted(bool success, const QString &response);
