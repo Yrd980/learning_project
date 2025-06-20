@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:io';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:i_iwara/db/database_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
@@ -190,6 +191,115 @@ class LogService extends GetxService {
       if (kDebugMode) {
         print("clean outdated log error: $e");
       }
+    }
+  }
+
+  Future<void> addLog({
+    required LogLevel level,
+    String? tag,
+    required String message,
+    String? details,
+  }) async {
+    try {
+      if (!CommonConstants.enableLogPersistence && level != LogLevel.error) {
+        return;
+      }
+
+      final now = DateTime.now();
+
+      final entry = LogEntry(
+        timestamp: now,
+        level: level,
+        tag: tag,
+        message: message,
+        details: details,
+        sessionId: _sessionId,
+      );
+
+      _buffer.add(entry);
+
+      if (_buffer.length >= _maxBufferSize) {
+        unawaited(_flushBuffer());
+      }
+
+      if (level == LogLevel.info) {
+        unawaited(_checkDatabaseSizeBeforeAdd());
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("add log error: $e");
+        print("try to add log info: $message");
+      }
+    }
+  }
+
+  Future<void> _flushBuffer() async {
+    if (_buffer.isEmpty || _bufferLock.value) {
+      return;
+    }
+
+    _bufferLock.value = true;
+    try {
+      _db.execute('BEGIN TRANSACTION');
+
+      try {
+        final batch = List.from(_buffer);
+        _buffer.clear();
+
+        for (final entry in batch) {
+          _insertLogStmt.execute([
+            entry.timestamp.millisecondsSinceEpoch ~/ 1000,
+            LogEntry.levelToString(entry.level),
+            entry.tag,
+            entry.message,
+            entry.details,
+            entry.sessionId,
+          ]);
+        }
+        _db.execute('COMMIT');
+      } catch (e) {
+        _db.execute('ROLLBACK');
+        if (kDebugMode) {
+          print("write log to database error : $e");
+        }
+
+        if (_buffer.isEmpty) {
+          final failedBatch = _db
+              .prepare('SELECT MAX(id) as max_id FROM app_logs')
+              .select();
+          final lastId = failedBatch.isEmpty
+              ? 0
+              : (failedBatch.first['max_id'] as int? ?? 0);
+
+          final now = DateTime.now();
+          final oneMinuteAgo = now.subtract(const Duration(minutes: 1));
+
+          final recentLogsCount = _db
+              .prepare('''
+            SELECT COUNT(*) as count FROM app_logs
+            WHERE timestap >= ?
+          ''')
+              .select([oneMinuteAgo.millisecondsSinceEpoch ~/ 1000]);
+
+          final count = recentLogsCount.isEmpty
+              ? 0
+              : (recentLogsCount.first['count'] as int? ?? 0);
+
+          if (count < 100) {
+            final errorEntry = LogEntry(
+              timestamp: now,
+              level: LogLevel.error,
+              tag: "log system",
+              message: "fail to write log to database ",
+              details: "error info : $e",
+              sessionId: _sessionId,
+            );
+            _buffer.add(errorEntry);
+          }
+        }
+      }
+    } finally {
+      _bufferLock.value = false;
     }
   }
 }

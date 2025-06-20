@@ -95,8 +95,7 @@ class CommonConstants {
       id: SortId.date,
       label: t.common.latest,
       icon: const Icon(Icons.new_releases),
-    ),
-    Sort(
+    ), Sort(
       id: SortId.popularity,
       label: t.common.popular,
       icon: const Icon(Icons.star),
