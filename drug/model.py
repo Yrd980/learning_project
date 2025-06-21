@@ -4,7 +4,7 @@ import torch.nn as nn
 
 class SentimentModel(nn.Module):
     def __init__(self, config):
-        super(SentimentModel, self).__init__()
+        super().__init__()
         self.config = config
         self.embedding = nn.Embedding(
             num_embeddings=config.vocab_size,
@@ -27,6 +27,7 @@ class SentimentModel(nn.Module):
         self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x, attention_mask=None):
+
         embedded = self.embedding(x)
 
         if attention_mask is not None:
@@ -53,10 +54,10 @@ def create_model(config):
 
 class ModelConfig:
     def __init__(self):
-        self.vocab_size = 10000
-        self.embedding_dim = 100
-        self.lstm_units = 64
+        self.vocab_size = 10000  
+        self.embedding_dim = 100 
+        self.lstm_units = 64 
         self.dropout_rate = 0.2
         self.num_classes = 3
         self.learning_rate = 1e-3
-        self.max_len = 128
+        self.max_length = 128
