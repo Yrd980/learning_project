@@ -3,8 +3,7 @@ import torch
 import pandas as pd
 from model import SentimentModel, ModelConfig
 from transformers import BertTokenizer
-import logging
-import os
+import argparse
 
 
 class SentimentAnalyzer:
@@ -39,17 +38,27 @@ class SentimentAnalyzer:
             probabilities = torch.nn.functional.softmax(outputs, dim=1)
 
         probs = probabilities[0].cpu().numpy()
-        sentiment_map = {0: "negative", 1: "normal", 2: "positive"}
+        sentiment_map = {0: "negative", 1: "neutral", 2: "positive"}
         prediction = sentiment_map[probs.argmax()]
 
         result = f"✨ sentiment analysis result：{prediction}\n\n"
         result += "📊 probabilities distribution：\n"
         result += f"negative: {probs[0]:.2%}\n"
-        result += f"normal: {probs[1]:.2%}\n"
+        result += f"neutral: {probs[1]:.2%}\n"
         result += f"positive: {probs[2]:.2%}"  # 添加情感标签的颜色提示
-        color_map = {"negative": "🔴", "normal": "⚪", "positive": "🟢"}
+        color_map = {"negative": "🔴", "neutral": "⚪", "positive": "🟢"}
         result = f"{color_map[prediction]} {result}"
 
+        print(f"Original text: {text}")
+        print(f"Input IDs sample: {input_ids[0][:10]}")  # 查看前10个token ID
+        print(f"Outputs before softmax: {outputs}")
+        print(
+            self.model
+        )  # 输出模型结构，检查是否正确print(f"Probabilities: {probabilities}")
+
+        # 检查模型参数是否非零
+        for name, param in self.model.named_parameters():
+            print(name, torch.sum(param).item())
         return result
 
     def predict_file(self, file):
@@ -79,21 +88,55 @@ class SentimentAnalyzer:
                     _, predicted = torch.max(outputs, 1)
                     results.append(predicted.item())
 
-            # 添加预测结果到DataFrame
-            sentiment_map = {0: "negative", 1: "normal", 2: "positive"}
+            sentiment_map = {0: "negative", 1: "neutral", 2: "positive"}
             df["predict_sentiment"] = [sentiment_map[pred] for pred in results]
 
-            # 保存结果
             output_path = "result.csv"
             df.to_csv(output_path, index=False)
             return (
                 f"✅ predict finish！result save to {output_path}\n\n📊 sentiment distribution ：\n"
-                + f"positive：{(df['predict_sentiment']=='positive').sum()} 条\n"
-                + f"normal：{(df['predict_sentiment']=='normal').sum()} \n"
+                + f"positive：{(df['predict_sentiment']=='positive').sum()} \n"
+                + f"neutral：{(df['predict_sentiment']=='neutral').sum()} \n"
                 + f"negative：{(df['predict_sentiment']=='negative').sum()} "
             )
         except Exception as e:
             return f"❌ fail to process file：{str(e)}"
 
 
+def main():
+    parser = argparse.ArgumentParser(description="Sentiment Analyzer Inference")
+    parser.add_argument("mode", choices=["text", "file"], help="inference mode")
+    parser.add_argument(
+        "--model_path", type=str, required=True, help="Path to model checkpoint"
+    )
+    parser.add_argument("--text", type=str, help="Text to analyze")
+    parser.add_argument("--file", type=str, help="Path to CSV file")
+    parser.add_argument(
+        "--max_length", type=int, default=128, help="Maximum sequence length"
+    )
 
+    args = parser.parse_args()
+
+    analyzer = SentimentAnalyzer(args.model_path)
+
+    if args.mode == "text":
+        if not args.text:
+            print("❌ Error: --text is required when mode is 'text'")
+            return
+        output = analyzer.predict_text(args.text, max_length=args.max_length)
+        print(output)
+
+    elif args.mode == "file":
+        if not args.file:
+            print("❌ Error: --file is required when mode is 'file'")
+            return
+
+        class DummyFile:
+            name = args.file
+
+        output = analyzer.predict_file(DummyFile())
+        print(output)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,10 +1,8 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include <algorithm>
 #include <cmath>
 #include <cstddef>
-#include <iostream>
 #include <string>
 
 struct Pos {

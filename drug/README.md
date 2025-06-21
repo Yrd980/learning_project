@@ -18,18 +18,15 @@ python train.py \
 # text inference
 
 python inference.py text \
-    --model_path checkpoints/best_model.pth \
-    --text "This medicine helped me a lot with minimal side effects." \
-    --max_length 128
+        --model_path checkpoints/best_model.pth \
+        --text "This medicine helped me a lot with minimal side effects." \
+        --max_length 128
 
-# batch inference
+# file inference
 
-python inference.py batch \
-    --test_file data/test.csv \
-    --model_path checkpoints/best_model.pth \
-    --output_file predictions.csv \
-    --batch_size 32 \
-    --max_length 128
+python inference.py file \
+  --model_path checkpoints/best_model.pth \
+  --file ./review/drugsComTest_raw.csv
 
 # tensorboard
 

@@ -5,7 +5,7 @@ import logging
 
 
 def create_interface():
-    analyzer = SentimentAnalyzer("checkpoint/best_model.pth")
+    analyzer = SentimentAnalyzer("checkpoints/best_model.pth")
 
     custom_css = """
     .gradio-container {
@@ -37,7 +37,9 @@ def create_interface():
                         lines=4,
                     )
                     text_button = gr.Button("start analyze", variant="primary")
-                    text_output = gr.Textbox(label="analysis result", lines=6)
+                    text_output = gr.Textbox(
+                        label="analysis result", lines=6, value="", interactive=False
+                    )
 
                 gr.Markdown(
                     """
@@ -53,7 +55,9 @@ def create_interface():
                 with gr.Column():
                     file_input = gr.File(label="Upload CSV File", file_types=[".csv"])
                     file_button = gr.Button("Start Analysis", variant="primary")
-                    file_output = gr.Textbox(label="Processing Results", lines=6)
+                    file_output = gr.Textbox(
+                        label="Processing Results", lines=6, value="", interactive=False
+                    )
 
                 gr.Markdown(
                     """

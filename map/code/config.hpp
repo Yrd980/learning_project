@@ -1,33 +1,14 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 #include "pos.hpp"
-#include <algorithm>
-#include <atomic>
-#include <bitset>
 #include <chrono>
-#include <climits>
-#include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <ctime>
-#include <fstream>
-#include <iostream>
-#include <list>
-#include <map>
-#include <memory>
-#include <queue>
-#include <set>
+#include <functional>
 #include <string>
-#include <thread>
 #include <unordered_map>
-#include <unordered_set>
 #include <vector>
 using namespace std::chrono;
 #include "count.hpp"
 #include "logger.hpp"
-#include <functional>
-#include <type_traits>
 
 const int MAX_Line_Length = 200;
 const int MAX_Col_Length = 200;
@@ -67,7 +48,40 @@ const double _pulledItemAtEnd = 1900;
 int exptRobotCnt = 0;
 
 Pos dir[4] = {Pos(0, 1), Pos(0, -1), Pos(-1, 0), Pos(1, 0)};
-// 0 表示右移一格 1 表示左移一格 2 表示上移一格 3 表示下移一格
 std::unordered_map<Pos, int> Pos2move = {
     {Pos(0, 1), 0}, {Pos(0, -1), 1}, {Pos(-1, 0), 2}, {Pos(1, 0), 3}};
+
+FileLogger shipLogger("../log/ship_log.txt");
+FileLogger robotLogger("../log/robot_log.txt");
+FileLogger berthLogger("../log/berth_log.txt");
+FileLogger itemLogger("../log/item_log.txt");
+FileLogger centerLogger("../log/center_log.txt");
+
+FileLogger flowLogger("../log/flow_log.txt");
+FileLogger bcenterlogger("../log/bcenter_log.txt");
+FileLogger pathLogger("../log/path_log.txt");
+FileLogger allPathLogger("../log/allPath_log.txt");
+FileLogger estimatorLogger("../log/estimator_log.txt");
+
+#ifdef DEBUG
+#define TEST(x) x
+std::ofstream fout("output.txt");
+std::ofstream tout("time.txt");
+#else
+#define TEST(x)
+#endif
+
+#ifdef DEBUG
+Counter counter;
+#else
+Void_Counter counter;
+#endif
+
+#ifdef CREATE
+#define CREATEMAP(x) x
+std::ofstream mapOut("../genMap/path.txt"); // 测试用输出
+#else
+#define CREATEMAP(x)
+#endif
+
 #endif
