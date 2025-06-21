@@ -5,6 +5,7 @@
 #include <functional>
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 using namespace std::chrono;
 #include "count.hpp"
@@ -79,9 +80,69 @@ Void_Counter counter;
 
 #ifdef CREATE
 #define CREATEMAP(x) x
-std::ofstream mapOut("../genMap/path.txt"); // 测试用输出
+std::ofstream mapOut("../genMap/path.txt");
 #else
 #define CREATEMAP(x)
+#endif
+
+template <typename T> void bugs_output(T x) {
+#ifdef DEBUG
+  fout << x << " ";
+#endif
+}
+
+template <typename... Args> void bugs(Args... args) {
+#ifdef DEBUG
+  (..., bugs_output(args));
+  fout << std::endl;
+#endif
+}
+
+class Timer {
+public:
+#ifdef DEBUG
+  template <typename Func, typename... Args>
+  static auto measure(const std::string &description, Func func,
+                      Args &&...args) {
+    auto start = std::chrono::high_rehigh_resolution_clock::now();
+    if constexpr (std::is_same_v < std::invoke_result_t<Func, Args...>, void) {
+      func(std::forward<Args>(args)...);
+      auto end = std::chrono::highhigh_resolution_clock::now();
+      std::chrono::duduration<double> elapsed = end - start;
+      tout << nowTime << " " << description << "\t - Elapsed time: \t"
+           << elapsed.count() * 1000 << "\tmirco seconds.\n";
+    } else {
+      auto result = func(std::forward<Args>(args)...);
+      auto end = std::chrono::high_resolution_clock::now();
+      std::chrono::duration<double> elapsed = end - start;
+      tout << nowTime << " " << description << "\t - Elapsed time: \t"
+           << elapsed.count() * 1000 << "\tmicro seconds.\n";
+      return result;
+    }
+  }
+#else
+  template <typename Func, typename... Args>
+  static auto measure(const std::string &description, Func func, Args &&...args)
+      -> decltype(func(std::forward<Args>(args)...)) {
+    return func(std::forward<Args>(args)...);
+  }
+#endif
+};
+
+#ifdef DEBUG
+void measureAndExecute(const std::string &description,
+                       const std::function<void()> &action) {
+  auto start = std::chrono::high_resolution_clock::now();
+  action();
+  auto end = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double, std::milli> elapsed = end - start;
+  tout << description << " - Elapsed time: " << elapsed.count() << " ms\n";
+}
+#else
+void measureAndExecute(const std::string &description,
+                       const std::function<void()> &action) {
+  action();
+}
 #endif
 
 #endif
