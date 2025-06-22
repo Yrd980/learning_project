@@ -24,5 +24,41 @@ class MigrationManager {
     MigrationV6Config(),
     MigrationV7ConfigStorage(),
     MigrationV8DisableTheater(),
-  ]
+  ];
+
+  int getCurrentVersion(CommonDatabase db) {
+    final stmt = db.prepare('PRAGMA user_version;');
+    final ResultSet result = stmt.select([]);
+    stmt.dispose();
+    return result.first['user_version'] as int;
+  }
+
+  void runMigrations(CommonDatabase db) {
+    final currentVersion = getCurrentVersion(db);
+    final pendingMigrations =
+        migrations.where((m) => m.version > currentVersion).toList()
+          ..sort((a, b) => a.version.compareTo(b.version));
+
+    if (pendingMigrations.isEmpty) {
+      LogUtils.i(
+        'current database version is v$currentVersion, dont need migration',
+      );
+      return;
+    }
+
+    db.execute('BEGIN TRANSACTION;');
+    try {
+      for (var migration in pendingMigrations) {
+        LogUtils.i(
+          'application migrating v${migration.version} : ${migration.description}',
+        );
+        migration.up(db);
+      }
+      db.execute('COMMIT;');
+      LogUtils.i('all migrations success');
+    } catch (e) {
+      db.execute('ROLLBACK;');
+      throw DatabaseException("migration fail: $e");
+    }
+  }
 }

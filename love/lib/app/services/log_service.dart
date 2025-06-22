@@ -302,4 +302,19 @@ class LogService extends GetxService {
       _bufferLock.value = false;
     }
   }
+
+  Future<CommonDatabase> initLogDatabase() async {
+    if(_logDb != null) {
+      return _logDb!;
+    }
+
+    try {
+      final appDocDir = await getApplicationDocumentsDirectory();
+      final dbDir = path.join(appDocDir.path,CommonConstants.applicationName ?? 'i_iwara');
+
+      await Directory(dbDir).create(recursive: true);
+      
+    } catch (e) {
+    }
+  }
 }

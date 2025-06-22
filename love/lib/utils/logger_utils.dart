@@ -135,4 +135,69 @@ class LogUtils {
       }
     }
   }
+
+  static void w(String message, [String tag = _TAG]) {
+    final maskedMessage = _enhancedMasking(message);
+
+    _logger.w("[${_getTimeString()}][$tag] $maskedMessage");
+    final String logLine = "[${_getTimeString()}][WARN][$tag] $maskedMessage";
+    _addToMemoryLog(logLine);
+
+    unawaited(_writeToDatabase(LogLevel.warn, maskedMessage, tag));
+  }
+
+  static void d(String message, [String tag = _TAG]) {
+    final maskedMessage = _enhancedMasking(message);
+
+    if (!_isProduction) {
+      _logger.d("[${_getTimeString()}][$tag] $maskedMessage");
+    }
+
+    final String logLine = "[${_getTimeString()}][DEBUG][$tag] $maskedMessage";
+    _addToMemoryLog(logLine);
+
+    unawaited(_writeToDatabase(LogLevel.debug, maskedMessage, tag));
+  }
+
+  static void e(
+    String message, {
+    String tag = _TAG,
+    Object? error,
+    StackTrace? stackTrace,
+    StackTrace? stack,
+  }) {
+    final maskedMessage = _enhancedMasking(message);
+
+    String? details;
+
+    if (error != null || stackTrace != null || stack != null) {
+      final buffer = StringBuffer();
+      if (error != null) {
+        final maskedError = maskSensitiveData(error.toString());
+        buffer.writeln("error detail: $maskedError");
+      }
+      final trace = stackTrace ?? stack;
+      if (trace != null) {
+        final maskedTrace = maskSensitiveData(trace.toString());
+        buffer.writeln("stack track: $maskedTrace");
+      }
+      details = buffer.toString();
+    }
+
+    final String logLine = "[${_getTimeString()}][ERROR][$tag] $maskedMessage";
+    _addToMemoryLog(logLine);
+
+    if (details != null) {
+      _addToMemoryLog("[${_getTimeString()}][ERROR][$tag] $details");
+    }
+
+    if(Get.isRegistered<LogService>()){
+      try {
+       Get.find<LogService>().addLogSync(
+        level: LogLevel.error,
+       ) 
+      } catch (e) {
+      }
+    }
+  }
 }
