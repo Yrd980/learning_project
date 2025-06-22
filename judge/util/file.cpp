@@ -22,7 +22,7 @@ QString loadText(const QString &path) {
 }
 
 const QString TempFiles::PATH =
-        QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/Judge";
+        QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/judge";
 
 #define TempFileName(id) (PATH + "/temp" + (id.isEmpty() ? "" : "-") + id)
 
@@ -72,7 +72,7 @@ void TempFiles::clearCache() {
 }
 
 const QString Configs::PATH =
-        QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/Judge/config.json";
+        QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/judge/config.json";
 
 void Configs::clear() {
     QFile file(PATH);
@@ -92,7 +92,7 @@ void Configs::reset() {
 }
 
 Configs::Configs(QObject *parent) : QObject(parent) {
-    QString folder = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/Judge";
+    QString folder = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/judge";
     QDir dir;
     if (!dir.exists(folder) && dir.mkpath(folder)) {
     }
