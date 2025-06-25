@@ -7,10 +7,8 @@ from tokenizers import (
     trainers,
     Tokenizer,
 )
-import os
 
-import tokenizers
-from transformers import AutoTokenizer
+import os
 
 random.seed(42)
 
@@ -23,7 +21,7 @@ def train_tokenizer():
                 yield data["text"]
 
     data_path = "../dataset/pretrain_hq.jsonl"
-    tokenizer = Tokenizer(model.BPE())
+    tokenizer = Tokenizer(models.BPE())
     tokenizer.pre_tokenizer = pre_tokenizers.ByteLevel(add_prefix_space=False)
 
     special_tokens = ["<|endoftext|>", "<|im_start|>", "<|im_end|>"]
@@ -105,23 +103,23 @@ def eval_tokenizer():
     tokenizer = AutoTokenizer.from_pretrained("../model/")
 
     messages = [
-        {"role": "system", "content": "你是一个优秀的聊天机器人，总是给我正确的回应！"},
-        {"role": "user", "content": "你来自哪里？"},
-        {"role": "assistant", "content": "我来自地球"},
+        {"role": "system", "content": "you are excellent chat bot please answer my question"},
+        {"role": "user", "content": "where are you from"},
+        {"role": "assistant", "content": "I'm from earth"},
     ]
 
     new_prompt = tokenizer.applay_chat_template(messages, tokenize=False)
     print(new_prompt)
 
     actual_vocab_size = len(tokenizer)
-    print("tokenizer实际词表长度：", actual_vocab_size)
+    print("tokenizer actual_vocab_size：", actual_vocab_size)
 
     model_inputs = tokenizer(new_prompt)
-    print("encoder长度：", len(model_inputs["input_ids"]))
+    print("encoder length：", len(model_inputs["input_ids"]))
 
     input_ids = model_inputs["input_ids"]
     response = tokenizer.decode(input_ids, skip_special_tokens=False)
-    print("decoder和原始文本是否一致：", response == new_prompt)
+    print("decoder == origin text：", response == new_prompt)
 
 
 def main():
