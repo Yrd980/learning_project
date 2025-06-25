@@ -10,18 +10,16 @@ import time
 import math
 import warnings
 import torch
-from torch import device, optim, nn
+from torch import optim, nn
 import torch.distributed as dist
 from contextlib import nullcontext
 from torch.utils.data import DataLoader, DistributedSampler
-from transformers import (
-    AutoTokenizer,
-    AutoModelForCausalLM,
-    NezhaForNextSentencePrediction,
-)
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from model.model_minimind import MiniMindConfig, MiniMindForCausalLM
 from dataset.lm_dataset import SFTDataset
 from model.model_lora import load_lora, save_lora, apply_lora
+
+warnings.filterwarnings("ignore")
 
 
 def Logger(content):
@@ -171,7 +169,7 @@ if __name__ == "__main__":
     args.save_dir = os.path.join(args.out_dir)
     os.makedirs(args.save_dir, exist_ok=True)
     os.makedirs(args.out_dir, exist_ok=True)
-    tokens_pre_iter = args.batch_size * args.max_seq_len
+    tokens_per_iter = args.batch_size * args.max_seq_len
     device_type = "cuda" if "cuda" in args.device else "cpu"
 
     ctx = nullcontext() if device_type == "cpu" else torch.cuda.amp.autocast()

@@ -2,11 +2,9 @@ import random
 import re
 from threading import Thread
 
-from pandas.plotting import hist_series
 import torch
 import numpy as np
 import streamlit as st
-from transformers.models import openai
 
 st.set_page_config(page_title="MiniMind", initial_sidebar_state="collapsed")
 
@@ -173,10 +171,10 @@ model_source = st.sidebar.radio("choose model resource", ["local", "API"], index
 
 if model_source == "API":
     api_url = st.sidebar.text_input("API URL", value="http://127.0.0.1:8000/v1")
-    api_model_id = st.sidebar.text_input("MODEL ID", value="minimind")
-    api_model_name = st.sidebar.text_input("MODEL NAME", value="MiniMind2")
-    api_key = st.sidebar.text_input("API KEY", value="none", type="password")
-    slogan = f"Hi I'm {api_model_name}"
+    api_model_id = st.sidebar.text_input("Model ID", value="minimind")
+    api_model_name = st.sidebar.text_input("Model Name", value="MiniMind2")
+    api_key = st.sidebar.text_input("API Key", value="none", type="password")
+    slogan = f"Hi, I'm {api_model_name}"
 else:
     MODEL_PATHS = {
         "MiniMind2-R1 (0.1B)": ["../MiniMind2-R1", "MiniMind2-R1"],
@@ -233,10 +231,12 @@ def main():
                     process_assistant_content(message["content"]),
                     unsafe_allow_html=True,
                 )
-                if st.button("x", key=f"delete_{i}"):
+                if st.button("×", key=f"delete_{i}"):
                     st.session_state.messages = st.session_state.messages[: i - 1]
-                st.session_state.chat_messages = st.session_state.chat_messages[: i - 1]
-                st.rerun()
+                    st.session_state.chat_messages = st.session_state.chat_messages[
+                        : i - 1
+                    ]
+                    st.rerun()
         else:
             st.markdown(
                 f'<div style="display: flex; justify-content: flex-end;"><div style="display: inline-block; margin: 10px 0; padding: 8px 12px 8px 12px;  background-color: gray; border-radius: 10px; color:white; ">{message["content"]}</div></div>',
@@ -258,10 +258,10 @@ def main():
             unsafe_allow_html=True,
         )
         messages.append(
-            {"role": "user", "conten": prompt[-st.session_state.max_new_tokens :]}
+            {"role": "user", "content": prompt[-st.session_state.max_new_tokens :]}
         )
         st.session_state.chat_messages.append(
-            {"role": "user", "conten": prompt[-st.session_state.max_new_tokens :]}
+            {"role": "user", "content": prompt[-st.session_state.max_new_tokens :]}
         )
 
         with st.chat_message("assistant", avatar=image_url):
@@ -276,7 +276,7 @@ def main():
                     client = OpenAI(api_key=api_key, base_url=api_url)
                     history_num = st.session_state.history_chat_num + 1
                     conversation_history = (
-                        system_prompt + st.session_state.chat_message[-history_num:]
+                        system_prompt + st.session_state.chat_messages[-history_num:]
                     )
                     answer = ""
                     response = client.chat.completions.create(
@@ -303,17 +303,16 @@ def main():
                 st.session_state.chat_messages = (
                     system_prompt
                     + st.session_state.chat_messages[
-                        -st.session_state.history_chat_num + 1
+                        -(st.session_state.history_chat_num + 1) :
                     ]
                 )
-
                 new_prompt = tokenizer.apply_chat_template(
                     st.session_state.chat_messages,
                     tokenize=False,
                     add_generation_prompt=True,
                 )
 
-                inputs = tokenizer(new_prompt, return_tensor="pt", truncation=True).to(
+                inputs = tokenizer(new_prompt, return_tensors="pt", truncation=True).to(
                     device
                 )
 

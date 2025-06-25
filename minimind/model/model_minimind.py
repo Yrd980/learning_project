@@ -15,7 +15,7 @@ class MiniMindConfig(PretrainedConfig):
         max_position_embeddings: int = 32768,
         num_attention_heads: int = 8,
         num_hidden_layers: int = 8,
-        num_key_value_heads: int = 6400,
+        num_key_value_heads: int = 2,
         vocab_size: int = 6400,
         rms_norm_eps: float = 1e-5,
         rope_theta: float = 1e6,
@@ -66,13 +66,13 @@ from transformers.modeling_outputs import CausalLMOutputWithPast
 
 
 class RMSNorm(torch.nn.Module):
-    def __init__(self, dim: int, eps: float):
+    def __init__(self, dim: int, eps: float = 1e-5):
         super().__init__()
         self.eps = eps
         self.weight = nn.Parameter(torch.ones(dim))
 
     def _norm(self, x):
-        return x * torch.rsqrt((x.pow(2).mean(-1, keepdim=True)) + self.eps)
+        return x * torch.rsqrt(x.pow(2).mean(-1, keepdim=True) + self.eps)
 
     def forward(self, x):
         return self.weight * self._norm(x.float()).type_as(x)
@@ -87,17 +87,17 @@ def precompute_freqs_cis(dim: int, end: int = int(32 * 1024), theta: float = 1e6
     return freqs_cos, freqs_sin
 
 
-def apply_rotary_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
+def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     def rotate_half(x):
         return torch.cat(
             (-x[..., x.shape[-1] // 2 :], x[..., : x.shape[-1] // 2]), dim=-1
         )
 
-    q_embed = q * cos.unsqueeze(unsqueeze_dim) + rotate_half(q) * sin.unsqueeze(
-        unsqueeze_dim
+    q_embed = (q * cos.unsqueeze(unsqueeze_dim)) + (
+        rotate_half(q) * sin.unsqueeze(unsqueeze_dim)
     )
-    k_embed = k * cos.unsqueeze(unsqueeze_dim) + rotate_half(k) * sin.unsqueeze(
-        unsqueeze_dim
+    k_embed = (k * cos.unsqueeze(unsqueeze_dim)) + (
+        rotate_half(k) * sin.unsqueeze(unsqueeze_dim)
     )
     return q_embed, k_embed
 
@@ -123,17 +123,17 @@ class Attention(nn.Module):
         )
         assert args.num_attention_heads % self.num_key_value_heads == 0
         self.n_local_heads = args.num_attention_heads
-        self.n_local_kv_heads = args.num_key_value_heads
+        self.n_local_kv_heads = self.num_key_value_heads
         self.n_rep = self.n_local_heads // self.n_local_kv_heads
         self.head_dim = args.hidden_size // args.num_attention_heads
         self.q_proj = nn.Linear(
             args.hidden_size, args.num_attention_heads * self.head_dim, bias=False
         )
         self.k_proj = nn.Linear(
-            args.hidden_size, args.num_key_value_heads * self.head_dim, bias=False
+            args.hidden_size, self.num_key_value_heads * self.head_dim, bias=False
         )
         self.v_proj = nn.Linear(
-            args.hidden_size, args.num_key_value_heads * self.head_dim, bias=False
+            args.hidden_size, self.num_key_value_heads * self.head_dim, bias=False
         )
         self.o_proj = nn.Linear(
             args.num_attention_heads * self.head_dim, args.hidden_size, bias=False
@@ -146,10 +146,6 @@ class Attention(nn.Module):
             and args.flash_attn
         )
 
-        mask = torch.full((1, 1, args.max_seq_len, args.max_seq_len), float("-inf"))
-        mask = torch.triu(mask, diagonal=1)
-        self.register_buffer("mask", mask, persistent=False)
-
     def forward(
         self,
         x: torch.Tensor,
@@ -159,7 +155,6 @@ class Attention(nn.Module):
         attention_mask: Optional[torch.Tensor] = None,
     ):
 
-        # x.shape still (batch_size,seq_len,num_heads,head_dim)
         bsz, seq_len, _ = x.shape
         xq, xk, xv = self.q_proj(x), self.k_proj(x), self.v_proj(x)
         xq = xq.view(bsz, seq_len, self.n_local_heads, self.head_dim)
@@ -167,7 +162,7 @@ class Attention(nn.Module):
         xv = xv.view(bsz, seq_len, self.n_local_kv_heads, self.head_dim)
 
         cos, sin = position_embeddings
-        xq, xk = apply_rotary_emb(xq, xk, cos[:seq_len], sin[:seq_len])
+        xq, xk = apply_rotary_pos_emb(xq, xk, cos[:seq_len], sin[:seq_len])
 
         if past_key_value is not None:
             xk = torch.cat([past_key_value[0], xk], dim=1)
@@ -313,7 +308,7 @@ class MoEGate(nn.Module):
         return topk_idx, topk_weight, aux_loss
 
 
-class MoEFeedForward(nn.Module):
+class MOEFeedForward(nn.Module):
     def __init__(self, config: MiniMindConfig):
         super().__init__()
         self.config = config
@@ -329,6 +324,7 @@ class MoEFeedForward(nn.Module):
     def forward(self, x):
         identity = x
         orig_shape = x.shape
+        bsz, seq_len, _ = x.shape
         topk_idx, topk_weight, aux_loss = self.gate(x)
         x = x.view(-1, x.shape[-1])
         flat_topk_idx = topk_idx.view(-1)
@@ -336,8 +332,10 @@ class MoEFeedForward(nn.Module):
             x = x.repeat_interleave(self.config.num_experts_per_tok, dim=0)
             y = torch.empty_like(x, dtype=torch.float16)
             for i, expert in enumerate(self.experts):
-                y[flat_topk_idx == i] = expert(x[flat_topk_idx == i]).to(y.dtype)
-            y = y.view(*topk_weight.shape, -1) * topk_weight.unsqueeze(-1).sum(dim=1)
+                y[flat_topk_idx == i] = expert(x[flat_topk_idx == i]).to(
+                    y.dtype
+                )  # 确保类型一致
+            y = (y.view(*topk_weight.shape, -1) * topk_weight.unsqueeze(-1)).sum(dim=1)
             y = y.view(*orig_shape)
         else:
             y = self.moe_infer(x, flat_topk_idx, topk_weight.view(-1, 1)).view(
@@ -349,7 +347,7 @@ class MoEFeedForward(nn.Module):
         self.aux_loss = aux_loss
         return y
 
-    @torch.no_grad
+    @torch.no_grad()
     def moe_infer(self, x, flat_expert_indices, flat_expert_weights):
         expert_cache = torch.zeros_like(x)
         idxs = flat_expert_indices.argsort()
@@ -384,7 +382,7 @@ class MiniMindBlock(nn.Module):
         self.post_attention_layernorm = RMSNorm(
             config.hidden_size, eps=config.rms_norm_eps
         )
-        self.mlp = FeedForward(config) if not config.use_moe else MoEFeedForward(config)
+        self.mlp = FeedForward(config) if not config.use_moe else MOEFeedForward(config)
 
     def forward(
         self,
@@ -400,7 +398,7 @@ class MiniMindBlock(nn.Module):
             position_embeddings,
             past_key_value,
             use_cache,
-            attention_mask,
+            attention_mas,
         )
         hidden_states += residual
         hidden_states += self.mlp(self.post_attention_layernorm(hidden_states))
@@ -437,7 +435,7 @@ class MiniMindModel(nn.Module):
         attention_mask: Optional[torch.Tensor] = None,
         past_key_values: Optional[List[Tuple[torch.Tensor, torch.Tensor]]] = None,
         use_cache: bool = False,
-        **args,
+        **kwargs,
     ):
         batch_size, seq_length = input_ids.shape
         past_key_values = past_key_values or [None] * len(self.layers)
@@ -470,13 +468,13 @@ class MiniMindModel(nn.Module):
         aux_loss = sum(
             layer.mlp.aux_loss
             for layer in self.layers
-            if isinstance(layer.mlp, MoEFeedForward)
+            if isinstance(layer.mlp, MOEFeedForward)
         )
 
         return hidden_states, presents, aux_loss
 
 
-class MiniMindForCausalLM(MiniMindModel):
+class MiniMindForCausalLM(PreTrainedModel, GenerationMixin):
     config_class = MiniMindConfig
 
     def __init__(self, config: MiniMindConfig = None):

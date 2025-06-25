@@ -1,20 +1,21 @@
-import random
-import json
 from tokenizers import (
-    decoders,
     models,
     pre_tokenizers,
+    decoders,
     trainers,
     Tokenizer,
 )
 
 import os
+import random
+import json
 
 random.seed(42)
 
 
 def train_tokenizer():
-    def read_text_from_jsonl(file_path):
+
+    def read_texts_from_jsonl(file_path):
         with open(file_path, "r", encoding="utf-8") as f:
             for line in f:
                 data = json.loads(line)
@@ -33,7 +34,10 @@ def train_tokenizer():
         initial_alphabet=pre_tokenizers.ByteLevel.alphabet(),
     )
 
-    texts = read_text_from_jsonl(data_path)
+    texts = read_texts_from_jsonl(data_path)
+
+    tokenizer.train_from_iterator(texts, trainer=trainer)
+
     tokenizer.decoder = decoders.ByteLevel()
 
     assert tokenizer.token_to_id("<|endoftext|>") == 0
@@ -49,7 +53,7 @@ def train_tokenizer():
         "add_bos_token": False,
         "add_eos_token": False,
         "add_prefix_space": False,
-        "add_tokens_decoder": {
+        "added_tokens_decoder": {
             "0": {
                 "content": "<|endoftext|>",
                 "lstrip": False,
@@ -103,12 +107,15 @@ def eval_tokenizer():
     tokenizer = AutoTokenizer.from_pretrained("../model/")
 
     messages = [
-        {"role": "system", "content": "you are excellent chat bot please answer my question"},
+        {
+            "role": "system",
+            "content": "you are excellent chat bot please answer my question",
+        },
         {"role": "user", "content": "where are you from"},
         {"role": "assistant", "content": "I'm from earth"},
     ]
 
-    new_prompt = tokenizer.applay_chat_template(messages, tokenize=False)
+    new_prompt = tokenizer.apply_chat_template(messages, tokenize=False)
     print(new_prompt)
 
     actual_vocab_size = len(tokenizer)

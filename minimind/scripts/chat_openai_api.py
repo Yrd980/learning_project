@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-client = OpenAI(api_key="ollama", base_url="http://127.0.0.0.1:8998/v1")
+client = OpenAI(api_key="ollama", base_url="http://127.0.0.1:8998/v1")
 
 stream = True
 conversation_history_origin = []
@@ -24,5 +24,6 @@ while True:
         for chunk in response:
             print(chunk.choices[0].delta.content or "", end="")
             assistant_res += chunk.choices[0].delta.content or ""
+
     conversation_history.append({"role": "assistant", "content": assistant_res})
     print("\n\n")

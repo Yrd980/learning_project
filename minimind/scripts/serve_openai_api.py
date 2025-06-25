@@ -97,7 +97,7 @@ def generate_stream_response(messages, temperature, top_p, max_tokens):
                 inputs.input_ids,
                 max_new_tokens=max_tokens,
                 do_sample=True,
-                temerature=temperature,
+                temperature=temperature,
                 top_p=top_p,
                 attention_mask=inputs.attention_mask,
                 pad_token_id=tokenizer.pad_token_id,
@@ -134,7 +134,7 @@ async def chat_completions(request: ChatRequest):
                     for chunk in generate_stream_response(
                         messages=request.messages,
                         temperature=request.temperature,
-                        top_p=request.temperature,
+                        top_p=request.top_p,
                         max_tokens=request.max_tokens,
                     )
                 ),

@@ -56,7 +56,6 @@ def train_epoch(epoch, wandb):
             loss = loss_fct(res.logits.view(-1, res.logits.size(-1)), Y.view(-1)).view(
                 Y.size()
             )
-
             sp_ids = torch.isin(
                 Y.view(-1),
                 torch.tensor(
@@ -66,6 +65,7 @@ def train_epoch(epoch, wandb):
                     + end_of_answer_ids
                 ).to(args.device),
             )
+
             loss_mask = loss_mask.view(-1)
             loss_mask_sum = loss_mask.sum()
             loss_mask[sp_ids] = 10
@@ -79,14 +79,16 @@ def train_epoch(epoch, wandb):
         if (step + 1) % args.accumulation_steps == 0:
             scaler.unscale_(optimizer)
             torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
+
             scaler.step(optimizer)
             scaler.update()
+
             optimizer.zero_grad(set_to_none=True)
 
         if step % args.log_interval == 0:
             spend_time = time.time() - start_time
             Logger(
-                "Epoch:[{}/{}]({}/{}) loss:{:.4f} lr:{:.12f} epoch_Time:{}min:".format(
+                "Epoch:[{}/{}]({}/{}) loss:{:.3f} lr:{:.12f} epoch_Time:{}min:".format(
                     epoch + 1,
                     args.epochs,
                     step,
@@ -102,7 +104,7 @@ def train_epoch(epoch, wandb):
                     {
                         "loss": loss * args.accumulation_steps,
                         "lr": optimizer.param_groups[-1]["lr"],
-                        "last-time": spend_time / (step + 1) * iter_per_epoch // 60
+                        "epoch-time": spend_time / (step + 1) * iter_per_epoch // 60
                         - spend_time // 60,
                     }
                 )
@@ -110,7 +112,7 @@ def train_epoch(epoch, wandb):
         if (step + 1) % args.save_interval == 0 and (not ddp or dist.get_rank() == 0):
             model.eval()
             moe_path = "_moe" if lm_config.use_moe else ""
-            ckp = f"{args.save_dir}/full_dist_{lm_config.hidden_size}{moe_path}.pth"
+            ckp = f"{args.save_dir}/reason_{lm_config.hidden_size}{moe_path}.pth"
             if isinstance(model, torch.nn.parallel.DistributedDataParallel):
                 state_dict = model.module.state_dict()
             else:
@@ -209,6 +211,7 @@ if __name__ == "__main__":
         wandb = None
 
     model, tokenizer = init_model(lm_config)
+
     train_ds = SFTDataset(args.data_path, tokenizer, max_length=args.max_seq_len)
     train_sampler = DistributedSampler(train_ds) if ddp else None
     train_loader = DataLoader(

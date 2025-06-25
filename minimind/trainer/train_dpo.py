@@ -128,10 +128,7 @@ def train_epoch(epoch, wandb):
                     }
                 )
 
-        if (step + 1) % args.save_interval == 0 and (
-            not ddp or dist,
-            dist.get_rank() == 0,
-        ):
+        if (step + 1) % args.save_interval == 0 and (not ddp or dist.get_rank() == 0,):
             model.eval()
             moe_path = "_moe" if lm_config.use_moe else ""
             ckp = f"{args.save_dir}/rlhf_{lm_config.hidden_size}{moe_path}.pth"
@@ -153,10 +150,12 @@ def init_model(lm_config):
     state_dict = torch.load(ckp, map_location=args.device)
     model.load_state_dict(state_dict, strict=False)
     ref_model = MiniMindForCausalLM(lm_config)
-    ref_model.load_state_dict(state_dict,strict = False)
+    ref_model.load_state_dict(state_dict, strict=False)
     ref_model.eval()
 
-    Logger(f'LLM parameter {sum(p.numel() for p in model.parameters() if p.requires_grad) / 1e6:.3f} million')
+    Logger(
+        f"LLM parameter {sum(p.numel() for p in model.parameters() if p.requires_grad) / 1e6:.3f} million"
+    )
     model = model.to(args.device)
     ref_model = ref_model.to(args.device)
 
@@ -182,7 +181,9 @@ if __name__ == "__main__":
     parser.add_argument("--epochs", type=int, default=2)
     parser.add_argument("--batch_size", type=int, default=4)
     parser.add_argument("--learning_rate", type=float, default=1e-8)
-    parser.add_argument("--device", type=str, default="cuda:0" if torch.cuda.is_available() else "cpu")
+    parser.add_argument(
+        "--device", type=str, default="cuda:0" if torch.cuda.is_available() else "cpu"
+    )
     parser.add_argument("--dtype", type=str, default="bfloat16")
     parser.add_argument("--use_wandb", action="store_true")
     parser.add_argument("--wandb_project", type=str, default="MiniMind-RLHF-SFT")
@@ -193,11 +194,11 @@ if __name__ == "__main__":
     parser.add_argument("--warmup_iters", type=int, default=0)
     parser.add_argument("--log_interval", type=int, default=100)
     parser.add_argument("--save_interval", type=int, default=100)
-    parser.add_argument('--local_rank', type=int, default=-1)
-    parser.add_argument('--hidden_size', default=512, type=int)
-    parser.add_argument('--num_hidden_layers', default=8, type=int)
-    parser.add_argument('--max_seq_len', default=1024, type=int)
-    parser.add_argument('--use_moe', default=False, type=bool)
+    parser.add_argument("--local_rank", type=int, default=-1)
+    parser.add_argument("--hidden_size", default=512, type=int)
+    parser.add_argument("--num_hidden_layers", default=8, type=int)
+    parser.add_argument("--max_seq_len", default=1024, type=int)
+    parser.add_argument("--use_moe", default=False, type=bool)
     parser.add_argument("--data_path", type=str, default="../dataset/dpo.jsonl")
 
     args = parser.parse_args()
@@ -210,7 +211,7 @@ if __name__ == "__main__":
     args.save_dir = os.path.join(args.out_dir)
     os.makedirs(args.save_dir, exist_ok=True)
     os.makedirs(args.out_dir, exist_ok=True)
-    tokens_pre_iter = args.batch_size * args.max_seq_len
+    tokens_per_iter = args.batch_size * args.max_seq_len
     device_type = "cuda" if "cuda" in args.device else "cpu"
 
     ctx = nullcontext() if device_type == "cpu" else torch.cuda.amp.autocast()
@@ -235,7 +236,7 @@ if __name__ == "__main__":
         wandb = None
 
     model, ref_model, tokenizer = init_model(lm_config)
-    train_ds = DPODataset(args.data_path,tokenizer,max_length=args.max_seq_len)
+    train_ds = DPODataset(args.data_path, tokenizer, max_length=args.max_seq_len)
     train_sampler = DistributedSampler(train_ds) if ddp else None
     train_loader = DataLoader(
         train_ds,
@@ -248,10 +249,10 @@ if __name__ == "__main__":
     )
 
     scaler = torch.cuda.amp.GradScaler(enabled=(args.dtype in ["float16", "bfloat16"]))
-    optimizer = optim.AdamW(model.parameters(),lr=args.learning_rate)
+    optimizer = optim.AdamW(model.parameters(), lr=args.learning_rate)
     if ddp:
         model._ddp_params_and_buffers_to_ignore = {"pos_cis"}
-        model = DistributedDataParallel(model,device_ids=[ddp_local_rank])
+        model = DistributedDataParallel(model, device_ids=[ddp_local_rank])
 
     iter_per_epoch = len(train_loader)
 

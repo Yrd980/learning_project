@@ -47,7 +47,7 @@ def distillation_loss_fn(
 def train_epoch(epoch, wandb, alpha=0.0, temperature=1.0):
     start_time = time.time()
 
-    if teacher.model is not None:
+    if teacher_model is not None:
         teacher_model.eval()
         teacher_model.requires_grad_(False)
 
@@ -69,7 +69,7 @@ def train_epoch(epoch, wandb, alpha=0.0, temperature=1.0):
 
         if teacher_model is not None:
             with torch.no_grad():
-                teacher.logits = teacher_model(X).logits
+                teacher_logits = teacher_model(X).logits
                 vocab_size_student = student_logits.size(-1)
                 teacher_logits = teacher_logits[..., :vocab_size_student]
 

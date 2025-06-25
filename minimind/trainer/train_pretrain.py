@@ -10,7 +10,7 @@ import math
 import warnings
 import torch
 import torch.distributed as dist
-from torch import lstm_cell, optim, nn
+from torch import optim, nn
 from torch.nn.parallel import DistributedDataParallel
 from torch.utils.data import DataLoader, DistributedSampler
 from contextlib import nullcontext
@@ -26,8 +26,8 @@ def Logger(content):
         print(content)
 
 
-def get_lr(current_step, total_step, lr):
-    return lr / 10 + 0.5 * lr * (1 + math.cos(math.pi * current_step / total_step))
+def get_lr(current_step, total_steps, lr):
+    return lr / 10 + 0.5 * lr * (1 + math.cos(math.pi * current_step / total_steps))
 
 
 def train_epoch(epoch, wandb):
@@ -169,7 +169,7 @@ if __name__ == "__main__":
 
     ctx = nullcontext() if device_type == "cpu" else torch.cuda.amp.autocast()
 
-    ddp = int(os.environ.get("RANK", -1)) != -1  # is this a ddp run?
+    ddp = int(os.environ.get("RANK", -1)) != -1
     ddp_local_rank, DEVICE = 0, "cuda:0"
 
     base_seed = 1337
