@@ -1,9 +1,27 @@
-**/node_modules/        # Ignore all levels of node_modules
-**/dist/                # Ignore all levels of dist
-**/build/               # Ignore all levels of build
-*.log                   # Log files
-*.min.*                 # Minified files
-*.map                   # Source map files
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # Python related
 **/__pycache__/         # Ignore all levels of __pycache__
