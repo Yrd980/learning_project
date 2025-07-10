@@ -12,7 +12,7 @@ RESOURCES_BIN_DIR="${RESOURCES_BASE_DIR}/bin"
 RESOURCES_CONFIG="${RESOURCES_BASE_DIR}/config.yaml"
 RESOURCES_CONFIG_MIXIN="${RESOURCES_BASE_DIR}/mixin.yaml"
 
-IP_BASE_DIR="${RESOURCES_BASE_DIR}/zip"
+ZIP_BASE_DIR="${RESOURCES_BASE_DIR}/zip"
 ZIP_CLASH=$(echo ${ZIP_BASE_DIR}/clash*)
 ZIP_MIHOMO=$(echo ${ZIP_BASE_DIR}/mihomo*)
 ZIP_YQ=$(echo ${ZIP_BASE_DIR}/yq*)
@@ -31,19 +31,17 @@ CLASH_UPDATE_LOG="${CLASH_BASE_DIR}/clashupdate.log"
 _set_var() {
   local user=$USER
   local home=$HOME
-  [ -n "SUDO_USER" ] && {
-    user="SUDO_USER"
-    home=$(awk -F: -v user="SUDO_USER" '$1=user{print $6}' /etc/passwd)
+  [ -n "$SUDO_USER" ] && {
+    user=$SUDO_USER
+    home=$(awk -F: -v user="$SUDO_USER" '$1==user{print $6}' /etc/passwd)
   }
 
-  [ -n "BASH_VERSION" ] && {
+  [ -n "$BASH_VERSION" ] && {
     _SHELL=bash
   }
-
   [ -n "$ZSH_VERSION" ] && {
     _SHELL=zsh
   }
-
   [ -n "$fish_version" ] && {
     _SHELL=fish
   }
@@ -51,7 +49,6 @@ _set_var() {
   command -v bash >&/dev/null && {
     SHELL_RC_BASH="${home}/.bashrc"
   }
-
   command -v zsh >&/dev/null && {
     SHELL_RC_ZSH="${home}/.zshrc"
   }
@@ -123,15 +120,14 @@ function _get_kernel() {
   _okcat "install kernel：$BIN_KERNEL_NAME"
 }
 
-  _get_random_port() {
-    local randomPort=$(shuf -i 1024-65535 -n 1)
-    ! _is_bind "$randomPort" && {echo "$randomPort" && return
-  }
+_get_random_port() {
+  local randomPort=$(shuf -i 1024-65535 -n 1)
+  ! _is_bind "$randomPort" && { echo "$randomPort" && return; }
   _get_random_port
 }
 
 function _get_proxy_port() {
-  local mixed_port=$(sudo "BIN_YQ" '.mixed_port // ""' $CLASH_CONFIG_RUNTIME)
+  local mixed_port=$(sudo "$BIN_YQ" '.mixed-port // ""' $CLASH_CONFIG_RUNTIME)
   MIXED_PORT=${mixed_port:-7890}
 
   _is_already_in_use "$MIXED_PORT" "$BIN_KERNEL_NAME" && {
@@ -225,7 +221,7 @@ function _valid_env() {
   [ "$(ps -p 1 -o comm=)" != "systemd" ] && _error_quit "system not support systemd"
 }
 
-function _valid_config () {
+function _valid_config() {
   [ -e "$1" ] && [ "$(wc -l <"$1")" -gt 1 ] && {
     local cmd msg
     cmd="$BIN_KERNEL -d $(dirname "$1") -f $1 -t"
@@ -352,7 +348,3 @@ _start_convert() {
 _stop_convert() {
   pkill -9 -f "$BIN_SUBCONVERTER" >&/dev/null
 }
-
-
-
-

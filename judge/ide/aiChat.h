@@ -5,6 +5,7 @@
 #include <QList>
 #include <QObject>
 #include <QString>
+#include <cstdio>
 #include <qdatetime.h>
 #include <qhashfunctions.h>
 #include <qlist.h>
@@ -21,6 +22,7 @@ struct AIMessage {
     AIMessage(AIMessageType type, const QString &content) :
         type(type), content(content), timestamp(QDateTime::currentDateTime()) {};
 };
+
 
 class AIChatManager : public QObject {
     Q_OBJECT

@@ -1,14 +1,6 @@
-function clashon() {
-  _get_proxy_port
-  systemctl is-active "$BIN_KERNEL_NAME" >&/dev/null || {
-    sudo systemctl start "$BIN_KERNEL_NAME" >/dev/null || {
-      _failcat 'fail start: please execute clashstatus check log'
-      return 1
-    }
-  }
-
-  local auth=$(sudo "$BIN_YQ" '.authentication[0] // ""' "$CLASH_CONFIG_RUNTIME")
-  [ -n "$auth" ] && auth=$auth@
+_set_system_proxy() {
+    local auth=$(sudo "$BIN_YQ" '.authentication[0] // ""' "$CLASH_CONFIG_RUNTIME")
+    [ -n "$auth" ] && auth=$auth@
 
   local http_proxy_addr="http://${auth}127.0.0.1:${MIXED_PORT}"
   local socks_proxy_addr="socks5h://${auth}127.0.0.1:${MIXED_PORT}"
@@ -25,31 +17,86 @@ function clashon() {
   export no_proxy=$no_proxy_addr
   export NO_PROXY=$no_proxy
 
-  _okcat 'start proxy enverionment'
+    sudo "$BIN_YQ" -i '.system-proxy.enable = true' "$CLASH_CONFIG_MIXIN"
+}
+
+_unset_system_proxy() {
+    unset http_proxy
+    unset https_proxy
+    unset HTTP_PROXY
+    unset HTTPS_PROXY
+    unset all_proxy
+    unset ALL_PROXY
+    unset no_proxy
+    unset NO_PROXY
+
+    sudo "$BIN_YQ" -i '.system-proxy.enable = false' "$CLASH_CONFIG_MIXIN"
+}
+
+function clashon() {
+    _get_proxy_port
+    systemctl is-active "$BIN_KERNEL_NAME" >&/dev/null || {
+        sudo systemctl start "$BIN_KERNEL_NAME" >/dev/null || {
+            _failcat 'start fail: use clashstatus check log'
+            return 1
+        }
+    }
+    _set_system_proxy
+    _okcat 'enable oroxy'
 }
 
 watch_proxy() {
-  [ -z "$http_proxy" ] && [[ $- == *i* ]] && {
-    _is_root || _failcat 'not detect enverionment variable，execute clashon to start proxy enverionment' && clashon
-  }
+    [ -z "$http_proxy" ] && [[ $- == *i* ]] && {
+        clashproxy status >&/dev/null && {
+            _is_root && clashon
+        }
+    }
 }
 
 function clashoff() {
   sudo systemctl stop "$BIN_KERNEL_NAME" && _okcat 'exit proxy enverionment' ||
     _failcat 'exit error: please execute "clashstatus" to check log' || return 1
 
-  unset http_proxy
-  unset https_proxy
-  unset HTTP_PROXY
-  unset HTTPS_PROXY
-  unset all_proxy
-  unset ALL_PROXY
-  unset no_proxy
-  unset NO_PROXY
+  _unset_system_proxy
 }
 
 clashrestart() {
-  { clashoff && clashon; } >&/dev/null
+    { clashoff && clashon; } >&/dev/null
+}
+
+function clashproxy() {
+    case "$1" in
+    on)
+        systemctl is-active "$BIN_KERNEL_NAME" >&/dev/null || {
+            _failcat 'not detect proxy please use clashon'
+            return 1
+        }
+        _set_system_proxy
+        _okcat 'start proxy'
+        ;;
+    off)
+        _unset_system_proxy
+        _okcat 'close proxy'
+        ;;
+    status)
+        local system_proxy_status=$(sudo "$BIN_YQ" '.system-proxy.enable' "$CLASH_CONFIG_MIXIN" 2>/dev/null)
+        [ "$system_proxy_status" = "false" ] && {
+            _failcat "proxy：close"
+            return 1
+        }
+        _okcat "proxy：on
+http_proxy： $http_proxy
+socks_proxy：$all_proxy"
+        ;;
+    *)
+        cat <<EOF
+用法: clashproxy [on|off|status]
+    on      开启系统代理
+    off     关闭系统代理
+    status  查看系统代理状态
+EOF
+        ;;
+    esac
 }
 
 function clashstatus() {
@@ -225,7 +272,10 @@ function clashctl() {
         shift
         clashstatus "$@"
         ;;
-
+    proxy)
+        shift
+        clashproxy "$@"
+        ;;
     tun)
         shift
         clashtun "$@"
@@ -246,10 +296,7 @@ function clashctl() {
         cat <<EOF
 
 Usage:
-    clash      COMMAND  [OPTION]
-    mihomo     COMMAND  [OPTION]
-    clashctl   COMMAND  [OPTION]
-    mihomoctl  COMMAND  [OPTION】
+    clash COMMAND  [OPTION]
 
 Commands:
     on                   start proxy
