@@ -154,6 +154,7 @@ class LogUtils {
     }
 
     final String logLine = "[${_getTimeString()}][DEBUG][$tag] $maskedMessage";
+
     _addToMemoryLog(logLine);
 
     unawaited(_writeToDatabase(LogLevel.debug, maskedMessage, tag));

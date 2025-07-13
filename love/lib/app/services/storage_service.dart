@@ -43,8 +43,133 @@ class StorageService {
           await _secureStorage.delete(key: 'test_key');
           _useSecureStorage = true;
           LogUtils.d('secure storage available', _tag);
-        } catch (e) {}
+        } catch (e) {
+          _useSecureStorage = false;
+          LogUtils.w(
+            'secure storage can not use , use normal storage as roll ',
+            _tag,
+          );
+        }
       }
-    } catch (e) {}
+
+      initialized = true;
+    } catch (e) {
+      LogUtils.e('storage services init fail', tag: _tag, error: e);
+      rethrow;
+    }
+  }
+
+  GetStorage get box {
+    if (_box == null) {
+      throw StateError('storage services not init');
+    }
+    return _box!;
+  }
+
+  @Deprecated('Use [CommonDatabase] instead')
+  Future<void> writeData(String key, dynamic value) async {
+    await box.write(key, value);
+  }
+
+  @Deprecated('Use [CommonDatabase] instead')
+  T? readData<T>(String key) {
+    return box.read<T>(key);
+  }
+
+  @Deprecated('Use [CommonDatabase] instead')
+  Future<void> deleteData(String key) async {
+    await box.remove(key);
+  }
+
+  @Deprecated('Use [CommonDatabase] instead')
+  Future<void> clearAll() async {
+    await box.erase();
+    if (_useSecureStorage) {
+      try {
+        await _secureStorage.deleteAll();
+      } catch (e) {
+        LogUtils.e('clear secure storage fail', tag: _tag, error: e);
+      }
+    }
+  }
+
+  Future<void> writeSecureData(String key, String value) async {
+    if (_useSecureStorage) {
+      try {
+        await _secureStorage.write(key: key, value: value);
+        return;
+      } catch (e) {
+        LogUtils.w('write secure storage fail roll to normal storage', _tag);
+        _useSecureStorage = false;
+      }
+    }
+    await box.write(_securePrefix + key, value);
+  }
+
+  Future<String?> readSecureData(String key) async {
+    if (_useSecureStorage) {
+      try {
+        return await _secureStorage.read(key: key);
+      } on PlatformException catch (e) {
+        if (e.message?.contains('BAD_DECRYPT') ?? false) {
+          LogUtils.w('secure storage decode fail clear all data', _tag);
+          await _secureStorage.deleteAll();
+        }
+        LogUtils.w('read fail，roll to normal', _tag);
+        _useSecureStorage = false;
+      } catch (e) {
+        LogUtils.w('read fail，roll to normal', _tag);
+        _useSecureStorage = false;
+      }
+    }
+    return box.read<String>(_securePrefix + key);
+  }
+
+  Future<void> deleteSecureData(String key) async {
+    if (_useSecureStorage) {
+      try {
+        await _secureStorage.delete(key: key);
+        return;
+      } catch (e) {
+        LogUtils.w('delete fail, roll to normal', _tag);
+        _useSecureStorage = false;
+      }
+    }
+    await box.remove(_securePrefix + key);
+  }
+
+  Future<void> writeSecureObject(String key, Map<String, dynamic> value) async {
+    final string = json.encode(value);
+    await writeSecureData(key, string);
+  }
+
+  Future<Map<String, dynamic>?> readSecureObject(String key) async {
+    try {
+      final string = await readSecureData(key);
+      if (string == null) return null;
+      return json.decode(string) as Map<String, dynamic>;
+    } catch (e) {
+      LogUtils.e('read fail', tag: _tag, error: e);
+      return null;
+    }
+  }
+
+  Future<void> writeCredentials(String username, String password) async {
+    await writeSecureData('username', username);
+    await writeSecureData('password', password);
+  }
+
+  Future<Map<String, String>?> readCredentials() async {
+    final username = await readSecureData('username');
+    final password = await readSecureData('password');
+    if (username != null && password != null) {
+      return {'username': username, 'password': password};
+    }
+    return null;
+  }
+
+  Future<void> clearCredentials() async {
+    await deleteSecureData('username');
+    await deleteSecureData('password');
   }
 }
