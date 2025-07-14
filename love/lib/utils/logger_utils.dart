@@ -201,4 +201,14 @@ class LogUtils {
       }
     }
   }
+
+  void addLogSync({required LogLevel level,String? tag,required String message,String? details}) {
+  try {
+    final now = DateTime.now();
+    final timestamp = now.millisecondsSinceEpoch ~/ 1000;
+
+    _insertLogStmt.execute([])
+  }
+  }
 }
+

@@ -299,9 +299,129 @@ class AuthService extends GetxService {
   }
 
   void _startTokenRefreshTimer() {}
-}
 
-Future<void> _handleTokenExpiredSilently() async {}
+  Future<void> handleTokenExpired() async {
+    if (!_isAuthenticated.value) {
+      return;
+    }
+
+    _isAuthenticated.value = false;
+    _accessToken = null;
+    _authToken = null;
+    _accessTokenExpireTime = null;
+
+    await _storage.deleteSecureData(KeyConstants.autoToken);
+    await _storage.deleteSecureData(KeyConstants.accessToken);
+
+    try {
+      Get.find<UserService>().handleLogout();
+    } catch (e) {
+      LogUtils.e('notify user logout error', error: e);
+    }
+
+    _messageService.showMessage(t.errors.pleaseLoginAgain, MDToastType.warning);
+
+    LogUtils.d('user logout');
+  }
+
+  void resetProxy() {
+    _dio.httpClientAdapter = IOHttpClientAdapter();
+  }
+
+  Future<void> _handleTokenExpiredSilently() async {
+    if (!_isAuthenticated.value) {
+      return;
+    }
+
+    _isAuthenticated.value = false;
+    _accessToken = null;
+    _authToken = null;
+    _accessTokenExpireTime = null;
+
+    _tokenRefreshTimer?.cancel();
+    _tokenRefreshTimer = null;
+
+    await _storage.deleteSecureData(KeyConstants.autoToken);
+    await _storage.deleteSecureData(KeyConstants.accessToken);
+
+    try {
+      Get.find<UserService>().handleLogout();
+    } catch (e) {
+      LogUtils.e('notify user logout fail', tag: _tag, error: e);
+    }
+
+    LogUtils.d('user silently logout', _tag);
+  }
+
+  Future<void> logout() async {
+    try {
+      _authToken = null;
+      _accessToken = null;
+      _tokenExpireTime = null;
+      _tokenRefreshTimer?.cancel();
+      _isAuthenticated.value = false;
+      await _storage.deleteSecureData(KeyConstants.autoToken);
+      await _storage.deleteSecureData(KeyConstants.accessToken);
+    } catch (e) {
+      LogUtils.e('logout process fail', tag: _tag, error: e);
+      _authToken = null;
+      _accessToken = null;
+      _tokenExpireTime = null;
+      _isAuthenticated.value = false;
+    }
+  }
+
+  Future<ApiResult> register(
+    String email,
+    String captchaId,
+    String captchaAnswer,
+  ) async {
+    try {
+      final headers = {'X-Captcha': '$captchaId:$captchaAnswer'};
+      final data = {'email': email, 'locale': Get.locale?.countryCode ?? 'en'};
+      final response = await _dio.post(
+        '/user/register',
+        data: data,
+        options: dio.Options(headers: headers),
+      );
+
+      if (response.statusCode == 200 &&
+          response.data['message'] == 'register.emailInstructionsSent') {
+        LogUtils.d('register success send email', _tag);
+        return ApiResult.success();
+      } else {
+        return ApiResult.fail(
+          response.data['message'] ?? t.errors.registerFailed,
+        );
+      }
+    } on dio.DioException catch (e) {
+      LogUtils.e('register fail: ${e.message}', tag: _tag);
+      if (e.response != null && e.response?.data != null) {
+        var errorMessage =
+            e.response!.data['errors']?[0]['message'] ??
+            e.response!.data['message'] ??
+            t.errors.unknownError;
+        switch (errorMessage) {
+          case 'errors.invalidEmail':
+            return ApiResult.fail(t.errors.invalidEmail);
+          case 'errors.emailAlreadyExists':
+            return ApiResult.fail(t.errors.emailAlreadyExists);
+          case 'errors.invalidCaptcha':
+            return ApiResult.fail(t.errors.invalidCaptcha);
+          case 'errors.tooManyRequests':
+            return ApiResult.fail(t.errors.tooManyRequests);
+          default:
+            return ApiResult.fail(errorMessage);
+        }
+      } else {
+        return ApiResult.fail(t.errors.networkError);
+      }
+    } catch (e) {
+      LogUtils.e('register occur problem: $e', tag: _tag);
+      return ApiResult.fail(t.errors.unknownError);
+    }
+  }
+}
 
 class AuthServiceException implements Exception {
   final String message;
