@@ -30,6 +30,8 @@ class DatabaseService {
   Future<void> init() async {
     try {
       _db = await openSqliteDb();
+
+      _migrationManager.runMigrations(_db);
     } catch (e) {
       LogUtils.e('database init error', tag: 'DatabaseService', error: e);
       throw DatabaseException('database init fail: $e');
