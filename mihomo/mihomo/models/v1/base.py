@@ -8,4 +8,4 @@ class StarrailInfoParsedV1(BaseModel):
 
     player: Player
     player_details: PlayerSpaceInfo = Field(..., alias="PlayerSpaceInfo")
-    character: list[Character]
+    characters: list[Character]
