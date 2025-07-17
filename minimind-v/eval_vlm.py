@@ -6,7 +6,6 @@ import torch
 import warnings
 from PIL import Image
 from transformers import AutoTokenizer, AutoModelForCausalLM, TextStreamer
-import transformers
 from model.model_vlm import MiniMindVLM, VLMConfig
 
 warnings.filterwarnings("ignore")
@@ -141,9 +140,11 @@ if __name__ == "__main__":
         prompt = f"{model.params.image_special_token}\n descripe this picuture"
 
         for image_file in os.listdir(image_dir):
-            image = Image.open(os.path.join(image_dir,image_file)).convert("RGB")
-            pixel_tensors = (MiniMindVLM.image2tensor(image,preprocess).to(args.device).unsqueeze(0))
-            chat_with_vlm(prompt,pixel_tensors,image_file)
+            image = Image.open(os.path.join(image_dir, image_file)).convert("RGB")
+            pixel_tensors = (
+                MiniMindVLM.image2tensor(image, preprocess).to(args.device).unsqueeze(0)
+            )
+            chat_with_vlm(prompt, pixel_tensors, image_file)
 
     if args.use_multi == 2:
         args.model_mode = 2
