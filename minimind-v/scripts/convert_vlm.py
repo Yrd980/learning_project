@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import torch
 import warnings
-from transformers import AutoTokenizer, AutoModelForCausalLM, LlamaConfig
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from model.model_vlm import MiniMindVLM, VLMConfig
 
 warnings.filterwarnings("ignore", category=UserWarning)

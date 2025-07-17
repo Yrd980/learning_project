@@ -1,12 +1,10 @@
-from math import log
 import os
-from re import L
 
 import torch
 import warnings
 from .model_minimind import *
 from typing import Optional, Tuple, List
-from torch import embedding, nn
+from torch import nn
 from transformers import CLIPProcessor, CLIPModel
 from typing import List
 
@@ -60,9 +58,8 @@ class MiniMindVLM(MiniMindForCausalLM):
 
     @staticmethod
     def get_vision_model(model_path: str):
-        from transformers import logging as hg_logging
-
-        hg_logging.set_verbosity_error()
+        from transformers import logging as hf_logging
+        hf_logging.set_verbosity_error()
         if not os.path.exists(model_path):
             return None, None
         model = CLIPModel.from_pretrained(model_path)
@@ -88,19 +85,16 @@ class MiniMindVLM(MiniMindForCausalLM):
 
     def count_vision_proj(self, tokens, h, vision_tensors=None, seqlen=512):
         def find_indices(tokens, image_ids):
-            image_id_tensor = torch.tensor(image_ids).to(tokens.device)
+            image_ids_tensor = torch.tensor(image_ids).to(tokens.device)
             len_image_ids = len(image_ids)
             if len_image_ids > tokens.size(1):
                 return None
             tokens_view = tokens.unfold(1, len_image_ids, 1)
-            matches = (tokens_view == image_id_tensor).all(dim=2)
+            matches = (tokens_view == image_ids_tensor).all(dim=2)
             return {
-                batch_idx: [
-                    (idx.items(), idx.item() + len_image_ids - 1)
-                    for idx in matches[batch_idx].nonzero(as_tuple=True)[0]
-                ]
-                for batch_idx in range(tokens.size(0))
-                if matches[batch_idx].any()
+                batch_idx: [(idx.item(), idx.item() + len_image_ids - 1) for idx in
+                            matches[batch_idx].nonzero(as_tuple=True)[0]]
+                for batch_idx in range(tokens.size(0)) if matches[batch_idx].any()
             } or None
 
         image_indices = find_indices(tokens, self.params.image_ids)
@@ -190,19 +184,17 @@ class MiniMindVLM(MiniMindForCausalLM):
 
         hidden_states = self.model.norm(hidden_states)
 
-        aux_loss = sum(layer.mlp.aux_loss for layer in self.model.layers if isinstance(logits_to_keep,int) else logits_to_keep)
-            
-        slice_indices = (
-            slice(-logits_to_keep,None)
-            if isinstance(logits_to_keep,int)
-            else logits_to_keep
+        aux_loss = sum(
+            layer.mlp.aux_loss
+            for layer in self.model.layers
+            if isinstance(layer.mlp, MOEFeedForward)
         )
-
-        logits = self.lm_head(hidden_states[:,slice_indices,:])
-        self.OUT.__setitem__("last_hidden_state", hidden_states)
-        self.OUT.__setitem__("logits", logits)
-        self.OUT.__setitem__("aux_loss", aux_loss)
-        self.OUT.__setitem__("past_key_values", presents)
+        slice_indices = slice(-logits_to_keep, None) if isinstance(logits_to_keep, int) else logits_to_keep
+        logits = self.lm_head(hidden_states[:, slice_indices, :])
+        self.OUT.__setitem__('last_hidden_state', hidden_states)
+        self.OUT.__setitem__('logits', logits)
+        self.OUT.__setitem__('aux_loss', aux_loss)
+        self.OUT.__setitem__('past_key_values', presents)
         return self.OUT
 
 

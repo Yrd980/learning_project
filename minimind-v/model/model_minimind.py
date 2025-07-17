@@ -19,7 +19,7 @@ class MiniMindConfig(PretrainedConfig):
         num_key_value_heads: int = 2,
         vocab_size: int = 6400,
         rms_norm_eps: float = 1e-05,
-        rope_theta: int = 1e6,
+        rope_theta: int = 1000000.0,
         flash_attn: bool = True,
         use_moe: bool = False,
         num_experts_per_tok: int = 2,
@@ -70,7 +70,7 @@ from transformers.modeling_outputs import CausalLMOutputWithPast
 class RMSNorm(torch.nn.Module):
     def __init__(self, dim: int, eps: float = 1e-5):
         super().__init__()
-        self.eps = (eps,)
+        self.eps = eps
         self.weight = nn.Parameter(torch.ones(dim))
 
     def _norm(self, x):
@@ -196,9 +196,7 @@ class Attention(nn.Module):
             scores = scores + torch.triu(
                 torch.full((seq_len, seq_len), float("-inf"), device=scores.device),
                 diagonal=1,
-            ).unsqueeze(0).unsqueeze(
-                0
-            )  # scores+mask
+            ).unsqueeze(0).unsqueeze(0)
 
             if attention_mask is not None:
                 extended_attention_mask = attention_mask.unsqueeze(1).unsqueeze(2)
@@ -325,7 +323,7 @@ class MOEFeedForward(nn.Module):
         identity = x
         orig_shape = x.shape
         bsz, seq_len, _ = x.shape
-        # 使用门控机制选择专家
+
         topk_idx, topk_weight, aux_loss = self.gate(x)
         x = x.view(-1, x.shape[-1])
         flat_topk_idx = topk_idx.view(-1)
@@ -333,9 +331,7 @@ class MOEFeedForward(nn.Module):
             x = x.repeat_interleave(self.config.num_experts_per_tok, dim=0)
             y = torch.empty_like(x, dtype=torch.float16)
             for i, expert in enumerate(self.experts):
-                y[flat_topk_idx == i] = expert(x[flat_topk_idx == i]).to(
-                    y.dtype
-                )  # 确保类型一致
+                y[flat_topk_idx == i] = expert(x[flat_topk_idx == i]).to(y.dtype)
             y = (y.view(*topk_weight.shape, -1) * topk_weight.unsqueeze(-1)).sum(dim=1)
             y = y.view(*orig_shape)
         else:
