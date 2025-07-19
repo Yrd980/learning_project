@@ -1,0 +1,10 @@
+@reference '../../index.css';
+
+.focus-visible {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-2;
+}
+
+.skip-link {
+  @apply absolute -top-40 left-6 bg-primary-500 text-white px-4 py-2 rounded
+    focus:top-6 transition-all duration-200;
+} 

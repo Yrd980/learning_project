@@ -1,0 +1,12 @@
+@reference '../../index.css';
+
+.company-card {
+  @apply bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg
+    transition-shadow duration-300 cursor-pointer;
+}
+
+@media (max-width: 768px) {
+  .company-card {
+    @apply p-4;
+  }
+} 
