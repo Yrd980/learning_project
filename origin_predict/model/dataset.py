@@ -29,9 +29,8 @@ class KCDataset(Dataset):
         scaled = scaler.fit_transform(pd_data.iloc[:, 0:21].to_numpy())
         y = pd_data.iloc[:, 21].to_numpy()
 
-        smote = SMOTE(sampling_strategy=1.0, random_state=42)
+        smote = SMOTE(sampling_strategy="auto", random_state=42)
         X_resampled, y_resampled = smote.fit_resample(scaled, y)
-
         tl = TomekLinks(sampling_strategy="auto")
         X_resampled, y_resampled = tl.fit_resample(X_resampled, y_resampled)
 

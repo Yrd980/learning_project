@@ -3,12 +3,11 @@ from torch.utils.data import DataLoader
 from torch import nn, optim
 from dataset import KCDataset
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from util.plot import plot_model
 
 import warnings
 
 warnings.filterwarnings("ignore")
-
-from util.plot import plot_model
 
 
 class LMConfig(nn.Module):

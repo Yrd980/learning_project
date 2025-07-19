@@ -6,12 +6,9 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QLabel,
     QFileDialog,
-    QHBoxLayout,
     QCheckBox,
     QMessageBox,
 )
-from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
 from origin.model import model_view
 
 
@@ -83,7 +80,6 @@ class ModelCompareApp(QWidget):
         for model in model_list:
             model_view(self.file_path, model)
 
-        # Optionally: clear existing plot or load image result
         QMessageBox.information(self, "Success", "Model comparison completed.")
 
 
