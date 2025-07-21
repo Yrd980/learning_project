@@ -3,8 +3,6 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import io
-import base64
 from origin.model import (
     preprocess, apply_resampling_and_pca, 
     get_models, evaluate_model, optimize_model,
@@ -24,7 +22,6 @@ def plot_to_base64(fig):
     try:
         # Save to temporary file instead of base64 for Gradio
         import tempfile
-        import os
         
         # Create temporary file
         temp_file = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
