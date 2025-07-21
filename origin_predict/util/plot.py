@@ -28,7 +28,7 @@ def plot_model(model_name, accuracy, precision, recall, f1):
     fig.suptitle(f'{model_name} - Performance Analysis', fontsize=16, fontweight='bold')
 
     x = range(1, len(accuracy) + 1)
-    
+
     # Flatten axes for easier iteration
     axes_flat = axes.flatten()
 
@@ -73,7 +73,7 @@ def plot_model(model_name, accuracy, precision, recall, f1):
              bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.5))
 
     plt.tight_layout(rect=[0, 0.05, 1, 0.96])
-    
+
     timestamp = datetime.now().strftime("%m-%d-%H-%M")
     save_path = f"results/{model_name}_{timestamp}.png"
     print(f"Enhanced plot saved to: {save_path}")

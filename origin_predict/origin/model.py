@@ -17,7 +17,7 @@ from sklearn.ensemble import RandomForestClassifier, StackingClassifier
 from sklearn.linear_model import LogisticRegression
 from imblearn.over_sampling import SMOTE
 from imblearn.under_sampling import TomekLinks
-from typing import Tuple, List, Dict, Any
+from typing import Tuple, List, Dict
 from util.plot import plot_model, plot_model_comparison, plot_comprehensive_comparison, create_summary_table
 
 # Ensure models directory exists
