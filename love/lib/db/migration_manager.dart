@@ -1,5 +1,3 @@
-// lib/migrations/migration_manager.dart
-
 import 'package:i_iwara/db/migrations/migration_v3.dart';
 import 'package:i_iwara/db/migrations/migration_v4.dart';
 import 'package:i_iwara/db/migrations/migration_v5.dart';

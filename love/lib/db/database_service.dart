@@ -23,6 +23,7 @@ class DatabaseService {
   factory DatabaseService() => _instance;
 
   DatabaseService._internal();
+
   late CommonDatabase _db;
   CommonDatabase? _logDb;
   final MigrationManager _migrationManager = MigrationManager();

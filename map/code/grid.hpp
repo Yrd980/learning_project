@@ -387,8 +387,8 @@ std::deque<int> *sovleShip(Pos origin, int direction, Pos target,
       if (grids[next[i].x][next[i].y]->shipAble[next[i].direction] == 0)
         continue;
       map->setVisited(next[i].x, next[i].y, next[i].direction);
-      _ship_map_front[end] = start - 1; 
-      _ship_map_front_pos[end] = i;     
+      _ship_map_front[end] = start - 1;
+      _ship_map_front_pos[end] = i;
       if (next[i].toPos() == target) {
         if (needPath) {
           return return_path(end);
@@ -400,4 +400,22 @@ std::deque<int> *sovleShip(Pos origin, int direction, Pos target,
   }
   return new std::deque<int>;
 }
+
+std::deque<int> *return_path(int now) {
+  std::deque<int> *result = new std::deque<int>;
+  while (now != 0) {
+    result->push_front(_ship_map_front_pos[now]);
+    now = _ship_map_front[now];
+  }
+  return result;
+}
+
+void resetbelong() {
+  for (int i = 0; i < MAX_Line_Length; i++) {
+    for (int j = 0; j < MAX_Col_Length; j++) {
+      grids[i][j]->belongToBerth = -1;
+    }
+  }
+}
+
 #endif
