@@ -1,0 +1,1 @@
+Insert banned words, as in swear words and dangerous tokens
